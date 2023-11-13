@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Dashboard | User - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+    <!-- jsvectormap css -->
+    <link href="assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css">
+
+    <!--Swiper slider css-->
+    <link href="assets/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Layout config Js -->
+    <script src="assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- Icons Css -->
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <!-- App Css-->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css">
+    <!-- custom Css-->
+    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css">
+    <style>
+        .table>:not(caption)>*>*{
+            background: unset;
+            --vz-text-opacity: 1;
+            color: #878a99!important;
+        }
+        .form-select{
+            width: unset;
+        }
+        .dt-buttons {
+            top: 0 !important;
+            right: 0 !IMPORTANT;
+            position: absolute !important;
+            margin-top: 22px;
+        }
+        #datatables-example_filter {
+            float: left;
+        }
+        #datatables-example th{
+            display: none;
+        }
+    </style>
+
+    <link href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/b-1.6.5/b-colvis-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.2/fc-3.3.1/r-2.2.6/rr-1.2.7/sl-1.3.1/datatables.css" rel="stylesheet" crossorigin>
+    <link href="https://cdn.jsdelivr.net/gh/djibe/material@4.6.2-1.0/css/material-plugins.min.css" rel="stylesheet" crossorigin>
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/staterestore/1.2.2/css/stateRestore.dataTables.min.css">
+
+
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    <header id="page-topbar">
+        <div class="layout-width">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box horizontal-logo">
+                        <a href="index.html" class="logo logo-dark">
+                        <span class="logo-sm">
+                            <img src="assets/images/logo-sm.png" alt="" height="22">
+                        </span>
+                            <span class="logo-lg">
+                            <img src="assets/images/logo-dark.png" alt="" height="17">
+                        </span>
+                        </a>
+
+                        <a href="index.html" class="logo logo-light">
+                        <span class="logo-sm">
+                            <img src="assets/images/logo-sm.png" alt="" height="22">
+                        </span>
+                            <span class="logo-lg">
+                            <img src="assets/images/logo-light.png" alt="" height="17">
+                        </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm fs-16 header-item-icon vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
+                    <span class="hamburger-icon">
+                          <!--<i class="la la-bars text-white"></i>-->
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <!-- App Search-->
+                    <div class="app-search">
+                        <div class="position-relative">
+                            <h1 class="text-muted">Notes</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center">
+
+
+
+
+                    <div class="ms-1 header-item d-none d-sm-flex">
+                        <a href="#" class="btn btn-icon btn-topbar">
+                            <i class='la la-md la-home icon-margin fs-18' style="margin-right: 5px;"></i> <span>Home</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== App Menu ========== -->
+    <div class="app-menu navbar-menu">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+            <!-- Dark Logo-->
+            <a href="index.html" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="assets/images/logo-sm.png" alt="" height="22">
+                    </span>
+                <span class="logo-lg">
+                        <img src="assets/images/logo-dark.png" alt="" height="17">
+                    </span>
+            </a>
+            <!-- Light Logo-->
+            <a href="index.html" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="assets/images/logo-sm.png" alt="" height="22">
+                    </span>
+                <span class="logo-lg">
+                        <img src="images/logo.png" alt="" class="sidebar-logo mb-3">
+                    </span>
+            </a>
+            <h2 class="text-white mb-3">UWorld</h2>
+            <h3 class="text-white" style="font-size: 1rem!important;">STEP1 QBank</h3>
+            <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+                <i class="ri-record-circle-line"></i>
+            </button>
+        </div>
+
+        <div id="scrollbar" class="side-scrollbar">
+            <div class="container-fluid">
+
+                <div id="two-column-menu">
+                </div>
+                <ul class="navbar-nav" id="navbar-nav">
+
+
+                    <!--<li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Components</span></li>-->
+
+
+                    <li class="nav-item mt-3">
+                        <a class="nav-link menu-link" href="welcome.html">
+                            <i class='la la-md la-home icon-margin fs-18'></i> <span data-key="t-widgets">Welcome</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="default/index.html">
+                            <i class='la la-edit fs-18'></i> <span data-key="t-widgets">Create Test</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="previoustests.html">
+                            <i class='la la-list-alt fs-18'></i> <span data-key="t-widgets">Previous Tests</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#sidebarLanding" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLanding">
+                            <i class="la la-chart-bar fs-18"></i> <span data-key="t-landing">Performance</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarLanding">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="welcome.html" class="nav-link" data-key="t-one-page"> <i class="la la-clipboard-check fs-18"></i> Overall </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="reports.html" class="nav-link" data-key="t-one-page"> <i class="la la-chart-pie fs-18"></i> Reports </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link" data-key="t-one-page"> <i class="la la-chart-line fs-18"></i> Graphs </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="search.html">
+                            <i class='ri-search-line fs-18'></i> <span data-key="t-widgets">Search</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="notes.html">
+                            <i class='la la-file-alt fs-18'></i> <span data-key="t-widgets">Notes</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="flashcards.html">
+                            <i class='la la-bolt fs-18'></i> <span data-key="t-widgets">Flashcards</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="my_notebook.html">
+                            <i class='la la-book fs-18'></i> <span data-key="t-widgets">My Notebook</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="">
+                            <i class='la la-question-circle fs-18'></i> <span data-key="t-widgets">Help</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- Sidebar -->
+        </div>
+
+        <div class="offcanvas-footer p-3 text-center">
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="text-white" style="margin: unset;">Expiration Date  </h5>
+                    <p class="text-muted">May 07, 2023 12:00 PM EDT</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-background"></div>
+    </div>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col">
+
+                        <div class="h-100">
+
+
+                            <div class="row">
+                                <div class="col-lg-12">
+
+                                    <style>
+
+
+                                    </style>
+
+
+
+
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!--<div class="table-responsive table-card mt-3 mb-1">-->
+                                            <div class="table table-card mt-3 mb-1">
+                                                <table id="datatables-example" class="table"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- end .h-100-->
+
+                    </div> <!-- end col -->
+
+                </div>
+
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <script>document.write(new Date().getFullYear())</script> © User.
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end d-none d-sm-block">
+                            Design & Develop by Themesbrand
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->
+
+
+
+<!--start back-to-top-->
+<button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+    <i class="ri-arrow-up-line"></i>
+</button>
+<!--end back-to-top-->
+
+<!--preloader-->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/libs/simplebar/simplebar.min.js"></script>
+<script src="assets/libs/node-waves/waves.min.js"></script>
+<script src="assets/libs/feather-icons/feather.min.js"></script>
+<script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+<script src="assets/js/plugins.js"></script>
+
+<!-- apexcharts -->
+<script src="assets/libs/apexcharts/apexcharts.min.js"></script>
+
+<!-- Vector map-->
+<script src="assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
+<script src="assets/libs/jsvectormap/maps/world-merc.js"></script>
+
+<!--Swiper slider js-->
+<script src="assets/libs/swiper/swiper-bundle.min.js"></script>
+
+<!-- Dashboard init -->
+<script src="assets/js/pages/dashboard-ecommerce.init.js"></script>
+
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<!--datatable js-->
+<script src="assets/datatables/js/jquery.dataTables.min.js"></script>
+<script src="assets/datatables/js/dataTables.bootstrap5.min.js"></script>
+
+<script src="https://cdn.datatables.net/staterestore/1.2.2/js/dataTables.stateRestore.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
+
+
+<script src="assets/js/pages/datatables.init.js"></script>
+
+
+<script>
+    $.extend($.fn.dataTable.defaults, {
+        // buttons:[
+        //     'colvis',
+        // ],
+        // Display
+        dom: '<"top"f><"data-table"rt<"bottom"Blip>>', // https://datatables.net/examples/basic_init/dom.html
+        lengthMenu: [ // https://datatables.net/examples/advanced_init/length_menu.html
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"],
+        ],
+        language: {
+            search: '_INPUT_',
+            searchPlaceholder: 'Search', // https://datatables.net/reference/option/language.searchPlaceholder
+            info: '_START_-_END_ of _TOTAL_', // https://datatables.net/examples/basic_init/language.html
+            lengthMenu: 'Items per page: _MENU_',
+            infoEmpty: '0 of _MAX_',
+            infoFiltered: '',
+            paginate: {
+                first: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M18.41 16.59L13.82 12l4.59-4.59L6l-6 6 6 6zM6 6h2v12H6z"/></svg>',
+                previous: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.4141z"/></svg>',
+                next: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/></svg>',
+                last: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM6h2v12h-2z"/></svg>'
+            },
+            decimal: ',',
+            thousands: '.',
+            zeroRecords: 'No results found'
+        },
+        // buttons: {
+        //     buttons: [
+        //
+        //     ],
+        //     dom: {
+        //         container: { className: 'dt-buttons d-none d-md-flex flex-wrap' },
+        //         buttonContainer: {},
+        //         button: { className:'<i class="la la-play-circle la-lg pointer fs-22 cursor-pointer" style="color: blue"></i><i class="la la-tasks la-lg pointer fs-22 cursor-pointer ms-2" style="color: blue"></i><i class="bx bx-bar-chart pointer fs-22 cursor-pointer ms-2" style="color: blue"></i>' }
+        //     }
+        // },
+        // Data display
+        colReorder: true,
+        fixedHeader: true,
+        ordering: true,
+        paging: true,
+        pageLength: 10,
+        pagingType: 'full', // https://datatables.net/reference/option/pagingType
+        responsive: true,
+        searching: true,
+        select: {
+            style: 'multi+shift', // https://datatables.net/reference/option/select.style
+            className: 'table-active' // https://datatables.net/reference/option/select.className
+        },
+        stateSave: true,
+    })
+
+
+    const dataSet = [
+        [" <div class=\"card nt-card\">\n" +
+        "                                        <div class=\"card-header nc-header\">\n" +
+        "\n" +
+        "                                           <div class='savc d-none'>\n" +
+        "                                               <span class=\"float-end text-secondary cursor-pointer\">Cancel</span>\n" +
+        "                                               <span class=\"float-end text-secondary cursor-pointer\" id='saveBtn' onclick='saveFunc()'>Save</i>&nbsp;<span class=\"et-line\"></span>&nbsp;</span>\n" +
+        "                                           </div>\n" +
+        "\n" +
+        "                                            <div class='edt'>\n" +
+        "                                                <span class=\"float-end text-secondary\"><i class=\"la la-trash fs-22 cursor-pointer\"></i></span>\n" +
+        "                                                <span class=\"float-end text-secondary\"><i id='editBtn' onclick='editFunc()' class=\"la la-edit fs-22 cursor-pointer\"></i>&nbsp;<span class=\"et-line\"></span>&nbsp;</span>\n" +
+        "                                            </div>\n" +
+        "\n" +
+        "                                            <h6 class=\"card-title\" style=\"margin: unset;\">Question ID: 19810\n" +
+        "                                                Biostatistics - Biostatistics & Epidemiology</h6>\n" +
+        "                                            <!--<button id=\"editBtn\" type=\"button\">Edit Document</button>-->\n" +
+        "                                        </div>\n" +
+        "                                        <div class=\"card-body\" id=\"editDocument\">\n" +
+        "                                                    <p id=\"content\">You can change the heading, author name and this content itself. Click on Edit Document to start editing. At this point, you can edit this document and the changes will be saved in localStorage. However, once you reload the page your changes will be gone. To fix it we will have to retrieve the contents from localSotrage when the page reloads.</p>\n" +
+        "                                        </div>\n" +
+        "                                    </div>"]
+    ];
+
+
+    $(function() {
+        $('#datatables-example').DataTable({
+            // Table data
+            data: dataSet, // My JS array
+            columns: [ // Define table Headers for each column
+                { title: 'SCORE' }
+            ],
+            "columnDefs": [
+                // { "width": "10%", "targets": 8 }
+            ],
+            "fnInitComplete": function (oSettings, json) {
+                $('.dataTables_filter input').attr('type', 'text');
+            },
+        })
+        // .column([2]).visible(false) // Hide Office column for demo suitable width
+            .on('page.dt', function () {
+                $('[data-toggle="tooltip"]').tooltip({placement: 'bottom'})
+            })
+    })
+</script>
+<script>
+    function editFunc() {
+        var editables = document.querySelectorAll('#content')
+        editables[0].contentEditable = 'true';
+        $('.nt-card').css({ "border" : "1px solid blue" });
+        $('.savc').removeClass('d-none');
+        $('.edt').addClass('d-none');
+    }
+
+    function saveFunc() {
+        var editables = document.querySelectorAll('#content')
+        editables[0].contentEditable = 'false';
+        $('.nt-card').css({ "border" : "unset" });
+        $('.savc').addClass('d-none');
+        $('.edt').removeClass('d-none');
+        // Save the data in localStorage
+        for (var i = 0; i < editables.length; i++) {
+            localStorage.setItem(editables[i].getAttribute('id'), editables[i].innerHTML);
+        }
+    }
+
+    /*!
+     Print button for Buttons and DataTables.
+     2016 SpryMedia Ltd - datatables.net/license
+    */
+    // (function(b){"function"===typeof define&&define.amd?define(["jquery","datatables.net","datatables.net-buttons"],function(c){return b(c,window,document)}):"object"===typeof exports?module.exports=function(c,g){c||(c=window);g&&g.fn.dataTable||(g=require("datatables.net")(c,g).$);g.fn.dataTable.Buttons||require("datatables.net-buttons")(c,g);return b(g,c,c.document)}:b(jQuery,window,document)})(function(b,c,g,y){var u=b.fn.dataTable,n=g.createElement("a"),v=function(a){n.href=a;a=n.host;-1===a.indexOf("/")&&
+    // 0!==n.pathname.indexOf("/")&&(a+="/");return n.protocol+"//"+a+n.pathname+n.search};u.ext.buttons.print={className:"buttons-print",text:function(a){return a.i18n("buttons.print","<i class='la la-print fs-22'></i>")},action:function(a,k,p,h){a=k.buttons.exportData(b.extend({decodeEntities:!1},h.exportOptions));p=k.buttons.exportInfo(h);var w=k.columns(h.exportOptions.columns).flatten().map(function(d){return k.settings()[0].aoColumns[k.column(d).index()].sClass}).toArray(),r=function(d,e){for(var x="<tr>",l=0,z=d.length;l<z;l++)x+=
+    //         "<"+e+" "+(w[l]?'class="'+w[l]+'"':"")+">"+(null===d[l]||d[l]===y?"":d[l])+"</"+e+">";return x+"</tr>"},m='<table class="'+k.table().node().className+'">';h.header&&(m+="<thead>"+r(a.header,"th")+"</thead>");m+="<tbody>";for(var t=0,A=a.body.length;t<A;t++)m+=r(a.body[t],"td");m+="</tbody>";h.footer&&a.footer&&(m+="<tfoot>"+r(a.footer,"th")+"</tfoot>");m+="</table>";var f=c.open("","");f.document.close();var q="<title>"+p.title+"</title>";b("style, link").each(function(){var d=q,e=b(this).clone()[0];
+    //         "link"===e.nodeName.toLowerCase()&&(e.href=v(e.href));q=d+e.outerHTML});try{f.document.head.innerHTML=q}catch(d){b(f.document.head).html(q)}f.document.body.innerHTML="<h1>"+p.title+"</h1><div>"+(p.messageTop||"")+"</div>"+m+"<div>"+(p.messageBottom||"")+"</div>";b(f.document.body).addClass("dt-print-view");b("img",f.document.body).each(function(d,e){e.setAttribute("src",v(e.getAttribute("src")))});h.customize&&h.customize(f,h,k);a=function(){h.autoPrint&&(f.print(),f.close())};navigator.userAgent.match(/Trident\/\d.\d/)?
+    //         a():f.setTimeout(a,1E3)},title:"*",messageTop:"*",messageBottom:"*",exportOptions:{},header:!0,footer:!1,autoPrint:!0,customize:null};return u.Buttons});
+
+</script>
+</body>
+
+</html>
