@@ -3,7 +3,7 @@
    <head>
       <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
       <title>
-         Question 1 of 150
+         Question 1 of 676
          &rsaquo; AMC MCQ Online Trial Examination
       </title>
        <!-- Add script for countdown timer -->
