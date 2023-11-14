@@ -3,7 +3,7 @@
    <head>
       <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
       <title>
-         Supervisor's Announcements
+         Supervisor's 
          &rsaquo; AMC MCQ Online Trial Examination
       </title>
 
