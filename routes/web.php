@@ -8,6 +8,7 @@ use App\Http\Controllers\users\mocks_user\graph\MainGraphController;
 use App\Http\Controllers\users\mocks_user\help\MainHelpController;
 use App\Http\Controllers\users\mocks_user\mocks_list\MainMocksListController;
 use App\Http\Controllers\users\mocks_user\mocks_Result\MainMocksResultController;
+use App\Http\Controllers\users\mocks_user\mocks_user_test_history\MainMocksUserTestHistoryController;
 use App\Http\Controllers\users\mocks_user\MocksUserMainController;
 use App\Http\Controllers\users\mocks_user\previous_mocks\MainPreviousMocksController;
 use App\Http\Controllers\users\mocks_user\report\MainReportController;
@@ -408,6 +409,11 @@ Route::get('/mocks_user_mocks_analytics', [MainMocksResultController::class,'moc
 Route::get('/mocks_lunch', [MainExamController::class,'mocksLunchMocks']);
 Route::get('/mocks_terms', [MainExamController::class,'mocksTerms']);
 Route::get('/mocks_start', [MainExamController::class,'mocksStart']);
+
+
+// ###################################  MOCKS USER HISTORY ROUTES ##################
+
+Route::post('/generate_user_mock_history', [MainMocksUserTestHistoryController::class,'generateMocksHistory']);
 
 
 

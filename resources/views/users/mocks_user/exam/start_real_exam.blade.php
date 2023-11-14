@@ -2,6 +2,7 @@
 <html lang='en' >
    <head>
       <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
+      <meta name="csrf-token" content="{{ csrf_token() }}">
       <title>
          Question 1 of 676
          &rsaquo; AMC MCQ Online Trial Examination
@@ -109,14 +110,17 @@
         // Create an object with question data and push it to the array
         var data = {
             question_id: currentQuestion.question_id,
+            question_type: currentQuestion.question_type,
             selected_option: selectedOption,
             is_correct: isCorrect,
             time_spent: formatTime(timeSpentInSeconds)
         };
 
-        alert('time spend:::'+ formatTime(timeSpentInSeconds) );
+
 
         questionData.push(data);
+
+
 
         // Save the updated question data to localStorage
         saveQuestionDataToLocalStorage();
@@ -224,9 +228,34 @@
         } else {
 
 
-            alert(questionData);
 
-            resetDataOnTestEnd();
+               // Make an Ajax call to send the data to the server
+                 $.ajax({
+                     type: 'POST',
+                     url: '/generate_user_mock_history',
+                     contentType: 'application/json',
+                     data: JSON.stringify(questionData),
+                     headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+
+                    success: function (response) {
+
+                         resetDataOnTestEnd();
+                        console.log('Question data saved successfully.');
+
+                    },
+                    error: function (error) {
+                        console.error('Error saving question data:', error);
+                    }
+
+
+                });
+
+
+
+
+
 
         }
     }

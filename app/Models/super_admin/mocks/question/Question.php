@@ -6,6 +6,8 @@ use App\Models\super_admin\mocks\speciality\Speciality;
 use App\Models\super_admin\mocks\subject\Subject;
 use App\Models\super_admin\mocks\test\Test;
 use App\Models\super_admin\mocks\topic\Topic;
+use App\Models\users\mocks_user\mocks_user_question_history\MocksUserQuestionHistory;
+use App\Models\users\mocks_user\mocks_user_test_history\MocksUserTestHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,6 +52,19 @@ class Question extends Model
     public function test()
     {
         return $this->belongsTo(Test::class, 'test_id');
+    }
+
+
+       /**
+     * Define the many-to-many relationship with MocksUserTestHistory through the pivot table.
+     *
+     */
+
+    public function testHistories()
+    {
+        return $this->belongsToMany(MocksUserTestHistory::class, 'mocks_user_question_history', 'question_id', 'user_mocks_id')
+            ->using(MocksUserQuestionHistory::class)
+            ->withPivot(['choose_option', 'question_status', 'question_type', 'time_spent']);
     }
 
 

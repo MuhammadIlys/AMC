@@ -3,6 +3,7 @@
 namespace App\Models\super_admin\user_management;
 
 use App\Models\super_admin\user_management\subscription\Subscription;
+use App\Models\users\mocks_user\mocks_user_test_history\MocksUserTestHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,6 +40,12 @@ class Users extends Model
         ->where('pivot.expiry_timestamp', '>', now()) // Check if the expiry_timestamp is in the future
         ->isNotEmpty();;
     }
+
+     // Define the one-to-many relationship with MocksUserTestHistory
+     public function mockUserTestHistories()
+     {
+         return $this->hasMany(MocksUserTestHistory::class, 'user_id', 'id');
+     }
 
 
 }
