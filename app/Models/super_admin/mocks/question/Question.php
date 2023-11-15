@@ -23,6 +23,7 @@ class Question extends Model
         'subject_id',  // Foreign key for Subject
         'speciality_id', // Foreign key for Specialty
         'topic_id',  // Foreign key for Topic
+        'test_id',  // Foreign key for test
         'question_text',
         'option1',
         'option2',

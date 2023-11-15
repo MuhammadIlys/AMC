@@ -114,18 +114,24 @@ class MainMocksUserTestHistoryController extends Controller
                         break;
                     // Add more cases if you have additional question types
                 }
+
+
+
             } else {
                 // The question was omitted
                 $totalOmittedCount++;
 
                 switch ($question->question_type) {
                     case 1:
+                        $easyCount++;
                         $easyOmittedCount++;
                         break;
                     case 2:
+                        $fairCount++;
                         $fairOmittedCount++;
                         break;
                     case 3:
+                        $hardCount++;
                         $hardOmittedCount++;
                         break;
                     // Add more cases if you have additional question types
