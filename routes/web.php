@@ -398,7 +398,7 @@ Route::get('/store_user_mocks_id', [MainMocksListController::class,'storeMocksId
 Route::get('/mocks_user_previous_mocks', [MainPreviousMocksController::class,'previousMocksView'])
 ->middleware('subscription:MOCKS');
 
-Route::get('/mocks_user_mocks_result', [MainMocksResultController::class,'mocksResultView'])
+Route::get('/mocks_user_mocks_result/{custom_mocks_id}', [MainMocksResultController::class,'mocksResultView'])
 ->middleware('subscription:MOCKS');
 
 Route::get('/mocks_user_mocks_analytics', [MainMocksResultController::class,'mocksAnalyticsView'])

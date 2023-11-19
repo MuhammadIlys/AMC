@@ -24,6 +24,10 @@ class MocksUserTestHistory extends Model
         'incorrect',
         'omitted',
         'perscent',
+        'test_status',
+        'hard_correct',
+        'fair_correct',
+        'easy_correct',
     ];
 
 

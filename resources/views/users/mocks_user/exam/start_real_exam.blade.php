@@ -57,24 +57,9 @@
 
     // Function to handle actions when the timer ends
     function timerEnded() {
-        // Make an AJAX call to the endpoint when the timer ends
-        $.ajax({
-            url: '/your-endpoint',
-            type: 'POST',
-            data: { /* any data you want to send */ },
-            success: function (response) {
 
-                // time out mock test handler
-                console.log('Timer has ended. AJAX call successful.');
-
-                resetDataOnTestEnd();
-
-                window.location.href='/mocks_user_mocks_list';
-            },
-            error: function (xhr, status, error) {
-                console.error('Error:', error);
-            }
-        });
+        //handle the end mocks
+        handleMocksEnd();
     }
 
 
@@ -228,9 +213,21 @@
         } else {
 
 
+            handleMocksEnd();
 
-               // Make an Ajax call to send the data to the server
-                 $.ajax({
+
+
+
+
+
+        }
+    }
+
+
+    function handleMocksEnd(){
+
+         // Make an Ajax call to send the data to the server
+         $.ajax({
                      type: 'POST',
                      url: '/generate_user_mock_history',
                      contentType: 'application/json',
@@ -241,23 +238,66 @@
 
                     success: function (response) {
 
-                         resetDataOnTestEnd();
-                        console.log('Question data saved successfully.');
+                          // Clear stored data
+                        localStorage.removeItem('timer');
+                        localStorage.removeItem('currentQuestionIndex');
+                        localStorage.removeItem('questionData');
+                        localStorage.removeItem('startTimeForNextQuestion');
+
+                        // Clear the interval (assuming countdown is the variable holding the interval)
+                        clearInterval(countdown);
+
+                        // Reset the timer value (adjust the value as needed)
+                        countdown = 11700; // Assuming 11700 is the default timer value
+
+                        var userMocksId = response.user_mocks_id;
+
+                         // Assuming your route name is 'your.route.name'
+                        var url = '/mocks_user_mocks_result/' + userMocksId;
+
+                        // Redirect the user to the generated URL
+                        window.location.href = url;
+
 
                     },
                     error: function (error) {
                         console.error('Error saving question data:', error);
+
+                          // Clear stored data
+                            localStorage.removeItem('timer');
+                            localStorage.removeItem('currentQuestionIndex');
+                            localStorage.removeItem('questionData');
+                            localStorage.removeItem('startTimeForNextQuestion');
+
+                            // Clear the interval (assuming countdown is the variable holding the interval)
+                            clearInterval(countdown);
+
+                            // Reset the timer value (adjust the value as needed)
+                            countdown = 11700; // Assuming 11700 is the default timer value
                     }
 
 
                 });
+    }
+
+    function end_exam(){
 
 
+        Swal.fire({
+                title: "Warning",
+                text: "Do you want to end the mocks?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+            }).then((result) => {
+                // If the user confirms, move to the next question
+                if (result.isConfirmed) {
+                    handleMocksEnd();
+                }
+                // If the user cancels, do nothing
+            });
 
-
-
-
-        }
     }
 
 
@@ -426,6 +466,14 @@
                 </div>
             </div>
             <div id='footer'>
+                <div id="end-links">
+                    <ul>
+                    <li>
+                    <a accesskey="E" class="end" href="javascript:void(0)" onclick="end_exam()">End Examination</a>
+                    </li>
+                    </ul>
+
+                </div>
                 <div id='site-actions'>
                     <ul>
                         <li style="padding: 15px;">

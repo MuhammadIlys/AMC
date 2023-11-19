@@ -2613,6 +2613,9 @@
                                     <div class="card">
 
 
+
+
+
                                         <div class="card-header align-items-center d-flex">
                                             <div class="flex-shrink-0 ms-2">
                                                 <ul class="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0 fs-19"
@@ -2634,8 +2637,8 @@
                                             </div>
 
                                             <div class="flex-grow-1 oveflow-hidden">
-                                                <p class="text-muted text-truncates mb-0 float-end fs-14">Mocks
-                                                    ID: hash-10032023-97989892959595 <i class="la la-info-circle text-blue fs-18 ms-2"></i>
+                                                <p class="text-muted text-truncates mb-0 float-end fs-14">Custom Mocks
+                                                    ID: {{ $custom_mocks_id }} <i class="la la-info-circle text-blue fs-18 ms-2"></i>
                                                 </p>
                                             </div>
 
@@ -2650,36 +2653,135 @@
                                                 <div class="tab-pane active show" id="test_results" role="tabpanel">
 
 
+                                                 <!-- result progress bar design start-->
 
-                                                    <div class="test-results">
-                                                        <div class="summary-stats">
-                                                            <div class="score-stats">
-                                                                <div class="stats-title">Your Score</div>
-                                                                <div class="stats-area ng-star-inserted" style="">
-                                                                    <div class="user-score" style="left: 0%;">
-                                                                        <span>0%</span><i
-                                                                                class="la la-caret-down"></i></div>
-                                                                    <div class="average-score-line on-right"
-                                                                         style="left: 61%;">
-                                                                        <div class="average-score"> Avg:&nbsp;61%
-                                                                            <div class="arrow-up-div"></div>
-                                                                        </div>
+                                                    @if ($userCustomMocks->test_status == 'Pass')
+
+                                                    <div class="row" style="padding-left:80px">
+
+                                                        <div class="col-6">
+                                                            <div class="test-results">
+                                                                <div class="summary-stats">
+                                                                    <div class="score-stats">
+                                                                        <div class="stats-title">Your Percentage</div>
+                                                                        <div class="stats-area ng-star-inserted" style="">
+                                                                            <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%;">
+                                                                                <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
+                                                                            </div>
+                                                                            <div class="average-score-line on-right" style="left: 61%;">
+                                                                                <div class="average-score"> Avg:&nbsp;61%
+                                                                                    <div class="arrow-up-div"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="score-bar">
+                                                                                <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%;"></div>
+                                                                            </div>
+                                                                        </div><!---->
                                                                     </div>
-                                                                    <div class="score-bar">
-                                                                        <div class="user-score-bar"
-                                                                             style="width: 0%;"></div>
-                                                                    </div>
-                                                                </div><!----></div>
+
+                                                                </div>
+                                                            </div>
 
                                                         </div>
+                                                        <div class="col-6">
+
+                                                            <div class="test-results">
+                                                                <div class="summary-stats">
+                                                                    <div class="score-stats">
+                                                                        <div class="stats-title">Your Score</div>
+                                                                        <div class="stats-area ng-star-inserted" style="">
+                                                                            <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%;">
+                                                                                <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
+                                                                            </div>
+                                                                            <div class="average-score-line on-right" style="left: 61%;">
+                                                                                <div class="average-score"> Avg:&nbsp;255
+                                                                                    <div class="arrow-up-div"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="score-bar">
+                                                                                <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%;"></div>
+                                                                            </div>
+                                                                        </div><!---->
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+
+
+
+                                                @else
+
+
+
+                                                 <div class="row" style="padding-left:80px">
+
+                                                        <div class="col-6">
+                                                            <div class="test-results">
+                                                                <div class="summary-stats">
+                                                                    <div class="score-stats">
+                                                                        <div class="stats-title">Your Percentage</div>
+                                                                        <div class="stats-area ng-star-inserted" style="">
+                                                                            <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%; color:red;">
+                                                                                <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
+                                                                            </div>
+                                                                            <div class="average-score-line on-right" style="left: 61%; ">
+                                                                                <div class="average-score"> Avg:&nbsp;61%
+                                                                                    <div class="arrow-up-div"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="score-bar">
+                                                                                <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%; background-color:red;"></div>
+                                                                            </div>
+                                                                        </div><!---->
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-6">
+
+                                                            <div class="test-results">
+                                                                <div class="summary-stats">
+                                                                    <div class="score-stats">
+                                                                        <div class="stats-title">Your Score</div>
+                                                                        <div class="stats-area ng-star-inserted" style="">
+                                                                            <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%; color:red;">
+                                                                                <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
+                                                                            </div>
+                                                                            <div class="average-score-line on-right" style="left: 61%;">
+                                                                                <div class="average-score"> Avg:&nbsp;255
+                                                                                    <div class="arrow-up-div"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="score-bar">
+                                                                                <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%; background-color:red;"></div>
+                                                                            </div>
+                                                                        </div><!---->
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                @endif
+
+                                            </div>
+
+                                                <!-- result progress bar design end-->
+
+
+
+
 
 
                                                 <!--<div class="table-responsive table-card mt-3 mb-1">-->
 
                                                     <div class="row">
 
-                                                        <table id="datatables-example" class="table"></table>
+                                                        <table id="datatables-example2" class="table"></table>
 
                                                     </div>
 
@@ -2703,34 +2805,34 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">61</div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->correct }}</div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Incorrect</a></th>
-                                                                    <td> <div class="score-badge float-end">2</div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->incorrect }}</div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Omitted</a></th>
-                                                                    <td> <div class="score-badge float-end">3</div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->omitted}}</div></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                         <div class="col-xxl-3 col-sm-6 col-lg-4">
                                                             <table class="table align-middle table-nowrap mb-0">
-                                                                <h5 class="ms-2 score-title">Answer Changes</h5>
+                                                                <h5 class="ms-2 score-title" style="visibility: hidden">Answer Changes</h5>
                                                                 <tbody>
                                                                 <tr>
-                                                                    <th scope="row"><a href="#" class="fw-medium">Correct to Incorrect</a></th>
-                                                                    <td> <div class="score-badge float-end">61</div></td>
+                                                                    <th scope="row"><a href="#" class="fw-medium">Total Hard Correct</a></th>
+                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->hard_correct}} </div></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th scope="row"><a href="#" class="fw-medium">Incorrect to Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">2</div></td>
+                                                                    <th scope="row"><a href="#" class="fw-medium">Total Fair Correct</a></th>
+                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->fair_correct}} </div></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th scope="row"><a href="#" class="fw-medium">Incorrect to Incorrect</a></th>
-                                                                    <td> <div class="score-badge float-end">3</div></td>
+                                                                    <th scope="row"><a href="#" class="fw-medium">Total Easy Correct</a></th>
+                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->fair_correct}} </div></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -2771,17 +2873,19 @@
                                                             <thead>
                                                             <tr>
                                                                 <th></th>
-                                                                <th>NAME</th>
-                                                                <th>USAGE</th>
+                                                                <th>subject name</th>
+
                                                                 <th>CORRECT</th>
                                                                 <th>INCORRECT</th>
                                                                 <th>OMITTED</th>
-                                                                <th>P-RANK</th>
+
                                                             </tr>
                                                             </thead>
                                                         </table>
 
                                                         <!--table end-->
+
+
 
 
 
@@ -2851,6 +2955,7 @@
             }
         }
     </script>
+
     <script>
         $.extend($.fn.dataTable.defaults, {
             buttons: [],
@@ -2895,750 +3000,115 @@
             stateSave: true,
         })
 
-        // $(function () {
-        //     $('#datatables-example').DataTable({
-        //         "columnDefs": [
-        //             {"width": "2%", "targets": 0}
-        //         ],
-        //         "fnInitComplete": function (oSettings, json) {
-        //             $('.dataTables_filter input').attr('type', 'text');
-        //         },
-        //     })
-        //         .on('page.dt', function () {
-        //             $('[data-toggle="tooltip"]').tooltip({placement: 'bottom'})
-        //         })
-        // })
+
 
 
     </script>
 
-    <script>
-        $(".multiple_select").mousedown(function (e) {
-            if (e.target.tagName == "OPTION") {
-                return; //don't close dropdown if i select option
-            }
-            $(this).toggleClass('multiple_select_active'); //close dropdown if click inside <select> box
-        });
-        $(".multiple_select").on('blur', function (e) {
-            $(this).removeClass('multiple_select_active'); //close dropdown if click outside <select>
-        });
-
-        $('.multiple_select option').mousedown(function (e) { //no ctrl to select multiple
-            e.preventDefault();
-            $(this).prop('selected', $(this).prop('selected') ? false : true); //set selected options on click
-            $(this).parent().change(); //trigger change event
-        });
-
-
-        $("#myFilter").on('change', function () {
-            var selected = $("#myFilter").val().toString(); //here I get all options and convert to string
-            var document_style = document.documentElement.style;
-            if (selected !== "")
-                document_style.setProperty('--text', "'" + selected + "'");
-            else
-                document_style.setProperty('--text', "'Select values'");
-        });
-    </script>
-
-
-
 
     <script>
-        $('.accordion_1').click(function () {
-            if ($('.accordion_1_body').hasClass('hide')) {
-                $('.accordion_1_body').removeClass('hide');
-                $('.accordion_1_icon').removeClass('fa fa-angle-down');
-                $('.accordion_1_icon').addClass('fa fa-angle-up');
-                $('.panel-custom>.pb_1').css({"padding": ""});
 
-            }
-            else {
-                $('.accordion_1_body').addClass('hide');
-                $('.accordion_1_icon').removeClass('fa fa-angle-up');
-                $('.accordion_1_icon').addClass('fa fa-angle-down');
-                $('.panel-custom>.pb_1').css({"padding": "unset"});
-            }
-        });
 
-        $('.accordion_2').click(function () {
-            if ($('.accordion_2_body').hasClass('hide')) {
-                $('.accordion_2_body').removeClass('hide');
-                $('.accordion_2_icon').removeClass('fa fa-angle-down');
-                $('.accordion_2_icon').addClass('fa fa-angle-up');
-                $('.panel-custom>.pb_2').css({"padding": ""});
-            }
-            else {
-                $('.accordion_2_body').addClass('hide');
-                $('.accordion_2_icon').removeClass('fa fa-angle-up');
-                $('.accordion_2_icon').addClass('fa fa-angle-down');
-                $('.panel-custom>.pb_2').css({"padding": "unset"});
-            }
-        });
-    </script>
-
-    <script>
-        $.extend($.fn.dataTable.defaults, {
-            buttons: [
-                // 'colvis',
-                // {
-                // extend: 'createState',
-                // config: {
-                // creationModal: true,
-                // toggle: {
-                // columns:{
-                // search: true,
-                // visible: true
-                // }
-                // }
-                // }
-                // },
-                // 'savedStates'
-            ],
-            // Display
-            dom: '<"top"f><"data-table"rt<"bottom"Blip>>', // https://datatables.net/examples/basic_init/dom.html
-            lengthMenu: [ // https://datatables.net/examples/advanced_init/length_menu.html
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"],
-            ],
-            language: {
-                search: '_INPUT_',
-                searchPlaceholder: 'Search', // https://datatables.net/reference/option/language.searchPlaceholder
-                info: '_START_-_END_ of _TOTAL_', // https://datatables.net/examples/basic_init/language.html
-                lengthMenu: 'Items per page: _MENU_',
-                infoEmpty: '0 of _MAX_',
-                infoFiltered: '',
-                paginate: {
-                    first: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M18.41 16.59L13.82 12l4.59-4.59L6l-6 6 6 6zM6 6h2v12H6z"/></svg>',
-                    previous: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.4141z"/></svg>',
-                    next: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/></svg>',
-                    last: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM6h2v12h-2z"/></svg>'
-                },
-                decimal: ',',
-                thousands: '.',
-                zeroRecords: 'No results found'
-            },
-            // buttons: {
-            //     buttons: [
-            //
-            //     ],
-            //     dom: {
-            //         container: { className: 'dt-buttons d-none d-md-flex flex-wrap' },
-            //         buttonContainer: {},
-            //         button: { className:'<i class="la la-play-circle la-lg pointer fs-22 cursor-pointer" style="color: blue"></i><i class="la la-tasks la-lg pointer fs-22 cursor-pointer ms-2" style="color: blue"></i><i class="bx bx-bar-chart pointer fs-22 cursor-pointer ms-2" style="color: blue"></i>' }
-            //     }
-            // },
-            // Data display
-            colReorder: true,
-            fixedHeader: true,
-            ordering: true,
-            paging: true,
-            pageLength: 10,
-            pagingType: 'full', // https://datatables.net/reference/option/pagingType
-            responsive: true,
-            searching: true,
-            select: {
-                style: 'multi+shift', // https://datatables.net/reference/option/select.style
-                className: 'table-active' // https://datatables.net/reference/option/select.className
-            },
-            stateSave: true,
-        })
-
-        // <i class='la la-lg la-bookmark ng-star-inserted' style='color: blue;'></i>
-        const dataSet = [
-                                                    [" <i style='margin-left: 18px;'></i>   <i class='la la-lg la-times' style='color: red;'></i> ", "1652", " Anatomy", " Male Reproductive System", "Edinburgh", "2290", "ab", "02 secs", '<a href="https://uworld.aceamcq.com/user/review/exam/hash-10032023-97989892959595/125"><i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i></a>'],
-                                        [" <i style='margin-left: 18px;'></i>   <i class='la la-lg la-minus-circle ng-star-inserted' style='color: blue;'></i> ", "1653", " Anatomy", " Cardiovascular System", "Edinburgh", "2290", "ab", "00 secs", '<a href="https://uworld.aceamcq.com/user/review/exam/hash-10032023-97989892959595/127"><i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i></a>'],
-                                        [" <i style='margin-left: 18px;'></i>   <i class='la la-lg la-times' style='color: red;'></i> ", "1654", " Anatomy", " Ear, Nose &amp; Throat (ENT)", "Edinburgh", "2290", "ab", "02 secs", '<a href="https://uworld.aceamcq.com/user/review/exam/hash-10032023-97989892959595/128"><i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i></a>'],
-                                        [" <i style='margin-left: 18px;'></i>   <i class='la la-lg la-times' style='color: red;'></i> ", "1655", " Anatomy", " Cardiovascular System", "Edinburgh", "2290", "ab", "01 secs", '<a href="https://uworld.aceamcq.com/user/review/exam/hash-10032023-97989892959595/129"><i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i></a>'],
-                                        [" <i style='margin-left: 18px;'></i>   <i class='la la-lg la-minus-circle ng-star-inserted' style='color: blue;'></i> ", "1656", " Anatomy", " Cardiovascular System", "Edinburgh", "2290", "ab", "00 secs", '<a href="https://uworld.aceamcq.com/user/review/exam/hash-10032023-97989892959595/134"><i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i></a>'],
-                                ];
-
+        const dataSet = @json($dataTable);
 
         $(function () {
-            $('#datatables-example').DataTable({
+            $('#datatables-example2').DataTable({
                 // Table data
                 data: dataSet, // My JS array
                 columns: [ // Define table Headers for each column
-                    {},
-                    {title: 'ID'},
-                    {title: 'SUBJECTS'},
-                    {title: 'SYSTEMS'},
-                    {title: 'CATEGORIES'},
-                    {title: 'TOPICS'},
-                    {title: '% CORRECT OTHERS'},
-                    {title: 'TIME SPENT'},
-                    {}
+                    {title: ''},
+                    { title: 'ID' },
+                    { title: 'Subject' },
+                    { title: 'Speciality' },
+                    { title: 'Topic' },
+                    { title: 'choose Option' },
+                    { title: 'Tim Spent (mm:ss)' },
+                    { title: '' }, // Add an empty title for the 8th column
+
                 ],
-                "columnDefs": [
-                    {"width": "10%", "targets": [0, 8], 'orderable': false}
-                ],
+
                 "fnInitComplete": function (oSettings, json) {
                     $('.dataTables_filter input').attr('type', 'text');
                 },
             })
-            // .column([2]).visible(false) // Hide Office column for demo suitable width
-                .on('page.dt', function () {
-                    $('[data-toggle="tooltip"]').tooltip({placement: 'bottom'})
-                })
-        })
+            .on('page.dt', function () {
+                $('[data-toggle="tooltip"]').tooltip({ placement: 'bottom' })
+            });
+        });
+
+
     </script>
 
-
-
-    <script>
-        function getChartColorsArray(e) {
-            if (null !== document.getElementById(e)) {
-                var t = document.getElementById(e).getAttribute("data-colors");
-                if (t) return (t = JSON.parse(t)).map(function (e) {
-                    var t = e.replace(" ", "");
-                    return -1 === t.indexOf(",") ? getComputedStyle(document.documentElement).getPropertyValue(t) || t : 2 == (e = e.split(",")).length ? "rgba(" + getComputedStyle(document.documentElement).getPropertyValue(e[0]) + "," + e[1] + ")" : t
-                });
-                console.warn("data-colors Attribute not found on:", e)
-            }
-        }
-
-        var options, chart, donutchartportfolioColors = getChartColorsArray("anaylitics_charts"),
-            MarketchartColors = (donutchartportfolioColors && (options = {
-                series: [0, 60, 40],
-                labels: ["Correct", "Incorrect", "Omitted"],
-                chart: {type: "donut", height: 224},
-                plotOptions: {
-                    pie: {
-                        size: 100,
-                        offsetX: 0,
-                        offsetY: 0,
-                        donut: {
-                            size: "86%",
-                            labels: {
-                                show: !0,
-                                name: {show: !0, fontSize: "18px", offsetY: -5},
-                                value: {
-                                    show: !0,
-                                    fontSize: "20px",
-                                    color: "#343a40",
-                                    fontWeight: 500,
-                                    offsetY: 5,
-                                    formatter: function (e) {
-                                        return e + '%'
-                                    }
-                                },
-                                total: {
-                                    show: !0,
-                                    fontSize: "13px",
-                                    label: "Correct",
-                                    color: "#9599ad",
-                                    fontWeight: 500,
-                                    formatter: function (e) {
-                                        return e.globals.seriesTotals.reduce(function (e, t) {
-                                            // return e + t
-                                            return 0 + '%';
-                                        }, 0)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                dataLabels: {enabled: !1},
-                legend: {show: !1},
-                yaxis: {
-                    labels: {
-                        formatter: function (e) {
-                            return e + '%'
-                        }
-                    }
-                },
-                stroke: {lineCap: "round", width: 2},
-                colors: donutchartportfolioColors
-            }, (chart = new ApexCharts(document.querySelector("#anaylitics_charts"), options)).render()), getChartColorsArray("Market_chart")),
-            areachartbitcoinColors = (MarketchartColors && (options = {
-                    series: [{
-                        data: []
-                    }],
-                    chart: {type: "candlestick", height: 294, toolbar: {show: !1}},
-                    plotOptions: {candlestick: {colors: {upward: MarketchartColors[0], downward: MarketchartColors[1]}}},
-                    xaxis: {type: "datetime"},
-                    yaxis: {
-                        // tooltip: {enabled: !0}, labels: {
-                        //     formatter: function (e) {
-                        //         return "$" + e
-                        //     }
-                        // }
-                    },
-                    // tooltip: {
-                    //     shared: !0, y: [{
-                    //         formatter: function (e) {
-                    //             return void 0 !== e ? e.toFixed(0) : e
-                    //         }
-                    //     }, {
-                    //         formatter: function (e) {
-                    //             return void 0 !== e ? "$" + e.toFixed(2) + "k" : e
-                    //         }
-                    //     }, {
-                    //         formatter: function (e) {
-                    //             return void 0 !== e ? e.toFixed(0) + " Sales" : e
-                    //         }
-                    //     }]
-                    // }
-                }
-            ));
-    </script>
-
-
-
-
-
-
-    <script>
-        // Wait for the page to load
-        document.addEventListener("DOMContentLoaded", function () {
-            var hash = window.location.hash;
-            // If a hash is present and corresponds to a tab, activate that tab
-            if (hash) {
-                var tabLink = document.querySelector('a[href="' + hash + '"]');
-                if (tabLink) {
-                    tabLink.click();
-                }
-            }
-        });
-    </script>
-
-
-
-
-    <script>
-        var subject_data = [
-
-
-                                {
-                id: "1",
-                name: "<span> Anatomy</span><div class=\"progress mt-1\">\n" +
-                "                                            <div class=\"progress-bar bg-primary\" role=\"progressbar\" style=\"width: 0%\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n" +
-                "                                        </div>",
-                total_q: "5",
-                correct: "0 (0%)",
-                incorrect: "3 (60)%",
-                ommitted: "2 (40)%"
-
-            },
-
-
-                                ];
-
-                function sub_format45(d) {
-            return (
-                                                                                            '<table class="table mb-0 table-sub-rows">' +
-                    '<tr class="table-primary">' +
-                    // "<td> </td>" +
-                    "<td>  Cardiovascular System </td>" +
-
-                    "<td>3</td>" +
-                    "<td>0 (0%) </td>" +
-                    "<td>1 (33)% </td>" +
-                    "<td>2 (67)% </td>" +
-                    "</tr>" +
-                    "</table>"+
-                                                                '<table class="table mb-0 table-sub-rows">' +
-                    '<tr class="table-primary">' +
-                    // "<td> </td>" +
-                    "<td>  Ear, Nose &amp; Throat (ENT) </td>" +
-
-                    "<td>1</td>" +
-                    "<td>0 (0%) </td>" +
-                    "<td>1 (100)% </td>" +
-                    "<td>0 (0%) </td>" +
-                    "</tr>" +
-                    "</table>"+
-                                                                '<table class="table mb-0 table-sub-rows">' +
-                    '<tr class="table-primary">' +
-                    // "<td> </td>" +
-                    "<td>  Male Reproductive System </td>" +
-
-                    "<td>1</td>" +
-                    "<td>0 (0%) </td>" +
-                    "<td>1 (100)% </td>" +
-                    "<td>0 (0%) </td>" +
-                    "</tr>" +
-                    "</table>"+
-                                                                        ""
-
-            );
-        }
-
-
-        $(document).ready(function () {
-            var table = $("#tab_subjects").DataTable({
-                paging: false,
-                bFilter: false,
-                data: subject_data,
-                columns: [
-                    {
-                        className: "details-control",
-                        orderable: false,
-                        data: null,
-                        defaultContent: ''
-                    },
-                    {data: "name"},
-                    {data: "total_q"},
-                    {data: "correct"},
-                    {data: "incorrect"},
-                    {data: "ommitted"},
-                ],
-                order: [[1, "asc"]],
-                "fnInitComplete": function (oSettings, json) {
-                    $('.dataTables_filter input').attr('type', 'text');
-                    $('#tab_subjects').DataTable().search('').draw();
-                }
-            });
-
-            table.rows().every(function(rowIdx) {
-                var row = this.node();
-                var uniqueId = generateUniqueId(rowIdx);
-
-                $(row).attr('data-unique-id', uniqueId);
-                $(row).attr('id', uniqueId);
-            });
-            function generateUniqueId(rowIdx) {
-                var count = 1;
-                // return "row_" + new Date().getTime() + "_" + Math.random().toString(36).substr(2, 9);
-                return "row_" + "format" + "_" + (rowIdx);
-            }
-
-            $('#myInputTextField').keyup(function () {
-                table.search($(this).val()).draw();
-            });
-            // $("#tab_subjects tbody").on("click", "td.details-control", function () {
-            //     var tr = $(this).closest("tr");
-            //     var row = table.row(tr);
-            //
-            //     if (row.child.isShown()) {
-            //         row.child.hide();
-            //         tr.removeClass("shown");
-            //     } else {
-            //
-            //         row.child(format(row.data()), "p-0").show();
-            //         tr.addClass("shown");
-            //     }
-            // });
-        });
-
-                                $(document).on('click', "[data-unique-id = 'row_format_0']", function () {
-            var table = $('#tab_subjects').DataTable();
-            var tr = $(this).closest("tr");
-            var row = table.row(tr);
-
-
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass("shown");
-            } else {
-                row.child(sub_format45(row.data()), "p-0").show();
-                tr.addClass("shown");
-            }
-        });
-                    </script>
-
-    <script>
-        var system_data = [
-                                                            {
-                id: "1",
-                name: "<span> Cardiovascular System</span><div class=\"progress mt-1\">\n" +
-                "                                            <div class=\"progress-bar bg-primary\" role=\"progressbar\" style=\"width: 0%\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n" +
-                "                                        </div>",
-                total_q: "3",
-                correct: "0 (0%)",
-                incorrect: "1 (33)%",
-                ommitted: "2 (67)%"
-
-            },
-
-                                        {
-                id: "1",
-                name: "<span> Ear, Nose &amp; Throat (ENT)</span><div class=\"progress mt-1\">\n" +
-                "                                            <div class=\"progress-bar bg-primary\" role=\"progressbar\" style=\"width: 0%\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n" +
-                "                                        </div>",
-                total_q: "1",
-                correct: "0 (0%)",
-                incorrect: "1 (100)%",
-                ommitted: "0 (0%)"
-
-            },
-
-                                        {
-                id: "1",
-                name: "<span> Male Reproductive System</span><div class=\"progress mt-1\">\n" +
-                "                                            <div class=\"progress-bar bg-primary\" role=\"progressbar\" style=\"width: 0%\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n" +
-                "                                        </div>",
-                total_q: "1",
-                correct: "0 (0%)",
-                incorrect: "1 (100)%",
-                ommitted: "0 (0%)"
-
-            },
-
-                                ];
-
-
-                                function format56(d) {
-            return (
-                                                                                            '<table class="table mb-0 table-sub-rows" style="margin-left:unset">' +
-                    '<tr class="table-primary">' +
-                    "<td style='width: 28px;'> </td>" +
-                    "<td style='width: 17%;'>  Anatomy </td>" +
-                    "<td style='padding-left: 107px;'>3</td>" +
-                    "<td style='padding-left: 61px;'>0 (0%) </td>" +
-                    "<td style='padding-left: 66px;'>1 (33)% </td>" +
-                    "<td style='width: 134px;padding-left: 106px;'>2 (67)% </td>" +
-                    "</tr>" +
-                    "</table>"+
-                                                                        ""
-
-            );
-        }
-
-                        function format57(d) {
-            return (
-                                                                                            '<table class="table mb-0 table-sub-rows" style="margin-left:unset">' +
-                    '<tr class="table-primary">' +
-                    "<td style='width: 28px;'> </td>" +
-                    "<td style='width: 17%;'>  Anatomy </td>" +
-                    "<td style='padding-left: 107px;'>1</td>" +
-                    "<td style='padding-left: 61px;'>0 (0%) </td>" +
-                    "<td style='padding-left: 66px;'>1 (100)% </td>" +
-                    "<td style='width: 134px;padding-left: 106px;'>0 (0%) </td>" +
-                    "</tr>" +
-                    "</table>"+
-                                                                        ""
-
-            );
-        }
-
-                        function format63(d) {
-            return (
-                                                                                            '<table class="table mb-0 table-sub-rows" style="margin-left:unset">' +
-                    '<tr class="table-primary">' +
-                    "<td style='width: 28px;'> </td>" +
-                    "<td style='width: 17%;'>  Anatomy </td>" +
-                    "<td style='padding-left: 107px;'>1</td>" +
-                    "<td style='padding-left: 61px;'>0 (0%) </td>" +
-                    "<td style='padding-left: 66px;'>1 (100)% </td>" +
-                    "<td style='width: 134px;padding-left: 106px;'>0 (0%) </td>" +
-                    "</tr>" +
-                    "</table>"+
-                                                                        ""
-
-            );
-        }
-
-
-        $(document).ready(function () {
-            var table = $("#tab_systems").DataTable({
-                paging: false,
-                bFilter: false,
-                data: system_data,
-                columns: [
-                    {
-                        className: "details-control",
-                        orderable: false,
-                        data: null,
-                        defaultContent: ''
-                    },
-                    {data: "name"},
-                    {data: "total_q"},
-                    {data: "correct"},
-                    {data: "incorrect"},
-                    {data: "ommitted"}
-                ],
-                order: [[1, "asc"]],
-                "fnInitComplete": function (oSettings, json) {
-                    $('.dataTables_filter input').attr('type', 'text');
-                    $('#tab_systems').DataTable().search('').draw();
-                }
-            });
-
-            table.rows().every(function(rowIdx) {
-                var row = this.node();
-                var uniqueId = generateUniqueId(rowIdx);
-
-                $(row).attr('data-unique-id', uniqueId);
-            });
-            function generateUniqueId(rowIdx) {
-                var count = 1;
-                // return "row_" + new Date().getTime() + "_" + Math.random().toString(36).substr(2, 9);
-                return "row_" + "format2" + "_" + (rowIdx);
-            }
-
-            $('#myInputTextField').keyup(function () {
-                table.search($(this).val()).draw();
-            });
-        });
-
-                        $(document).on('click', "[data-unique-id = 'row_format2_0']", function () {
-            var table = $('#tab_systems').DataTable();
-            var tr = $(this).closest("tr");
-            var row = table.row(tr);
-
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass("shown");
-            } else {
-                row.child(format56(row.data()), "p-0").show();
-                tr.addClass("shown");
-            }
-
-        });
-                $(document).on('click', "[data-unique-id = 'row_format2_1']", function () {
-            var table = $('#tab_systems').DataTable();
-            var tr = $(this).closest("tr");
-            var row = table.row(tr);
-
-
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass("shown");
-            } else {
-                row.child(format57(row.data()), "p-0").show();
-                tr.addClass("shown");
-            }
-
-        });
-                $(document).on('click', "[data-unique-id = 'row_format2_2']", function () {
-            var table = $('#tab_systems').DataTable();
-            var tr = $(this).closest("tr");
-            var row = table.row(tr);
-
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass("shown");
-            } else {
-                row.child(format63(row.data()), "p-0").show();
-                tr.addClass("shown");
-            }
-
-        });
-
-    </script>
 
 
 <script>
-    $.extend($.fn.dataTable.defaults, {
-        buttons: [
-        ],
-        // Display
-        dom: '<"top"f><"data-table"rt<"bottom"Blip>>',
-        lengthMenu: [ // https://datatables.net/examples/advanced_init/length_menu.html
-            [10, 25, 50, -1],
-            [10, 25, 50, "All"],
-        ],
-        language: {
-            search: '_INPUT_',
-            searchPlaceholder: 'Search', // https://datatables.net/reference/option/language.searchPlaceholder
-            info: '_START_-_END_ of _TOTAL_', // https://datatables.net/examples/basic_init/language.html
-            lengthMenu: 'Items per page: _MENU_',
-            infoEmpty: '0 of _MAX_',
-            infoFiltered: '',
-            paginate: {
-                first: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M18.41 16.59L13.82 12l4.59-4.59L6l-6 6 6 6zM6 6h2v12H6z"/></svg>',
-                previous: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.4141z"/></svg>',
-                next: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/></svg>',
-                last: '<svg class="dataTables-svg" viewBox="0 0 24 24"><path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM6h2v12h-2z"/></svg>'
-            },
-            decimal: ',',
-            thousands: '.',
-            zeroRecords: 'No results found'
-        },
-
-        // Data display
-        colReorder: true,
-        fixedHeader: true,
-        ordering: true,
-        paging: false,
-        // pageLength: 10,
-        // pagingType: 'full', // https://datatables.net/reference/option/pagingType
-        responsive: true,
-        searching: true,
-        "info":     false,
-        select: {
-            style: 'multi+shift', // https://datatables.net/reference/option/select.style
-            className: 'table-active' // https://datatables.net/reference/option/select.className
-        },
-        stateSave: true,
-    })
-
-    // $(function () {
-    //     $('#datatables-example').DataTable({
-    //         "columnDefs": [
-    //             {"width": "2%", "targets": 0}
-    //         ],
-    //         "fnInitComplete": function (oSettings, json) {
-    //             $('.dataTables_filter input').attr('type', 'text');
-    //         },
-    //     })
-    //         .on('page.dt', function () {
-    //             $('[data-toggle="tooltip"]').tooltip({placement: 'bottom'})
-    //         })
-    // })
-
-
-</script>
-
-<script>
-    var data = [
+    var data2 = [
         {
-            id: "1",
-            name: "<span>BioChemistry</span>" +
+            id: "6",
+            name: "<span>Subject Name</span>" +
                "<div class=\"progress mt-1\" style=\"height:5px\">" +
-               "<div class=\"progress-bar bg-primary\" role=\"progressbar\" style=\"width: 15%\" aria-valuenow=\"15\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
                "<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 30%\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
                "<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
                "<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
                "</div>",
-            usage: "8/33",
-            correct: "2(80%)",
-            incorrect: "2(81%)",
-            ommitted: "0(0%)",
-            p_rank: "67th",
-            extn: "5421"
+
+            correct: "2(subject total correct)",
+            incorrect: "2(subject total incorrect)",
+            ommitted: "0(subject total omitted)",
+            extn: "5421",
         },
         {
-            id: "2",
-            name: "<span>Anotmy</span>" +
+            id: "5",
+            name: "<span>Subject Name</span>" +
                "<div class=\"progress mt-1\" style=\"height:5px\">" +
-               "<div class=\"progress-bar bg-primary\" role=\"progressbar\" style=\"width: 15%\" aria-valuenow=\"15\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
                "<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 30%\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
                "<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
                "<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
                "</div>",
-            usage: "1/33",
-            correct: "22(45%)",
-            incorrect: "12(82%)",
-            ommitted: "0(0%)",
-            p_rank: "37th",
-            extn: "54212"
-        }
+
+            correct: "2(subject total correct)",
+            incorrect: "2(subject total incorrect)",
+            ommitted: "0(subject total omitted)",
+            extn: "5421",
+        },
+        {
+            id: "3",
+            name: "<span>Subject Name</span>" +
+               "<div class=\"progress mt-1\" style=\"height:5px\">" +
+               "<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 30%\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
+               "<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
+               "<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
+               "</div>",
+
+            correct: "2(subject total correct)",
+            incorrect: "2(subject total incorrect)",
+            ommitted: "0(subject total omitted)",
+            extn: "5421",
+        },
+
     ];
 
+    var data={!! $jsonData  !!}
+
     function format(d) {
-        return (
-            '<table class="table mb-0 table-sub-rows">' +
-            '<tr class="table-primary">' +
-            "<td>Ear, Nose & Throat (ENT)</td>" +
-            "<td>" + d.extn + "</td>" +
-            "<td>1/14</td>" +
-            "<td>1 (100%)</td>" +
-            "<td>0 (0%)</td>" +
-            "<td>-</td>" +
-            "</tr>" +
-            '<tr class="table-primary">' +
-            "<td>Ear, Nose & Throat (ENT)</td>" +
-            "<td>" + d.extn + "</td>" +
-            "<td>1/14</td>" +
-            "<td>1 (100%)</td>" +
-            "<td>0 (0%)</td>" +
-            "<td>-</td>" +
-            "</tr>" +
-            "</table>"
-        );
-    }
+    var specialitiesTable = '<table class="table mb-0 table-sub-rows">';
+
+    d.specialities.forEach(function (speciality) {
+        specialitiesTable += '<tr class="table-primary">' +
+            '<td>' + speciality.name + '</td>' +
+            '<td>' + speciality.correct + '</td>' +
+            '<td>' + speciality.incorrect + '</td>' +
+            '<td>' + speciality.omitted + '</td>' +
+            '</tr>';
+    });
+
+    specialitiesTable += '</table>';
+
+    return specialitiesTable;
+}
+
+
+    //table for mocks analytics
 
     $(document).ready(function() {
         var table = $("#employees").DataTable({
@@ -3651,12 +3121,10 @@
                     defaultContent: ''
                 },
                 { data: "name" },
-                { data: "usage" },
                 { data: "correct" },
                 { data: "incorrect" },
-                { data: "ommitted" },
-                { data: "p_rank" },
-                { data: "extn", visible: false }
+                { data: "omitted" },
+                { data: "specialities", visible: false }
             ],
             order: [[1, "asc"]],
             "fnInitComplete": function (oSettings, json) {
@@ -3680,34 +3148,6 @@
                 tr.addClass("shown");
             }
         });
-    });
-</script>
-<script>
-    $(".multiple_select").mousedown(function(e) {
-        if (e.target.tagName == "OPTION")
-        {
-            return; //don't close dropdown if i select option
-        }
-        $(this).toggleClass('multiple_select_active'); //close dropdown if click inside <select> box
-    });
-    $(".multiple_select").on('blur', function(e) {
-        $(this).removeClass('multiple_select_active'); //close dropdown if click outside <select>
-    });
-
-    $('.multiple_select option').mousedown(function(e) { //no ctrl to select multiple
-        e.preventDefault();
-        $(this).prop('selected', $(this).prop('selected') ? false : true); //set selected options on click
-        $(this).parent().change(); //trigger change event
-    });
-
-
-    $("#myFilter").on('change', function() {
-        var selected = $("#myFilter").val().toString(); //here I get all options and convert to string
-        var document_style = document.documentElement.style;
-        if(selected !== "")
-            document_style.setProperty('--text', "'"+selected+"'");
-        else
-            document_style.setProperty('--text', "'Select values'");
     });
 </script>
 
@@ -3743,6 +3183,12 @@ $(document).ready(function() {
 </script>
 
 
+
+<script>
+    $(document).ready(function() {
+        $('#data-table').DataTable();
+    });
+</script>
 
 
 
