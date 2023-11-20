@@ -12,7 +12,7 @@ function getChartColorsArray(e) {
 var options, chart, donutchartportfolioColors = getChartColorsArray("portfolio_donut_charts"),
     MarketchartColors = (donutchartportfolioColors && (options = {
         series: [12, 4],
-        labels: ["Bitcoin", "Ethereum", "Litecoin"],
+        labels: ["ggg", "fff", "Litecoin"],
         chart: {type: "donut", height: 224},
         plotOptions: {
             pie: {
@@ -71,27 +71,9 @@ var options, chart, donutchartportfolioColors = getChartColorsArray("portfolio_d
             plotOptions: {candlestick: {colors: {upward: MarketchartColors[0], downward: MarketchartColors[1]}}},
             xaxis: {type: "datetime"},
             yaxis: {
-                // tooltip: {enabled: !0}, labels: {
-                //     formatter: function (e) {
-                //         return "$" + e
-                //     }
-                // }
+
             },
-            // tooltip: {
-            //     shared: !0, y: [{
-            //         formatter: function (e) {
-            //             return void 0 !== e ? e.toFixed(0) : e
-            //         }
-            //     }, {
-            //         formatter: function (e) {
-            //             return void 0 !== e ? "$" + e.toFixed(2) + "k" : e
-            //         }
-            //     }, {
-            //         formatter: function (e) {
-            //             return void 0 !== e ? e.toFixed(0) + " Sales" : e
-            //         }
-            //     }]
-            // }
+
         }
     ));
 
@@ -99,7 +81,7 @@ var options, chart, donutchartportfolioColors = getChartColorsArray("portfolio_d
     var options, chart, donutchartportfolioColors = getChartColorsArray("portfolio_donut_charts"),
     MarketchartColors = (donutchartportfolioColors && (options = {
         series: [12, 4],
-        labels: ["Bitcoin", "Ethereum", "Litecoin"],
+        labels: ["Bitcoin2", "Ethereum2", "Litecoin2S"],
         chart: {type: "donut", height: 224},
         plotOptions: {
             pie: {
@@ -158,26 +140,8 @@ var options, chart, donutchartportfolioColors = getChartColorsArray("portfolio_d
             plotOptions: {candlestick: {colors: {upward: MarketchartColors[0], downward: MarketchartColors[1]}}},
             xaxis: {type: "datetime"},
             yaxis: {
-                // tooltip: {enabled: !0}, labels: {
-                //     formatter: function (e) {
-                //         return "$" + e
-                //     }
-                // }
+
             },
-            // tooltip: {
-            //     shared: !0, y: [{
-            //         formatter: function (e) {
-            //             return void 0 !== e ? e.toFixed(0) : e
-            //         }
-            //     }, {
-            //         formatter: function (e) {
-            //             return void 0 !== e ? "$" + e.toFixed(2) + "k" : e
-            //         }
-            //     }, {
-            //         formatter: function (e) {
-            //             return void 0 !== e ? e.toFixed(0) + " Sales" : e
-            //         }
-            //     }]
-            // }
+
         }
     ));

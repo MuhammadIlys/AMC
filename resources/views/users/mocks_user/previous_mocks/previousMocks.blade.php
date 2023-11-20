@@ -46,7 +46,7 @@
                                         <div class="card-body">
                                                 <div class="table-responsive table-card mt-3 mb-1">
                                                     <!--<div class="table table-card mt-3 mb-1">-->
-                                                    <table id="datatables-example" class="table"></table>
+                                                    <table id="datatables-example2" class="table"></table>
                                                 </div>
                                         </div>
                                     </div>
@@ -77,6 +77,7 @@
         <script src="https://cdn.datatables.net/staterestore/1.2.2/js/dataTables.stateRestore.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
+
 
 
         <script src="{{ asset('user/mock_user_assets/assets/js/pages/datatables.init.js') }}"></script>
@@ -132,22 +133,21 @@
     @endphp
 
 
-    var dataSet = [
-        ["<span class='custom-badge'>10%</span>", "Mock 1", "2011/04/25", "20", "50", "40",  '<a href="{{ $urlMockResults }}"><i class="la la-play-circle la-lg pointer fs-22 cursor-pointer" style="color: #2196F3"></i></a> <a href="{{ $urlMockResults }}"><i class="la la-tasks la-lg pointer fs-22 cursor-pointer ms-2" style="color: #2196F3"></i></a> <a href="{{ $urlTestAnalytics }}"><i class="bx bx-bar-chart pointer fs-22 cursor-pointer ms-2" style="color: #2196F3"></i></a>'],
-        ["<span class='custom-badge'>10%</span>", "Mock 1", "2011/04/25", "20", "50", "40",  '<a href="{{ $urlMockResults }}"><i class="la la-play-circle la-lg pointer fs-22 cursor-pointer" style="color: #2196F3"></i></a> <a href="{{ $urlMockResults }}"><i class="la la-tasks la-lg pointer fs-22 cursor-pointer ms-2" style="color: #2196F3"></i></a> <a href="{{ $urlTestAnalytics }}"><i class="bx bx-bar-chart pointer fs-22 cursor-pointer ms-2" style="color: #2196F3"></i></a>']
-    ];
+    var dataSet = @json($dataSet);
 
 
    $(function() {
-        $('#datatables-example').DataTable({
+        $('#datatables-example2').DataTable({
             data: dataSet,
             columns: [
-                { title: 'SCORE' },
+                { title: 'Percentage' },
                 { title: 'NAME' },
                 { title: 'DATE' },
-                { title: 'Total Qs' },
+                { title: 'Obtain Marks' },
                 { title: 'Correct Qs' },
                 { title: 'Incorrect Qs' },
+                { title: 'Omitted Qs' },
+                { title: 'Test Status' },
                 { title: 'ACTIONS' }
             ],
             "columnDefs": [
