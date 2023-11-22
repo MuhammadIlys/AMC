@@ -1969,7 +1969,7 @@
 
 
 
-   <script>
+<script>
     var hardCorrect = {{ $userCustomMocks->hard_correct }};
     var fairCorrect = {{ $userCustomMocks->fair_correct }};
     var easyCorrect = {{ $userCustomMocks->easy_correct }};
@@ -2026,9 +2026,13 @@
                             color: "#9599ad",
                             fontWeight: 500,
                             formatter: function (e) {
-                                return "" + e.globals.seriesTotals.reduce(function (total, value) {
-                                    return total + value;
+                                var total = e.globals.series.reduce(function (total, value, index) {
+                                    if (index >= 3) { // Consider only correct, incorrect, and omitted
+                                        return total + value;
+                                    }
+                                    return total;
                                 }, 0);
+                                return "" + total;
                             }
                         }
                     }
@@ -2047,6 +2051,7 @@
         stroke: {lineCap: "round", width: 2},
         colors: donutchartportfolioColors
     }, (chart = new ApexCharts(document.querySelector("#qbank_charts22"), options)).render()));
+
 
 </script>
 
@@ -2164,51 +2169,6 @@
 
 
 <script>
-    var data2 = [
-        {
-            id: "6",
-            name: "<span>Subject Name</span>" +
-               "<div class=\"progress mt-1\" style=\"height:5px\">" +
-               "<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 30%\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "</div>",
-
-            correct: "2(subject total correct)",
-            incorrect: "2(subject total incorrect)",
-            ommitted: "0(subject total omitted)",
-            extn: "5421",
-        },
-        {
-            id: "5",
-            name: "<span>Subject Name</span>" +
-               "<div class=\"progress mt-1\" style=\"height:5px\">" +
-               "<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 30%\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "</div>",
-
-            correct: "2(subject total correct)",
-            incorrect: "2(subject total incorrect)",
-            ommitted: "0(subject total omitted)",
-            extn: "5421",
-        },
-        {
-            id: "3",
-            name: "<span>Subject Name</span>" +
-               "<div class=\"progress mt-1\" style=\"height:5px\">" +
-               "<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 30%\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "</div>",
-
-            correct: "2(subject total correct)",
-            incorrect: "2(subject total incorrect)",
-            ommitted: "0(subject total omitted)",
-            extn: "5421",
-        },
-
-    ];
 
     var data={!! $jsonData  !!}
 

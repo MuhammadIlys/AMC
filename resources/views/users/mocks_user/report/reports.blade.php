@@ -252,14 +252,14 @@
                                                 </ul>
                                             </div>
 
-                                            <div class="flex-grow-1 oveflow-hidden">
-                                                <p class="text-muted text-truncates mb-0 float-end"><i class="la la-print print-btn"></i>Print</p>
-                                            </div>
+
 
                                         </div>
 
 
                                         <div class="card-body">
+
+
                                             <!-- Tab panes -->
                                             <div class="tab-content text-muted">
                                                 <div class="tab-pane active show" id="Subject_tab" role="tabpanel">
@@ -286,13 +286,14 @@
                                                     <table id="employees" class="table table-striped" style="width:100%">
                                                         <thead>
                                                         <tr>
+
                                                             <th></th>
-                                                            <th>NAME</th>
-                                                            <th>USAGE</th>
+                                                            <th>subject name</th>
+
                                                             <th>CORRECT</th>
                                                             <th>INCORRECT</th>
                                                             <th>OMITTED</th>
-                                                            <th>P-RANK</th>
+
                                                         </tr>
                                                         </thead>
                                                     </table>
@@ -395,63 +396,28 @@
 </script>
 
 <script>
-    var data = [
-        {
-            id: "1",
-            name: "<span>BioChemistry</span>" +
-               "<div class=\"progress mt-1\" style=\"height:5px\">" +
-               "<div class=\"progress-bar bg-primary\" role=\"progressbar\" style=\"width: 15%\" aria-valuenow=\"15\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 30%\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "</div>",
-            usage: "8/33",
-            correct: "2(80%)",
-            incorrect: "2(81%)",
-            ommitted: "0(0%)",
-            p_rank: "67th",
-            extn: "5421"
-        },
-        {
-            id: "2",
-            name: "<span>Anotmy</span>" +
-               "<div class=\"progress mt-1\" style=\"height:5px\">" +
-               "<div class=\"progress-bar bg-primary\" role=\"progressbar\" style=\"width: 15%\" aria-valuenow=\"15\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-success\" role=\"progressbar\" style=\"width: 30%\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-warning\" role=\"progressbar\" style=\"width: 40%\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "<div class=\"progress-bar bg-danger\" role=\"progressbar\" style=\"width: 60%\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-               "</div>",
-            usage: "1/33",
-            correct: "22(45%)",
-            incorrect: "12(82%)",
-            ommitted: "0(0%)",
-            p_rank: "37th",
-            extn: "54212"
-        }
-    ];
+
+    var data={!! $jsonData  !!}
 
     function format(d) {
-        return (
-            '<table class="table mb-0 table-sub-rows">' +
-            '<tr class="table-primary">' +
-            "<td>Ear, Nose & Throat (ENT)</td>" +
-            "<td>" + d.extn + "</td>" +
-            "<td>1/14</td>" +
-            "<td>1 (100%)</td>" +
-            "<td>0 (0%)</td>" +
-            "<td>-</td>" +
-            "</tr>" +
-            '<tr class="table-primary">' +
-            "<td>Ear, Nose & Throat (ENT)</td>" +
-            "<td>" + d.extn + "</td>" +
-            "<td>1/14</td>" +
-            "<td>1 (100%)</td>" +
-            "<td>0 (0%)</td>" +
-            "<td>-</td>" +
-            "</tr>" +
-            "</table>"
-        );
+    var specialitiesTable = '<table class="table mb-0 table-sub-rows">';
+
+    d.specialities.forEach(function (speciality) {
+        specialitiesTable += '<tr class="table-primary">' +
+            '<td>' + speciality.name + '</td>' +
+            '<td>' + speciality.correct + '</td>' +
+            '<td>' + speciality.incorrect + '</td>' +
+            '<td>' + speciality.omitted + '</td>' +
+            '</tr>';
+    });
+
+    specialitiesTable += '</table>';
+
+    return specialitiesTable;
     }
+
+
+    //table for mocks analytics
 
     $(document).ready(function() {
         var table = $("#employees").DataTable({
@@ -464,12 +430,10 @@
                     defaultContent: ''
                 },
                 { data: "name" },
-                { data: "usage" },
                 { data: "correct" },
                 { data: "incorrect" },
-                { data: "ommitted" },
-                { data: "p_rank" },
-                { data: "extn", visible: false }
+                { data: "omitted" },
+                { data: "specialities", visible: false }
             ],
             order: [[1, "asc"]],
             "fnInitComplete": function (oSettings, json) {
@@ -494,35 +458,10 @@
             }
         });
     });
+
+
 </script>
-<script>
-    $(".multiple_select").mousedown(function(e) {
-        if (e.target.tagName == "OPTION")
-        {
-            return; //don't close dropdown if i select option
-        }
-        $(this).toggleClass('multiple_select_active'); //close dropdown if click inside <select> box
-    });
-    $(".multiple_select").on('blur', function(e) {
-        $(this).removeClass('multiple_select_active'); //close dropdown if click outside <select>
-    });
 
-    $('.multiple_select option').mousedown(function(e) { //no ctrl to select multiple
-        e.preventDefault();
-        $(this).prop('selected', $(this).prop('selected') ? false : true); //set selected options on click
-        $(this).parent().change(); //trigger change event
-    });
-
-
-    $("#myFilter").on('change', function() {
-        var selected = $("#myFilter").val().toString(); //here I get all options and convert to string
-        var document_style = document.documentElement.style;
-        if(selected !== "")
-            document_style.setProperty('--text', "'"+selected+"'");
-        else
-            document_style.setProperty('--text', "'Select values'");
-    });
-</script>
 
 
 @endsection

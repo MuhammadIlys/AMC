@@ -56,114 +56,125 @@ class MainMocksResultController extends Controller
     $totalSubjectIncorrect=0;
     $totalSubjectOmitted=0;
 
-     $totalSpecialityCorrect=0;
-     $totalSpecialityIncorrect=0;
-     $totalSpecialityOmitted=0;
+    $totalSpecialityCorrect=0;
+    $totalSpecialityIncorrect=0;
+    $totalSpecialityOmitted=0;
 
 
 
-// Get all subjects
-$allSubjects = Subject::all();
+        // Get all subjects
+        $allSubjects = Subject::all();
 
-// Loop through each subject
-foreach ($allSubjects as $subject) {
+        // Loop through each subject
+        foreach ($allSubjects as $subject) {
 
-    $totalSubjectCorrect=0;
-    $totalSubjectIncorrect=0;
-    $totalSubjectOmitted=0;
+            $totalSubjectCorrect=0;
+            $totalSubjectIncorrect=0;
+            $totalSubjectOmitted=0;
 
+             // Filter questions related to the current subject
+            $questionsForSubject = $userCustomMocksquestion->filter(function ($question) use ($subject) {
+                return $subject->subject_id == $question->subject->subject_id;
+            });
 
-    foreach ($userCustomMocksquestion as $question) {
-
-        // this will count total correct, incorrect, and omitted question related to the subject
-
-        if($subject->subject_id== $question->subject->subject_id){
-
-            switch ($question->pivot->question_status) {
-                case 'correct':
-                    $totalSubjectCorrect++;
-                    break;
-
-                case 'incorrect':
-                    $totalSubjectIncorrect++;
-                    break;
-
-                case 'omitted':
-                    $totalSubjectOmitted++;
-                    break;
-
-                default:
-                    // Handle unexpected values, if any
-                    break;
+            // Check if there are questions for the subject
+            if ($questionsForSubject->isEmpty()) {
+                // Skip if no questions for this subject
+                continue;
             }
 
-        }
+
+            foreach ($userCustomMocksquestion as $question) {
+
+                // this will count total correct, incorrect, and omitted question related to the subject
+
+                if($subject->subject_id== $question->subject->subject_id){
+
+                    switch ($question->pivot->question_status) {
+                        case 'correct':
+                            $totalSubjectCorrect++;
+                            break;
+
+                        case 'incorrect':
+                            $totalSubjectIncorrect++;
+                            break;
+
+                        case 'omitted':
+                            $totalSubjectOmitted++;
+                            break;
+
+                        default:
+                            // Handle unexpected values, if any
+                            break;
+                    }
+
+                }
 
 
 
 
-    }
-
-
-
-    // Get all specialities related to the current subject
-    $specialities = $subject->specialties;
-
-    // Loop through each speciality related to the subject
-    foreach ($specialities as $speciality) {
-
-        // Check if the speciality has questions before processing
-        $questionsForSpeciality = $userCustomMocksquestion->filter(function ($question) use ($subject, $speciality) {
-            return $subject->subject_id == $question->subject->subject_id &&
-                   $speciality->speciality_id == $question->speciality->speciality_id;
-        });
-
-        if ($questionsForSpeciality->isEmpty()) {
-            // Skip if no questions for this speciality
-            continue;
-        }
-
-        $totalSpecialityCorrect = 0;
-        $totalSpecialityIncorrect = 0;
-        $totalSpecialityOmitted = 0;
-
-        // Calculate total counts for each question status related to the speciality
-        foreach ($questionsForSpeciality as $question) {
-            switch ($question->pivot->question_status) {
-                case 'correct':
-                    $totalSpecialityCorrect++;
-                    break;
-
-                case 'incorrect':
-                    $totalSpecialityIncorrect++;
-                    break;
-
-                case 'omitted':
-                    $totalSpecialityOmitted++;
-                    break;
-
-                default:
-                    // Handle unexpected values, if any
-                    break;
             }
-        }
-
-
-         // Create an associative array for the speciality
-         $specialityData = [
-            'name' => $speciality->speciality_name,
-            'correct' => $totalSpecialityCorrect,
-            'incorrect' => $totalSpecialityIncorrect,
-            'omitted' => $totalSpecialityOmitted,
-        ];
-
-        // Append the speciality data to the datatable
-        $dataTable2[$subject->subject_name][] = $specialityData;
 
 
 
+            // Get all specialities related to the current subject
+            $specialities = $subject->specialties;
 
-    }
+            // Loop through each speciality related to the subject
+            foreach ($specialities as $speciality) {
+
+                // Check if the speciality has questions before processing
+                $questionsForSpeciality = $userCustomMocksquestion->filter(function ($question) use ($subject, $speciality) {
+                    return $subject->subject_id == $question->subject->subject_id &&
+                        $speciality->speciality_id == $question->speciality->speciality_id;
+                });
+
+                if ($questionsForSpeciality->isEmpty()) {
+                    // Skip if no questions for this speciality
+                    continue;
+                }
+
+                $totalSpecialityCorrect = 0;
+                $totalSpecialityIncorrect = 0;
+                $totalSpecialityOmitted = 0;
+
+                // Calculate total counts for each question status related to the speciality
+                foreach ($questionsForSpeciality as $question) {
+                    switch ($question->pivot->question_status) {
+                        case 'correct':
+                            $totalSpecialityCorrect++;
+                            break;
+
+                        case 'incorrect':
+                            $totalSpecialityIncorrect++;
+                            break;
+
+                        case 'omitted':
+                            $totalSpecialityOmitted++;
+                            break;
+
+                        default:
+                            // Handle unexpected values, if any
+                            break;
+                    }
+                }
+
+
+                // Create an associative array for the speciality
+                $specialityData = [
+                    'name' => $speciality->speciality_name,
+                    'correct' => $totalSpecialityCorrect,
+                    'incorrect' => $totalSpecialityIncorrect,
+                    'omitted' => $totalSpecialityOmitted,
+                ];
+
+                // Append the speciality data to the datatable
+                $dataTable2[$subject->subject_name][] = $specialityData;
+
+
+
+
+            }
 
 
     $subjectData2 = [
@@ -217,13 +228,6 @@ foreach ($dataTable2 as $subjectName => $subjectData) {
 
 // JSON encode the data
 $jsonData = json_encode($data2, JSON_PRETTY_PRINT);
-
-
-
-
-
-
-
 
 
         $data = [

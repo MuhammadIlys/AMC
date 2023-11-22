@@ -37,21 +37,13 @@
 
                                    <!-- chart start-->
 
-
-                                   <div style="width: 100%;">
-                                    <canvas id="testScoreChart" style="height: 360px;"></canvas>
-                                </div>
-
-
-
-
-
-
-
+                                    <!-- Your existing scatter plot containers -->
+                                    <div id="basic_scatter" data-colors="[&quot;--vz-primary&quot;, &quot;--vz-success&quot;, &quot;--vz-warning&quot;]" class="apex-charts" dir="ltr" style="min-height: 365px; max-width:95%">
+                                    </div>
                                    <!--chart end-->
 
 
-                                </div>
+                            </div>
 
                             </div>
                             <!--end row-->
@@ -67,77 +59,97 @@
         </div>
         <!-- End Page-content -->
 
+        <!-- Include the ApexCharts library -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
- <!-- Include the Chart.js library -->
- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+ // Function to get chart colors
+function getChartColorsArray(e) {
+    if (null !== document.getElementById(e)) {
+        return e = document.getElementById(e).getAttribute("data-colors"), (e = JSON.parse(e)).map(function (e) {
+            var t = e.replace(" ", "");
+            return -1 === t.indexOf(",") ? getComputedStyle(document.documentElement).getPropertyValue(t) || t : 2 == (e = e.split(",")).length ? "rgba(" + getComputedStyle(document.documentElement).getPropertyValue(e[0]) + "," + e[1] + ")" : t
+        });
+    }
+}
 
-        <script>
-            // Retrieve the dynamic data from PHP
-            var dynamicData = [
-                {"test": "Mocks 1", "score": 85},
-                {"test": "Mocks 2", "score": 92},
-                {"test": "Mocks 3", "score": 78},
-                {"test": "Mocks 4", "score": 89}
-            ];
+// Call getChartColorsArray to initialize chartScatterBasicColors
+var chartScatterBasicColors = getChartColorsArray("basic_scatter");
 
-            // Prepare data for Chart.js
-            var labels = dynamicData.map(item => item.test);
-            var data = dynamicData.map(item => item.score);
+// Extract the PHP data passed to the view
+var chartData = @json($chartData);
 
-            // Determine the maximum y-axis value (rounded up to the nearest hundred)
-            var maxScore = Math.ceil(Math.max(...data) / 100) * 100;
+// Log the chartData to the console for debugging
+console.log('chartData:', chartData);
 
-            // Create and render the chart
-            var ctx = document.getElementById('testScoreChart').getContext('2d');
-            var testScoreChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Mocks Scores',
-                        data: data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            max: maxScore,  // Set the maximum y-axis value to the determined max score
-                            beginAtZero: true,
-                            stepSize: 100,
-                            callback: function (value, index, values) {
-                                return value;  // Display y-axis labels as is (100, 200, 300, ...)
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Mocks'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false // Hide legend for this example
-                        }
-                    },
-                    layout: {
-                        padding: {
-                            left: 10,
-                            right: 10,
-                            top: 10,
-                            bottom: 10
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    barPercentage: 0.3, // Adjust the bar width as a percentage of available space
-                    categoryPercentage: 0.7 // Adjust the space between bars as a percentage of available space
-                }
+// Extract test names for x-axis labels
+var testNames = Object.keys(chartData);
+
+// Log the testNames to the console for debugging
+console.log('testNames:', testNames);
+
+// Add series data dynamically
+var dynamicSeries = [];
+
+Object.keys(chartData).forEach(function (seriesName) {
+    var seriesData = chartData[seriesName].map(function (point) {
+        return [new Date(point.date).getTime(), point.score];
+    });
+
+    dynamicSeries.push({
+        name: seriesName,
+        data: seriesData,
+    });
+
+    // Log each seriesData to the console for debugging
+    console.log('seriesData for ' + seriesName + ':', seriesData);
+});
+
+// Log the dynamicSeries to the console for debugging
+console.log('dynamicSeries:', dynamicSeries);
+
+// ApexCharts configuration
+var options = {
+    series: dynamicSeries,
+    chart: {
+        height: 350,
+        type: "scatter",
+        zoom: {
+            enabled: true,
+            type: "xy",
+        },
+        toolbar: {
+            show: false,
+        },
+    },
+    xaxis: {
+        type: "datetime",
+        tickAmount: 10,
+        labels: {
+            formatter: function (timestamp) {
+                return new Date(timestamp).toLocaleDateString();
+            },
+        },
+        categories: Array.from(new Set(testNames.flatMap(function (seriesName) {
+            return chartData[seriesName].map(function (point) {
+                return point.date;
             });
-        </script>
+        }))),
+    },
+    yaxis: {
+        tickAmount: 7,
+    },
+    colors: chartScatterBasicColors,
+};
+
+// Create the chart
+var chart = new ApexCharts(document.querySelector("#basic_scatter"), options);
+chart.render();
+
+
+</script>
+
+
 
 
 

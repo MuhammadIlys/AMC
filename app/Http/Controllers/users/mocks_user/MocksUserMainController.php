@@ -31,6 +31,7 @@ class MocksUserMainController extends Controller
         $totalIncorrectQuestions = 0;
         $totalOmittedQuestions = 0;
         $totalCorrectQuestionsPerSubject = [];
+        $totalQuestionsPerSubject= [];
 
         $user_id = Session::get('user')->id;
 
@@ -101,6 +102,9 @@ class MocksUserMainController extends Controller
         foreach ($history->questions as $question) {
             $subject = $question->subject; // Assuming there's a 'subject' relationship on the Question model
             $subjectKey = $subject->subject_name; // Replace 'name' with the actual property you want to use as the key
+            // Update total questions per subject
+    $totalQuestionsPerSubject[$subjectKey] = isset($totalQuestionsPerSubject[$subjectKey])
+    ? $totalQuestionsPerSubject[$subjectKey] + 1 : 1;
 
             $totalCorrectQuestionsPerSubject[$subjectKey] = isset($totalCorrectQuestionsPerSubject[$subjectKey])
                 ? $totalCorrectQuestionsPerSubject[$subjectKey] + ($question->pivot->question_status === 'correct' ? 1 : 0)
@@ -109,34 +113,36 @@ class MocksUserMainController extends Controller
 
     }
 
-   // Round down total time spent to the nearest whole number of hours
-$totalTimeSpentInHours = floor($totalTimeSpentInHours);
+    // Round down total time spent to the nearest whole number of hours
+    $totalTimeSpentInHours = floor($totalTimeSpentInHours);
 
-// Convert total time last recent mock to a human-readable format if needed
-$totalTimeLastRecentMock = $totalTimeLastRecentMock > 0 ? number_format($totalTimeLastRecentMock / 3600,1) : null;
+    // Convert total time spent to HH:MM format
+    $totalTimeSpentFormatted = gmdate('H:i', $totalTimeSpentInHours * 3600);
 
-// Calculate average time spent
-$averageTimeSpent = $totalMocksCompleted > 0 ? number_format($totalTimeSpentInHours / $totalMocksCompleted, 1) : 0;
+    // Calculate average time spent
+    $averageTimeSpent = $totalMocksCompleted > 0 ? gmdate('H:i', ($totalTimeSpentInHours / $totalMocksCompleted) * 3600) : '00:00';
 
-// Calculate average time spent for the most recent mock
-$averageTimeSpentRecentMock = $totalMocksCompleted > 0 ? number_format($totalTimeSpentInHoursRecentMock , 1) : 0;
+    // Calculate average time spent for the most recent mock
+    $averageTimeSpentRecentMock = $totalMocksCompleted > 0 ? gmdate('H:i', $totalTimeSpentInHoursRecentMock * 3600) : '00:00';
 
-// The rest of your logic or view rendering goes here
-return view("users.mocks_user.index", compact(
-    'totalTimeLastRecentMock',
-    'averageTimeSpent',
-    'averageTimeSpentRecentMock',
-    'totalMocksCompleted',
-    'totalMocksPassed',
-    'totalMocksFailed',
-    'totalHardQuestions',
-    'totalFairQuestions',
-    'totalEasyQuestions',
-    'totalCorrectQuestions',
-    'totalIncorrectQuestions',
-    'totalOmittedQuestions',
-    'totalCorrectQuestionsPerSubject'
-));
+
+    // The rest of your logic or view rendering goes here
+    return view("users.mocks_user.index", compact(
+        'totalTimeLastRecentMock',
+        'averageTimeSpent',
+        'averageTimeSpentRecentMock',
+        'totalMocksCompleted',
+        'totalMocksPassed',
+        'totalMocksFailed',
+        'totalHardQuestions',
+        'totalFairQuestions',
+        'totalEasyQuestions',
+        'totalCorrectQuestions',
+        'totalIncorrectQuestions',
+        'totalOmittedQuestions',
+        'totalCorrectQuestionsPerSubject',
+        'totalQuestionsPerSubject'
+    ));
 
 
 

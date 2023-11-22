@@ -47,7 +47,7 @@
 
 <!-- apexcharts -->
 <script src="{{ asset('user/mock_user_assets/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-
+<script src="{{ asset('user/mock_user_assets/assets/js/pages/apexcharts-scatter.init.js') }}"></script>
 <!-- Vector map-->
 <script src="{{ asset('user/mock_user_assets/assets/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
 <script src="{{ asset('user/mock_user_assets/assets/libs/jsvectormap/maps/world-merc.js') }}"></script>
