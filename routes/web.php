@@ -408,24 +408,32 @@ Route::get('/mocks_user_mocks_analytics', [MainMocksResultController::class,'moc
 
 //#################################  MOCKS EXAM LUNCH ROUTES ##################################################
 
-Route::get('/mocks_lunch', [MainExamController::class,'mocksLunchMocks']);
-Route::get('/mocks_terms', [MainExamController::class,'mocksTerms']);
-Route::get('/mocks_start', [MainExamController::class,'mocksStart']);
+Route::get('/mocks_lunch', [MainExamController::class,'mocksLunchMocks'])
+->middleware('subscription:MOCKS');
+Route::get('/mocks_terms', [MainExamController::class,'mocksTerms'])
+->middleware('subscription:MOCKS');
+Route::get('/mocks_start', [MainExamController::class,'mocksStart'])
+->middleware('subscription:MOCKS');
 
 
 // ###################################  MOCKS USER HISTORY ROUTES ##################
 
-Route::post('/generate_user_mock_history', [MainMocksUserTestHistoryController::class,'generateMocksHistory']);
+Route::post('/generate_user_mock_history', [MainMocksUserTestHistoryController::class,'generateMocksHistory'])
+->middleware('subscription:MOCKS');
+
 
 // ###################################  MOCKS USER ACCOUNT RESET ROUTES ##################
-Route::get('/account_reset_view', [MainAccountResetController::class,'showAccountResetView']);
+Route::get('/account_reset_view', [MainAccountResetController::class,'showAccountResetView'])
+->middleware('subscription:MOCKS');
 
 
-Route::get('/mocks_user_account_reset', [MainAccountResetController::class,'mocksUserAccountReset']);
+Route::get('/mocks_user_account_reset', [MainAccountResetController::class,'mocksUserAccountReset'])
+->middleware('subscription:MOCKS');
 
 // ###################################  MOCKS USER  QUESTION PREVIEW ROUTES ##################
 
-Route::get('/show_mocks_user_question_preview/{user_mocks_id}/{question_id?}', [MainQuestionPreviewController::class, 'showQuestionPreviewView']);
+Route::get('/show_mocks_user_question_preview/{user_mocks_id}/{question_id?}', [MainQuestionPreviewController::class, 'showQuestionPreviewView'])
+->middleware('subscription:MOCKS');
 
 
 
