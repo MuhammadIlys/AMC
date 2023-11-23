@@ -35,8 +35,9 @@ class MainPreviousMocksController extends Controller
 
             // Determine the Bootstrap badge class based on the question status
             $badgeClass = ($history->test_status === 'Pass') ? 'badge badge-label bg-success' : 'badge badge-label bg-danger';
-            $urlMockResults = "mocks_user_mocks_result/".$history->user_mocks_id; // Replace with the actual URL for mock results
-            $urlTestAnalytics = "mocks_user_mocks_result/".$history->user_mocks_id;; // Replace with the actual URL for test analytics
+            $urlMockResults = "mocks_user_mocks_result/".$history->user_mocks_id;
+            $urlTestAnalytics = "mocks_user_mocks_result/".$history->user_mocks_id;
+            $urlTestPreviewQuestion = "show_mocks_user_question_preview/". urlencode(encrypt($history->user_mocks_id)) ;
 
             // Build the row for DataTable
             $row = [
@@ -48,7 +49,7 @@ class MainPreviousMocksController extends Controller
                 $incorrect,
                 $omitted,
                 "<span class='$badgeClass'>$test_status</span>",
-                '<a title="Show Test Preview" href="' . $urlMockResults . '"><i class="la la-play-circle la-lg pointer fs-22 cursor-pointer" style="color: #2196F3"></i></a> <a title="Show Test Result" href="' . $urlMockResults . '"><i class="la la-tasks la-lg pointer fs-22 cursor-pointer ms-2" style="color: #2196F3"></i></a> <a title="Show Test Analytics" href="' . $urlTestAnalytics . '"><i class="bx bx-bar-chart pointer fs-22 cursor-pointer ms-2" style="color: #2196F3"></i></a>'
+                '<a title="Show Test Preview" href="' . $urlTestPreviewQuestion . '"><i class="la la-play-circle la-lg pointer fs-22 cursor-pointer" style="color: #2196F3"></i></a> <a title="Show Test Result" href="' . $urlMockResults . '"><i class="la la-tasks la-lg pointer fs-22 cursor-pointer ms-2" style="color: #2196F3"></i></a> <a title="Show Test Analytics" href="' . $urlTestAnalytics . '"><i class="bx bx-bar-chart pointer fs-22 cursor-pointer ms-2" style="color: #2196F3"></i></a>'
             ];
 
             // Add the row to the DataSet

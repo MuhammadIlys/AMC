@@ -15,6 +15,45 @@
       <link href='{{ asset("user/mock_user_assets/exam_assets/assets/css/screen.css")}}'  rel='stylesheet' type='text/css' />
 
 
+      <style>
+
+         /* Style the radio button */
+         input[type=radio] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 5px; /* Adjust the size as needed */
+            height: 5px; /* Adjust the size as needed */
+            border: 2px solid #3852A4; /* Set the border color */
+            border-radius: 50%; /* Make it round */
+            outline: none;
+            margin-right: 5px; /* Adjust the spacing as needed */
+        }
+
+        /* Style the checked state of the radio button */
+        input[type=radio]:checked {
+            background-color: #3852A4; /* Set the background color when checked */
+            border-color: #3852A4; /* Set the border color when checked */
+        }
+
+        .next {
+            background-color: #FFFFFF; /* White */
+            color: #3852A4;
+        padding: 10px 20px; /* Add some padding for a better appearance */
+        border: none; /* Remove the default border */
+        border-radius: 5px; /* Add some border radius for rounded corners */
+        cursor: pointer; /* Add a pointer cursor on hover */
+        font-size: 16px; /* Set the font size */
+    }
+
+    /* Add some styling for the buttons on hover */
+    .next:hover {
+        background-color: #5075c6;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        color: white
+    }
+      </style>
+
 <script>
     // Data fetched from the server
     var questions = {!! json_encode($questions) !!};
@@ -147,12 +186,12 @@
 
         // Update question count and content
         $('#question_count').text('Question ' + (currentQuestionIndex + 1) + ' of ' + questions.length);
-        document.getElementById('question_text').innerHTML = currentQuestion.question_text;
-        $('#option1').text(currentQuestion.option1);
-        $('#option2').text(currentQuestion.option2);
-        $('#option3').text(currentQuestion.option3);
-        $('#option4').text(currentQuestion.option4);
-        $('#option5').text(currentQuestion.option5);
+        $('question_text').html( currentQuestion.question_text);
+        $('#option1').html(currentQuestion.option1);
+        $('#option2').html(currentQuestion.option2);
+        $('#option3').html(currentQuestion.option3);
+        $('#option4').html(currentQuestion.option4);
+        $('#option5').html(currentQuestion.option5);
     }
 
 

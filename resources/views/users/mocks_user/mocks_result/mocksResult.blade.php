@@ -1628,6 +1628,20 @@
 
 
     </style>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- Check for the error in session and show SweetAlert2 -->
+    @if(session('mocks_older_error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session('mocks_older_error') }}',
+        });
+    </script>
+    @endif
+
 
     <!-- Start right Content here -->
     <!-- ============================================================== -->

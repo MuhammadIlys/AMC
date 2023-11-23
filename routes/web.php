@@ -3,6 +3,7 @@
 use App\Http\Controllers\login_registration\MainLoginRegistrationController;
 use App\Http\Controllers\super_admin\user_management\subscription\MainSubscriptionController;
 use App\Http\Controllers\super_admin\user_management\user\MainUserController;
+use App\Http\Controllers\users\mocks_user\account_reset\MainAccountResetController;
 use App\Http\Controllers\users\mocks_user\exam\MainExamController;
 use App\Http\Controllers\users\mocks_user\graph\MainGraphController;
 use App\Http\Controllers\users\mocks_user\help\MainHelpController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\users\mocks_user\mocks_Result\MainMocksResultController
 use App\Http\Controllers\users\mocks_user\mocks_user_test_history\MainMocksUserTestHistoryController;
 use App\Http\Controllers\users\mocks_user\MocksUserMainController;
 use App\Http\Controllers\users\mocks_user\previous_mocks\MainPreviousMocksController;
+use App\Http\Controllers\users\mocks_user\question_preview\MainQuestionPreviewController;
 use App\Http\Controllers\users\mocks_user\report\MainReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -414,6 +416,18 @@ Route::get('/mocks_start', [MainExamController::class,'mocksStart']);
 // ###################################  MOCKS USER HISTORY ROUTES ##################
 
 Route::post('/generate_user_mock_history', [MainMocksUserTestHistoryController::class,'generateMocksHistory']);
+
+// ###################################  MOCKS USER ACCOUNT RESET ROUTES ##################
+Route::get('/account_reset_view', [MainAccountResetController::class,'showAccountResetView']);
+
+
+Route::get('/mocks_user_account_reset', [MainAccountResetController::class,'mocksUserAccountReset']);
+
+// ###################################  MOCKS USER  QUESTION PREVIEW ROUTES ##################
+
+Route::get('/show_mocks_user_question_preview/{user_mocks_id}/{question_id?}', [MainQuestionPreviewController::class, 'showQuestionPreviewView']);
+
+
 
 
 

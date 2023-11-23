@@ -340,6 +340,11 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ url('/account_reset_view') }}">
+                            <i class="la la-undo fs-18"></i> <span data-key="t-widgets">Reset Options</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ url('/mocks_user_help') }}">
                             <i class='la la-question-circle fs-18'></i> <span data-key="t-widgets">Help</span>
                         </a>

@@ -36,6 +36,7 @@ class MainMocksResultController extends Controller
             $icon .= "<i class='la la-lg la-times' style='color: red;'></i>";
         }
 
+        $question_view_url='/show_mocks_user_question_preview/'.urlencode(encrypt($custom_mocks_id)).'/'.urlencode(encrypt($question->question_id));
         $rowData = [
             $icon,
             $question->question_id,
@@ -44,7 +45,7 @@ class MainMocksResultController extends Controller
             $question->topic->topic_name,
             ($question->pivot->choose_option == 6) ? 'Not Selected' : chr(64 + $question->pivot->choose_option),
             $question->pivot->time_spent,
-            "<a href='#' title='View Question'>
+            "<a  href='$question_view_url' title='Preview Question'>
             <i class='la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2'></i>
           </a>",
         ];
