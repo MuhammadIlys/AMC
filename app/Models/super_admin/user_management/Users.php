@@ -6,6 +6,7 @@ use App\Models\super_admin\user_management\subscription\Subscription;
 use App\Models\users\mocks_user\mocks_user_test_history\MocksUserTestHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\super_admin\mocks\test\Test;
 
 class Users extends Model
 {
@@ -46,6 +47,14 @@ class Users extends Model
      {
          return $this->hasMany(MocksUserTestHistory::class, 'user_id', 'id');
      }
+
+
+      // Define the many-to-many relationship with the Test model
+    public function mocks_test_management()
+    {
+        return $this->belongsToMany(Test::class, 'mocks_management', 'user_id', 'test_id')
+            ->withPivot('mocks_management_id'); // Add any additional pivot columns if needed
+    }
 
 
 }

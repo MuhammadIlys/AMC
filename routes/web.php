@@ -3,6 +3,7 @@
 use App\Http\Controllers\login_registration\MainLoginRegistrationController;
 use App\Http\Controllers\super_admin\user_management\subscription\MainSubscriptionController;
 use App\Http\Controllers\super_admin\user_management\user\MainUserController;
+use App\Http\Controllers\super_admin\user_management\mocks_management\MainMocksManagementController;
 use App\Http\Controllers\users\mocks_user\account_reset\MainAccountResetController;
 use App\Http\Controllers\users\mocks_user\exam\MainExamController;
 use App\Http\Controllers\users\mocks_user\graph\MainGraphController;
@@ -371,6 +372,23 @@ Route::delete('/delete_user_subscription/{subscriptionId}', [MainSubscriptionCon
 Route::post('/update_user_subscription_data', [MainSubscriptionController::class,'updateUserSubscription'])
 ->middleware('superadmin');
 
+// manage mocks for different users routes
+
+Route::get('/mocks_user_view', [MainMocksManagementController::class,'mocksUserView'])
+->middleware('superadmin');
+// this will load mocks subscribe user
+Route::get('/get_mocks_user_data', [MainMocksManagementController::class,'getMocksUserData'])
+->middleware('superadmin');
+
+// add mocks to test to the user
+
+Route::get('/add_mocks_to_mocks_user_view/{user_id}', [MainMocksManagementController::class,'loadAddMocksUserView'])
+->middleware('superadmin');
+
+
+Route::post('/save-mocks-to-user', [MainMocksManagementController::class, 'saveMocksToUser'])
+->name('save-mocks-to-user')
+->middleware('superadmin');
 
 
 //#################################  MOCKS USERS ROUTES ##################################################

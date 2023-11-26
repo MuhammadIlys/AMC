@@ -244,7 +244,6 @@
                 var allow_attempt = $('#allow_attempt').val();
                 var test_status = $('#test_status').val();
 
-                alert(test_name);
 
                 // Create an object to store the data you want to send to the Laravel function
                 var testData = {

@@ -13,8 +13,10 @@ class MainMocksListController extends Controller
     public function mocksListView()
 
     {
-        // Fetch data for the tests and related questions
-        $tests = Test::with('questions')->where('test_status', 'active')->get();
+        $user=Session::get('user');
+
+        // Fetch data for the tests linked to the user and related questions
+        $tests = $user->mocks_test_management()->with('questions')->where('test_status', 'active')->get();
 
         // You can further customize the data preparation based on your needs
         $mocksData = $tests->map(function ($test) {
