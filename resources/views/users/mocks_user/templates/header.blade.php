@@ -254,7 +254,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
-                                <a class="dropdown-item" href="https://mockuptest.aceamcq.com/amc/users"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Main Profile</span></a>
+                                <a class="dropdown-item" href="{{ url('/user_dashboard') }}"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Main Profile</span></a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-danger" href="{{ url('/') }}/user_logout"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>
                             </div>

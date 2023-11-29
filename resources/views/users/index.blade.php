@@ -129,6 +129,10 @@
       color: #ccc;
     }
 
+    .checkbox:checked {
+  background-color: #013884;
+}
+
 
 
 
@@ -372,7 +376,7 @@
    <div class="container">
   <div class="row">
     <!-- User Information Form -->
-    <div class="col-md-5">
+    <div class="col-md-5" style="margin-bottom: 30px; margin-top:20px;">
       <h6>User Information</h6>
       <form id="userInformationForm">
         <div class="row">
@@ -425,15 +429,15 @@
         <span class="text-danger" id="email_error"></span>
 
         <div class="form-check mt-2">
-          <input type="checkbox" class="form-check-input" id="receive_service_update" name="receive_service_update"   {{ $user->receive_service_update == 0 ? 'checked' : '' }} >
+          <input type="checkbox" class="checkbox form-check-input" id="receive_service_update" name="receive_service_update"   {{ $user->receive_service_update == 0 ? 'checked' : '' }} >
           <label class="form-check-label" for="receive_service_update">I do not want to receive notifications about my subscription (renewal reminders and service updates).</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="receive_promotion_update" name="receive_promotion_update" {{ $user->receive_promotion_update == 0 ? 'checked' : '' }}>
+          <input type="checkbox" class=" checkbox form-check-input" id="receive_promotion_update" name="receive_promotion_update" {{ $user->receive_promotion_update == 0 ? 'checked' : '' }}>
           <label class="form-check-label" for="receive_promotion_update">I do not want to receive promotions about future products and special offers.</label>
         </div>
         <!-- Add more user information fields as needed -->
-        <button type="submit" class="btn btn-primary mt-2">Update</button>
+        <button  style="background-color: #013884; color:white"  type="submit" class="btn  mt-2">Update</button>
       </form>
     </div>
 
@@ -441,7 +445,7 @@
     <div class="col-md-1 vertical-line"></div>
 
     <!-- Change Password and Security Question Form -->
-    <div class="col-md-5">
+    <div class="col-md-5" style="margin-bottom: 30px; margin-top:20px;">
       <h6>Change Password </h6>
       <form id="change_password_form">
         <input type="hidden" name="user_id3"  id="user_id3" value="{{ $user->id  }}" >
@@ -452,20 +456,19 @@
         <input type="password" class="form-control mt-2" id="confirm_password" name="new_password_confirmation"  placeholder="Confirm New Password" required>
         <span class="text-danger" id="confirm_password_error"></span>
         <div style="text-align: left;" class="form-check mt-2">
-          <input type="checkbox" class="form-check-input" id="show_password" name="show_password">
+          <input type="checkbox" class=" checkbox form-check-input" id="show_password" name="show_password">
           <label class="form-check-label" for="show_password">show password</label>
         </div>
 
         <!-- Add more password fields as needed -->
-        <button id="password_btn" class="btn btn-primary mt-2">Update</button>
+        <button  style="background-color: #013884; color:white"  id="password_btn" class="btn  mt-2">Update</button>
       </form>
 
 
     </div>
   </div>
 
-  <!-- Horizontal Line -->
-  <hr>
+
 
 </div>
 

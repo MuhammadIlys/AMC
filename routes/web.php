@@ -435,7 +435,7 @@ Route::get('/mocks_user_previous_mocks', [MainPreviousMocksController::class,'pr
 Route::get('/mocks_user_mocks_result/{custom_mocks_id}', [MainMocksResultController::class,'mocksResultView'])
 ->middleware('subscription:MOCKS');
 
-Route::get('/mocks_user_mocks_analytics', [MainMocksResultController::class,'mocksAnalyticsView'])
+Route::get('/mocks_user_mocks_analytics/{custom_mocks_id}', [MainMocksResultController::class,'mocksAnalyticsView'])
 ->middleware('subscription:MOCKS');
 
 //#################################  MOCKS EXAM LUNCH ROUTES ##################################################

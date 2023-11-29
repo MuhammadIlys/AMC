@@ -90,7 +90,7 @@
                                             <div class="test-card">
                                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                                     <h3 style="margin: 0;">{{ $mock['test_name'] }}</h3>
-                                                    <span class="info" style="border: 2px solid #888; padding:2px; border-radius: 50%; text-align: center; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center;">02</span>
+                                                    <span class="info" style="border: 2px solid #888; padding:2px; border-radius: 50%; text-align: center; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center;">{{ $mock['remaining_attempts'] }}</span>
                                                 </div>
                                                <hr >
                                                 <div class="info">

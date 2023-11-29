@@ -36,7 +36,7 @@ class MainPreviousMocksController extends Controller
             // Determine the Bootstrap badge class based on the question status
             $badgeClass = ($history->test_status === 'Pass') ? 'badge badge-label bg-success' : 'badge badge-label bg-danger';
             $urlMockResults = "mocks_user_mocks_result/".$history->user_mocks_id;
-            $urlTestAnalytics = "mocks_user_mocks_result/".$history->user_mocks_id;
+            $urlTestAnalytics = "mocks_user_mocks_analytics/".$history->user_mocks_id;
             $urlTestPreviewQuestion = "show_mocks_user_question_preview/". urlencode(encrypt($history->user_mocks_id)) ;
 
             // Build the row for DataTable
