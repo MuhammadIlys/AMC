@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>user dashboard</title>
+  <title>User Main Dashboard</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <!-- Font Awesome for icons -->
@@ -54,12 +54,10 @@
 
 
     .row-blue {
-    background-color: #1e88e5;
+    background-color: #013884;
 }
 
-.mr--0 {
-    margin-right: 0;
-}
+
 .row-productmenu {
     text-align: center;
     height: 55px;
@@ -106,61 +104,90 @@
     }
 
 
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Style the input fields */
+    .form-control {
+      border: none;
+      border-bottom: 2px solid #ccc; /* Only bottom border */
+      border-radius: 0;
+      padding: 0;
+      background: none; /* Remove input background */
+    }
+
+    .form-control:focus {
+      box-shadow: none; /* Remove focus box shadow */
+    }
+
+    .form-control::placeholder {
+      color: #ccc;
+    }
+
+
 
 
   </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Brand</a>
-    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  </div>
-</nav>
+    <header>
+        <!-- Header -->
+        <nav class="navbar navbar-light ">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="https://aceamcq.com/"><img width="80" height="80" src="{{ url('/sitelogo/aceamcqlogo.png') }}" alt="aceamc logo" srcset=""></a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            </div>
+        </nav>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Our Products</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Qbanks</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Recalls</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Mocks</a>
-      </li>
-      <hr>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Our Products</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Qbanks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Recalls</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Mocks</a>
+            </li>
+            <hr>
 
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/user_logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
-      </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url('/user_logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+            </li>
 
 
-    </ul>
-  </div>
-</div>
+            </ul>
+        </div>
+        </div>
+    </header>
 
 
 
   <!-- Content -->
-  <div  class="container-fluid mt-4 content">
+  <div  class="container-fluid content">
 
   <div id="Body_ExamScoresBanner" class="row mr--0 row-blue row-productmenu   ">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-12" >
-    <p class="heading-text exam-scores-pad submit-scores-banner">
-                            Have you taken any exam(s) yet?
-                            <span class="fontweight-regular">Tell us how you did!</span>
-                            <button class="btn btn-sm btn-danger" type="button" >Submit Scores</button>
-                        </p>
+
+        <p class="heading-text exam-scores-pad submit-scores-banner">
+            Do you have any question?
+
+            <button id="contact_us"  class="btn btn-sm btn-danger" type="button">Contact Us</button>
+        </p>
 
     </div>
 
@@ -657,6 +684,62 @@
 
 
 
+            // Add click event listener to the button
+         $("#contact_us").click(function () {
+                // Show the modal
+                $("#contact_us_model").modal("show");
+            });
+
+
+
+                    // Add submit event listener to the form
+            $("#contact_us_form").submit(function (event) {
+                event.preventDefault();
+
+                // Get form data
+                var formData = {
+                    name: $("#name").val(),
+                    email: $("#email3").val(),
+                    massage: $("#massage").val(),
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/contact_us",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    success: function (response) {
+                        if (response.errors) {
+                            // Display validation errors
+                            $('#massage_error').text(response.errors.massage[0]);
+                            $('#email3_error').text(response.errors.email[0]);
+                            $('#name_error').text(response.errors.name[0]);
+                        } else if (response.error) {
+                            // Display email sending error
+                            $('#form_error').text(response.error);
+                        } else {
+                            // Clear errors and close modal
+                            $('#massage_error').text('');
+                            $('#email3_error').text('');
+                            $('#name_error').text('');
+                            $("#contact_us_model").modal("hide");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle Ajax request error
+                        $('#form_error').text("An error occurred while processing your request.");
+                    }
+
+                });
+            });
+
+
+
+
+
+
     });// ready function end
 
    </script>
@@ -665,5 +748,65 @@
 
 
 </body>
+
+
+
+<!--contact us model model -->
+<div class="modal fade" id="contact_us_model" tabindex="-1" aria-labelledby="forgotModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="forgotModal">Contact Us</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="contact_us_form" >
+
+                <span class="text-danger"  id="form_error"></span>
+                <div class="row" style="padding: 20px;">
+
+                    <div class="col-sm-6" style=" margin-bottom:20px;">
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="name" value="{{ $user->first_name . ' ' . $user->last_name }}"  required>
+                            <span class="text-danger"  id="name_error"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style=" margin-bottom:20px;">
+
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="email3" id="email3" placeholder="Email" value="{{ $user->email}}" required>
+                            <span class="text-danger"  id="email3_error"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+
+                        <div class="form-group">
+                            <textarea  class="form-control" name="massage" id="massage" placeholder="Massage" required></textarea>
+                            <span class="text-danger"  id="massage_error"></span>
+                        </div>
+                    </div>
+
+                    <br><br>
+
+
+                        <div class="col-sm-12" style="text-align: right; margin-top: 30px;" >
+                            <button type="submit" class="btn " style="background-color: #013884; color:white;">Submit</button>
+                        </div>
+
+
+
+
+                </div>
+
+
+
+            </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 </html>

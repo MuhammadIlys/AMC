@@ -143,7 +143,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
         </div>
-    </nav>
+      </nav>
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Our Products</h5>
@@ -181,163 +181,68 @@
             <p class="heading-text exam-scores-pad submit-scores-banner">
                 Do you have any question?
 
-                <button id="contact_us"  class="btn btn-sm btn-danger" type="button">Contact Us</button>
+                <button id="contact_us" class="btn btn-sm btn-danger" type="button">Contact Us</button>
             </p>
         </div>
     </div>
 
   </div>
 
-  <div class="content">
-    <div class="container">
+    <div class="content">
+        <div class="container">
 
-      <div class="row" >
-        <!-- Login Section -->
-        <div class="col-md-6" style="margin-bottom: 30px">
-            <h5>Login</h5>
-            <p>Sign in using your AceAmcQ account</p>
-          <div class="login-container">
+            <div class="row" >
 
-                <!-- Laravel login form -->
-                <form method="POST" action="{{ url('/') }}/login">
-                    @csrf
+                <div class="col-md-3">
 
 
-                    @if(session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
-                    @endif
+                </div>
+                <!-- Login Section -->
+                <div class="col-md-6" style="margin-bottom: 30px">
+                    <h5>Change Password</h5>
+                    <p>Enter Your New Password!</p>
+                    <div class="login-container">
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="email" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a href="#"  rel="noopener noreferrer" id="btn-forgot" style="color:#013884">Forgot Password?</a>
-                        </div>
-                        <div class="col-sm-6" style="text-align: right">
-                            <button type="submit" class="btn " style="background-color: #013884; color:white;">Login</button>
-                        </div>
-                    </div>
+                        <!-- Laravel login form -->
+                        <form method="POST" action="{{ url('/') }}/change_password">
+                            @csrf
 
-                </form>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Registration Section -->
-        <div class="col-md-6">
-            <h5>Registration</h5>
-            <p>Create your AceAmcQ account</p>
-          <div class="register-container">
-
-              <!-- Laravel registration form -->
-              <form method="POST" action="{{ url('/') }}/register">
-                @csrf
-
-                @if(session('error2'))
-                        <div class="alert alert-danger">{{ session('error2') }}</div>
-                    @endif
-
-                    @if(session('account_success'))
-                        <div class="alert alert-success">{{ session('account_success') }}</div>
-                    @endif
-
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <input type="text" name="first_name" class="form-control" placeholder="First Name" value="{{ old('first_name') }}" required>
-                            @if ($errors->has('first_name'))
-                                <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                            @if(session('error'))
+                                <div class="alert alert-danger">{{ session('error') }}</div>
                             @endif
 
-                        </div>
-                    </div>
+                            <input type="hidden" name="token" value="{{ $token }}">
 
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <input type="text" name="last_name" class="form-control fix-register-inputs" placeholder="Last Name" value="{{ old('last_name') }}" required>
-                            @if ($errors->has('last_name'))
-                            <span class="text-danger">{{ $errors->first('last_name') }}</span>
-                        @endif
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group" style="margin-top: 17px;">
-                    <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required>
-                    @if ($errors->has('email'))
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                @endif
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password" value="{{ old('password') }}" required>
-                            @if ($errors->has('password'))
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password" placeholder="New Password" required>
+                                @if ($errors->has('password'))
                             <span class="text-danger">{{ $errors->first('password') }}</span>
-                        @endif
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <!-- Correct the name attribute for password confirmation -->
-                            <input type="password" name="password_confirmation" class="form-control fix-register-inputs" placeholder="Confirm Password" value="{{ old('password_confirmation') }}" required>
-                            @if ($errors->has('password_confirmation'))
+                            @endif
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
+                                @if ($errors->has('password_confirmation'))
                             <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
                             @endif
-                        </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-12" style="text-align: right">
+                                    <button type="submit" class="btn " style="background-color: #013884; color:white;">Change Password</button>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
 
-                <div class="form-group" style="margin-top: 17px;">
-                    <select name="country" id="country" class="form-control" value="{{ old('country') }}" required>
-                        <option value="" disabled selected>Select Your Country</option>
+                <div class="col-md-3">
 
-                        <!-- Add more countries as needed -->
-                    </select>
-                    @if ($errors->has('country'))
-                    <span class="text-danger">{{ $errors->first('country') }}</span>
-                    @endif
+
                 </div>
-
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" name="age_confirmation" id="age_confirmation" required>
-                    <label class="form-check-label">By clicking "Register", I confirm that I am over the age of 13 and agree to AceAmcq <a
-                        href="#" style="color: #013884">Terms of Use</a> and <a
-                        href="#" style="color: #013884">Privacy Policy</a>.</label>
-                </div>
-                <button type="submit" class="btn " style="background-color: #013884; color:white">Register</button>
-            </form>
-
-          </div>
-
-
+            </div>
         </div>
-
-
-
-      </div>
-
-
-
     </div>
-  </div>
 
   <!-- Footer -->
   <footer class="footer py-3 bg-light">
@@ -355,113 +260,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <style>
-    #forgot-form {
-        display: none;
-    }
-</style>
-  <script>
+
+
+
+</body>
+
+<script>
+
+
     $(document).ready(function() {
-      // Handle login form submission
-      $("#loginForm").submit(function(e) {
-        e.preventDefault();
-        // Add your login logic here
-        console.log("Login button clicked.");
-      });
 
-      // Handle registration form submission
-      $("#registerForm").submit(function(e) {
-        e.preventDefault();
-        // Add your registration logic here
-        console.log("Register button clicked.");
-      });
-
-
-              // Function to populate the select element with a list of all countries
-              function populateCountries() {
-            const countrySelect = $('#country');
-            $.ajax({
-                url: 'https://restcountries.com/v3.1/all',
-                method: 'GET',
-                success: function (response) {
-                    response.forEach(function (country) {
-                        const option = $('<option></option>');
-                        option.val(country.name.common);
-                        option.text(country.name.common);
-                        countrySelect.append(option);
+                // Add click event listener to the button
+                $("#contact_us").click(function () {
+                        // Show the modal
+                        $("#contact_us_model").modal("show");
                     });
-                },
-                error: function (xhr) {
-                    console.error('Error fetching country data: ' + xhr.statusText);
-                }
-            });
-        }
 
-        // Call the populateCountries function to load the options
-        populateCountries();
-
-
-
-
-
-        // forgot passoword form code
-
-        // Add click event listener to the button
-        $("#btn-forgot").click(function () {
-                // Show the modal
-                $("#forgotModal").modal("show");
-            });
-
-
-
-        // Add submit event listener to the form
-        $("#forgot-form2").submit(function (event) {
-            event.preventDefault();
-
-            // Get form data
-            var formData = {
-                email: $("#email2").val(),
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "/forgot_password",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: formData,
-                success: function (response) {
-                    if (response.errors) {
-                        // Display the errors for the 'email' field
-                        $('#forgot_password_error').text(response.errors.email[0]);
-                    } else {
-                        $('#forgot_password_error').text('');
-                        $("#forgotModal").modal("hide");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    // Handle the error response
-                    var errorMessage = "An error occurred while processing your request.";
-                    if (xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors.email) {
-                        errorMessage = xhr.responseJSON.errors.email[0];
-                    }
-                    $('#forgot_password_error').text(errorMessage);
-                }
-            });
-        });
-
-
-
-         // Add click event listener to the button
-         $("#contact_us").click(function () {
-                // Show the modal
-                $("#contact_us_model").modal("show");
-            });
-
-
-
-                    // Add submit event listener to the form
-            $("#contact_us_form").submit(function (event) {
+               // Add submit event listener to the form
+               $("#contact_us_form").submit(function (event) {
                 event.preventDefault();
 
                 // Get form data
@@ -505,53 +321,16 @@
 
 
 
+
+
     });
-  </script>
 
+</script>
 
-</body>
-
-<!--forgot password model model -->
-<div class="modal fade" id="forgotModal" tabindex="-1" aria-labelledby="forgotModal" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title" id="forgotModal">Forgot Password</h6>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form id="forgot-form2" >
-
-
-                <div class="row" style="padding: 20px;">
-
-                    <div class="col-sm-9">
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="email" id="email2" placeholder="Email" required>
-                            <span class="text-danger"  id="forgot_password_error"></span>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3" style="text-align: right">
-                        <button type="submit" class="btn " style="background-color: #013884; color:white;">Submit</button>
-                    </div>
-
-
-                </div>
-
-
-
-            </form>
-        </div>
-
-      </div>
-    </div>
-  </div>
 
 
 <!--contact us model model -->
-  <div class="modal fade" id="contact_us_model" tabindex="-1" aria-labelledby="forgotModal" aria-hidden="true">
+<div class="modal fade" id="contact_us_model" tabindex="-1" aria-labelledby="forgotModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -607,5 +386,7 @@
       </div>
     </div>
   </div>
+
+
 
 </html>

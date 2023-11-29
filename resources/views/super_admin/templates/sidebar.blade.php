@@ -495,6 +495,8 @@
 
                 </ul>
               </li>
+
+
               <li class="sidebar-item">
                 <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                   <span class="d-flex">
@@ -519,6 +521,27 @@
                       <span class="hide-menu">Add Subscription</span>
                     </a>
                   </li>
+
+                </ul>
+              </li>
+
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-help"></i>
+                  </span>
+                  <span class="hide-menu">Mocks</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ url('/') }}/mocks_user_view" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu"> Mocks User</span>
+                    </a>
+                  </li>
+
 
                 </ul>
               </li>

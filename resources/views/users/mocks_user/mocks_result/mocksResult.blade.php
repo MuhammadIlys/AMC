@@ -1696,143 +1696,151 @@
 
                                              <!--tab start -->
                                             <div class="tab-content text-muted">
+                                                
                                                 <div class="tab-pane active show" id="test_results" role="tabpanel">
-
-
-                                                 <!-- result progress bar design start-->
-
-                                                    @if ($userCustomMocks->test_status == 'Pass')
-
-                                                    <div class="row" style="padding-left:80px">
-
-                                                        <div class="col-6">
-                                                            <div class="test-results">
-                                                                <div class="summary-stats">
-                                                                    <div class="score-stats">
-                                                                        <div class="stats-title">Your Percentage</div>
-                                                                        <div class="stats-area ng-star-inserted" style="">
-                                                                            <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%;">
-                                                                                <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
-                                                                            </div>
-                                                                            <div class="average-score-line on-right" style="left: 61%;">
-                                                                                <div class="average-score"> Avg:&nbsp;61%
-                                                                                    <div class="arrow-up-div"></div>
+    
+    
+                                                         <!-- result progress bar design start-->
+    
+                                                        @if ($userCustomMocks->test_status == 'Pass')
+    
+                                                        <div class="row" style="padding-left:80px">
+    
+                                                            <div class="col-6">
+                                                                <div class="test-results">
+                                                                    <div class="summary-stats">
+                                                                        <div class="score-stats">
+                                                                            <div class="stats-title">Your Percentage</div>
+                                                                            <div class="stats-area ng-star-inserted" style="">
+                                                                                <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%;">
+                                                                                    <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="score-bar">
-                                                                                <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%;"></div>
-                                                                            </div>
-                                                                        </div><!---->
+                                                                                <div class="average-score-line on-right" style="left: 61%;">
+                                                                                    <div class="average-score"> Avg:&nbsp;61%
+                                                                                        <div class="arrow-up-div"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="score-bar">
+                                                                                    <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%;"></div>
+                                                                                </div>
+                                                                            </div><!---->
+                                                                        </div>
+    
                                                                     </div>
-
                                                                 </div>
+    
                                                             </div>
-
-                                                        </div>
-                                                        <div class="col-6">
-
-                                                            <div class="test-results">
-                                                                <div class="summary-stats">
-                                                                    <div class="score-stats">
-                                                                        <div class="stats-title">Your Score</div>
-                                                                        <div class="stats-area ng-star-inserted" style="">
-                                                                            <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%;">
-                                                                                <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
-                                                                            </div>
-                                                                            <div class="average-score-line on-right" style="left: 61%;">
-                                                                                <div class="average-score"> Avg:&nbsp;255
-                                                                                    <div class="arrow-up-div"></div>
+                                                            
+                                                            
+                                                            <div class="col-6">
+    
+                                                                <div class="test-results">
+                                                                    <div class="summary-stats">
+                                                                        <div class="score-stats">
+                                                                            <div class="stats-title">Your Score</div>
+                                                                            <div class="stats-area ng-star-inserted" style="">
+                                                                                <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%;">
+                                                                                    <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="score-bar">
-                                                                                <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%;"></div>
-                                                                            </div>
-                                                                        </div><!---->
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                @else
-
-
-
-                                                 <div class="row" style="padding-left:80px">
-
-                                                        <div class="col-6">
-                                                            <div class="test-results">
-                                                                <div class="summary-stats">
-                                                                    <div class="score-stats">
-                                                                        <div class="stats-title">Your Percentage</div>
-                                                                        <div class="stats-area ng-star-inserted" style="">
-                                                                            <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%; color:red;">
-                                                                                <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
-                                                                            </div>
-                                                                            <div class="average-score-line on-right" style="left: 61%; ">
-                                                                                <div class="average-score"> Avg:&nbsp;61%
-                                                                                    <div class="arrow-up-div"></div>
+                                                                                <div class="average-score-line on-right" style="left: 61%;">
+                                                                                    <div class="average-score"> Avg:&nbsp;255
+                                                                                        <div class="arrow-up-div"></div>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="score-bar">
-                                                                                <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%; background-color:red;"></div>
-                                                                            </div>
-                                                                        </div><!---->
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-6">
-
-                                                            <div class="test-results">
-                                                                <div class="summary-stats">
-                                                                    <div class="score-stats">
-                                                                        <div class="stats-title">Your Score</div>
-                                                                        <div class="stats-area ng-star-inserted" style="">
-                                                                            <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%; color:red;">
-                                                                                <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
-                                                                            </div>
-                                                                            <div class="average-score-line on-right" style="left: 61%;">
-                                                                                <div class="average-score"> Avg:&nbsp;255
-                                                                                    <div class="arrow-up-div"></div>
+                                                                                <div class="score-bar">
+                                                                                    <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%;"></div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="score-bar">
-                                                                                <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%; background-color:red;"></div>
-                                                                            </div>
-                                                                        </div><!---->
+                                                                            </div><!---->
+                                                                        </div>
+    
                                                                     </div>
-
                                                                 </div>
                                                             </div>
                                                         </div>
+    
+    
+    
+                                                    @else
+    
+    
+    
+                                                        <div class="row" style="padding-left:80px">
+    
+                                                            <div class="col-6">
+                                                                <div class="test-results">
+                                                                    <div class="summary-stats">
+                                                                        <div class="score-stats">
+                                                                            <div class="stats-title">Your Percentage</div>
+                                                                            <div class="stats-area ng-star-inserted" style="">
+                                                                                <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%; color:red;">
+                                                                                    <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
+                                                                                </div>
+                                                                                <div class="average-score-line on-right" style="left: 61%; ">
+                                                                                    <div class="average-score"> Avg:&nbsp;61%
+                                                                                        <div class="arrow-up-div"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="score-bar">
+                                                                                    <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%; background-color:red;"></div>
+                                                                                </div>
+                                                                            </div><!---->
+                                                                        </div>
+    
+                                                                    </div>
+                                                                </div>
+    
+                                                            </div>
+                                                            
+                                                            
+                                                            <div class="col-6">
+    
+                                                                <div class="test-results">
+                                                                    <div class="summary-stats">
+                                                                        <div class="score-stats">
+                                                                            <div class="stats-title">Your Score</div>
+                                                                            <div class="stats-area ng-star-inserted" style="">
+                                                                                <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%; color:red;">
+                                                                                    <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
+                                                                                </div>
+                                                                                <div class="average-score-line on-right" style="left: 61%;">
+                                                                                    <div class="average-score"> Avg:&nbsp;255
+                                                                                        <div class="arrow-up-div"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="score-bar">
+                                                                                    <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%; background-color:red;"></div>
+                                                                                </div>
+                                                                            </div><!---->
+                                                                        </div>
+    
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                    @endif
+    
+                                               
 
-                                                @endif
-
-                                            </div>
-
-                                                <!-- result progress bar design end-->
+                                                    <!-- result progress bar design end-->
 
 
 
 
 
 
-                                                <!--<div class="table-responsive table-card mt-3 mb-1">-->
-
-                                                    <div class="row">
-
-                                                        <table id="datatables-example2" class="table"></table>
-
-                                                    </div>
+                                                    <!--<div class="table-responsive table-card mt-3 mb-1">-->
+    
+                                                        <div class="row">
+    
+                                                            <table id="datatables-example2" class="table"></table>
+    
+                                                        </div>
 
 
                                                 </div>
+                                                
+                                                
                                                 <div class="tab-pane" id="test_analytics" role="tabpanel">
                                                    <!--analytics graph start-->
                                                     <div class="row">

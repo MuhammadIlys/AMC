@@ -290,7 +290,7 @@
             </button>
         </div>
 
-        <div id="scrollbar" class="side-scrollbar">
+        <div id="scrollbar" class="side-scrollbar" style="background-color: #09408b">
             <div class="container-fluid">
 
                 <div id="two-column-menu">
@@ -358,8 +358,8 @@
         <div class="offcanvas-footer p-3 text-center">
             <div class="row">
                 <div class="col-12">
-                    <h5 class="text-white" style="margin: unset;">Expiration Date </h5>
-                    <p class="text-muted">@if(session()->has('mocks_expiry_timestamp'))
+                    <h5 class="text-white" style="margin: unset; color:#fff !important">Expiration Date </h5>
+                    <p class="text-muted" style="color: #fff !important">@if(session()->has('mocks_expiry_timestamp'))
                         {{ session('mocks_expiry_timestamp') }}
                     @else
 

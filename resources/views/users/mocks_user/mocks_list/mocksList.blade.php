@@ -36,13 +36,14 @@
 
     .launch-button {
       width: 100%;
-      background-color: #007BFF;
+      background-color: #013884;
       color: #fff;
       border: none;
     }
 
     .launch-button:hover {
       background-color: #0056b3;
+      color:white;
     }
 
     .test-card:hover {
@@ -87,19 +88,24 @@
                                         @foreach ($mocksData as $mock)
                                         <div class="col-md-4">
                                             <div class="test-card">
-                                                <h3>{{ $mock['test_name'] }}</h3>
-                                                <p>{{ $mock['test_name'] }} details go here. This is a sample description for {{ $mock['test_name'] }}.</p>
+                                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <h3 style="margin: 0;">{{ $mock['test_name'] }}</h3>
+                                                    <span class="info" style="border: 2px solid #888; padding:2px; border-radius: 50%; text-align: center; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center;">02</span>
+                                                </div>
+                                               <hr >
                                                 <div class="info">
                                                     <span>Total Questions: {{ $mock['total_questions'] }}</span><br>
                                                     <span>Hard Questions: {{ $mock['hard_questions'] }}</span><br>
                                                     <span>Easy Questions: {{ $mock['easy_questions'] }}</span><br>
                                                     <span>Fair Questions: {{ $mock['fair_questions'] }}</span>
                                                 </div>
+
                                                 <button class="btn launch-button" data-test-id="{{ $mock['test_id'] }}">
                                                     <span class="loading-spinner" id="loading-spinner-{{ $mock['test_id'] }}"></span>
                                                     Launch Mocks
                                                 </button>
                                             </div>
+
                                         </div>
                                     @endforeach
 

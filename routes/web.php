@@ -58,6 +58,20 @@ Route::post('/login', [MainLoginRegistrationController::class, 'login']);
 // Handle registration form request
 Route::post('/register', [MainLoginRegistrationController::class, 'register']);
 
+Route::get('/email_verification/{token}', [MainLoginRegistrationController::class, 'emailVerification'])->name('email.verification');
+
+Route::post('/forgot_password', [MainLoginRegistrationController::class, 'forgotPassword'])->name('forgot.password');
+Route::post('/change_password', [MainLoginRegistrationController::class, 'changePassword'])->name('change.password');
+
+
+Route::get('/reset_password/{token}', [MainLoginRegistrationController::class, 'passwordRest'])->name('password.reset');
+
+Route::post('/contact_us', [MainLoginRegistrationController::class, 'ContactUs'])->name('contact.us');
+
+
+// show main login page
+Route::get('/email_testing', [MainLoginRegistrationController::class, 'emailtesting']);
+
 
 
 //#################################  MAIN DASHBOARD FOR USER AND SUPER ADMIN ROUTES ##################################################

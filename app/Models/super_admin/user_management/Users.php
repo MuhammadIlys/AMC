@@ -18,7 +18,8 @@ class Users extends Model
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'country',
         'role','address','address2','city','phone',
-        'receive_service_update', 'receive_promotion_update'
+        'receive_service_update', 'receive_promotion_update','email_token',
+        'email_status','reset_token','token_expires_at',
     ];
 
 
@@ -26,6 +27,16 @@ class Users extends Model
     public function isSuperAdmin()
     {
         return $this->role === 'super_admin';
+    }
+
+    public function isEmailVerified()
+    {
+        return $this->email_status == 1;
+    }
+
+    public function isUser(){
+
+        return $this->role === 'user';
     }
 
     public function subscriptions()

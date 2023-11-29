@@ -19,7 +19,8 @@ class QuestionSeeder extends Seeder
                 'subject_id' => 1,
                 'speciality_id' => 1,
                 'topic_id' => 13,
-                'test_id' => 4,
+                'test_id' => 6,
+
                 'question_text' => "Question text $i",
                 'option1' => "Option 1 for question $i",
                 'option2' => "Option 2 for question $i",
