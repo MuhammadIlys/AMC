@@ -222,34 +222,68 @@
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">AMC Mocks Test</span>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
-                  <span class="d-flex">
-                    <i class="ti ti-file-description"></i>
-                  </span>
-                  <span class="hide-menu">Subjects</span>
-                </a>
-                <ul aria-expanded="false" class="collapse first-level">
 
                 <li class="sidebar-item">
-                    <a href="{{ url('/subject_view') }}" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu">Subject View</span>
+                    <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                    <span class="d-flex">
+                        <i class="ti ti-file-description"></i>
+                    </span>
+                    <span class="hide-menu">Uploads</span>
                     </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="{{ url('/subject_add') }}" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu">Add Subject</span>
-                    </a>
-                  </li>
+                    <ul aria-expanded="false" class="collapse first-level">
 
-                </ul>
-              </li>
+                        <li class="sidebar-item">
+                            <a href="{{ url('/subject_view') }}" class="sidebar-link">
+                            <div class="round-16 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-circle"></i>
+                            </div>
+                            <span class="hide-menu">Upload Images</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ url('/subject_add') }}" class="sidebar-link">
+                            <div class="round-16 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-circle"></i>
+                            </div>
+                            <span class="hide-menu">Upload Video</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                    <span class="d-flex">
+                        <i class="ti ti-file-description"></i>
+                    </span>
+                    <span class="hide-menu">Subjects</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+
+                        <li class="sidebar-item">
+                            <a href="{{ url('/subject_view') }}" class="sidebar-link">
+                            <div class="round-16 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-circle"></i>
+                            </div>
+                            <span class="hide-menu">Subject View</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ url('/subject_add') }}" class="sidebar-link">
+                            <div class="round-16 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-circle"></i>
+                            </div>
+                            <span class="hide-menu">Add Subject</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
               <li class="sidebar-item">
                 <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                   <span class="d-flex">

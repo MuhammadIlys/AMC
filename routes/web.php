@@ -30,6 +30,7 @@ use App\Http\Controllers\super_admin\mocks\speciality\MainSpecialityController;
 use App\Http\Controllers\super_admin\mocks\topic\MainTopicController;
 use App\Http\Controllers\super_admin\mocks\question\MainQuestionController;
 use App\Http\Controllers\super_admin\mocks\test\MainTestController;
+use App\Http\Controllers\super_admin\mocks\upload\MainMocksUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,28 @@ Route::middleware('user')->group(function () {
     Route::match(['get', 'post'],'/user_logout', [MainLoginRegistrationController::class, 'userLogout']);
 });
 
+
+//#################################  MOCK SUPER ADMIN UPLOAD IMAGES AND VIDEO ROUTES ##################################################
+
+Route::middleware('superadmin')->group(function () {
+
+    // upload images view
+    Route::get('/show_mocks_image_view', [MainMocksUploadController::class, 'showMocksImageView']);
+    // upload mocks image
+    Route::post('/upload_mocks_image', [MainMocksUploadController::class, 'uploadMocksImage']);
+
+    // load image data to datatable
+    Route::get('/load_mocks_images', [MainMocksUploadController::class, 'loadMocksImages']);
+
+    // delete mocks image
+    Route::delete('/delete_mocks_image/{image_id}', [MainMocksUploadController::class, 'deleteMocksImage']);
+
+
+
+
+
+
+});
 
 
 //#################################  MOCK SUPER ADMIN ROUTES ##################################################
