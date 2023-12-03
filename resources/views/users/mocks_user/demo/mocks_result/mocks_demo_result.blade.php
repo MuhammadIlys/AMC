@@ -1,4 +1,4 @@
-@extends('users.mocks_user.templates.main')
+@extends('users.mocks_user.demo.templates.main')
 @section('main-container')
 
 
@@ -1658,13 +1658,13 @@
                                 <div class="col-xxl-12">
                                     <div class="card">
 
-                                       <style>
+                                           <style>
 
-                                       .nav-link:hover {
-                                            background: #013884;
+                                            .nav-link:hover {
+                                                background: #013884;
 
-                                        }
-                                       </style>
+                                            }
+                                           </style>
 
 
 
@@ -1690,7 +1690,7 @@
 
                                             <div class="flex-grow-1 oveflow-hidden">
                                                 <p class="text-muted text-truncates mb-0 float-end fs-14">Custom Mocks
-                                                    ID: {{ $custom_mocks_id }} <i class="la la-info-circle text-blue fs-18 ms-2"></i>
+                                                    ID: 4567 <i class="la la-info-circle text-blue fs-18 ms-2"></i>
                                                 </p>
                                             </div>
 
@@ -1708,7 +1708,7 @@
 
                                                          <!-- result progress bar design start-->
 
-                                                        @if ($userCustomMocks->test_status == 'Pass')
+
 
                                                         <div class="row" style="padding-left:80px">
 
@@ -1718,8 +1718,8 @@
                                                                         <div class="score-stats">
                                                                             <div class="stats-title">Your Percentage</div>
                                                                             <div class="stats-area ng-star-inserted" style="">
-                                                                                <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%;">
-                                                                                    <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
+                                                                                <div class="user-score" style="left: 70%;">
+                                                                                    <span>70%</span><i class="la la-caret-down"></i>
                                                                                 </div>
                                                                                 <div class="average-score-line on-right" style="left: 61%;">
                                                                                     <div class="average-score"> Avg:&nbsp;61%
@@ -1727,7 +1727,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="score-bar">
-                                                                                    <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%;"></div>
+                                                                                    <div class="user-score-bar" style="width: 70%;"></div>
                                                                                 </div>
                                                                             </div><!---->
                                                                         </div>
@@ -1745,16 +1745,16 @@
                                                                         <div class="score-stats">
                                                                             <div class="stats-title">Your Score</div>
                                                                             <div class="stats-area ng-star-inserted" style="">
-                                                                                <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%;">
-                                                                                    <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
+                                                                                <div class="user-score" style="left: 80%;">
+                                                                                    <span>270</span><i class="la la-caret-down"></i>
                                                                                 </div>
-                                                                                <div class="average-score-line on-right" style="left: 61%;">
-                                                                                    <div class="average-score"> Avg:&nbsp;255
+                                                                                <div class="average-score-line on-right" style="left: 70%;">
+                                                                                    <div class="average-score"> Avg:&nbsp;250
                                                                                         <div class="arrow-up-div"></div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="score-bar">
-                                                                                    <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%;"></div>
+                                                                                    <div class="user-score-bar" style="width: 80%;"></div>
                                                                                 </div>
                                                                             </div><!---->
                                                                         </div>
@@ -1765,66 +1765,6 @@
                                                         </div>
 
 
-
-                                                    @else
-
-
-
-                                                        <div class="row" style="padding-left:80px">
-
-                                                            <div class="col-6">
-                                                                <div class="test-results">
-                                                                    <div class="summary-stats">
-                                                                        <div class="score-stats">
-                                                                            <div class="stats-title">Your Percentage</div>
-                                                                            <div class="stats-area ng-star-inserted" style="">
-                                                                                <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%; color:red;">
-                                                                                    <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
-                                                                                </div>
-                                                                                <div class="average-score-line on-right" style="left: 61%; ">
-                                                                                    <div class="average-score"> Avg:&nbsp;61%
-                                                                                        <div class="arrow-up-div"></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="score-bar">
-                                                                                    <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%; background-color:red;"></div>
-                                                                                </div>
-                                                                            </div><!---->
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                            <div class="col-6">
-
-                                                                <div class="test-results">
-                                                                    <div class="summary-stats">
-                                                                        <div class="score-stats">
-                                                                            <div class="stats-title">Your Score</div>
-                                                                            <div class="stats-area ng-star-inserted" style="">
-                                                                                <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%; color:red;">
-                                                                                    <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
-                                                                                </div>
-                                                                                <div class="average-score-line on-right" style="left: 61%;">
-                                                                                    <div class="average-score"> Avg:&nbsp;255
-                                                                                        <div class="arrow-up-div"></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="score-bar">
-                                                                                    <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%; background-color:red;"></div>
-                                                                                </div>
-                                                                            </div><!---->
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    @endif
 
 
 
@@ -1839,7 +1779,156 @@
 
                                                         <div class="row">
 
-                                                            <table id="datatables-example2" class="table"></table>
+                                                            <div id="datatables-example2_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                                                <div class="top">
+                                                                   <div id="datatables-example2_filter" class="dataTables_filter"><label><input type="text" class="form-control form-control-sm" placeholder="Search" aria-controls="datatables-example2"></label></div>
+                                                                </div>
+                                                                <div class="data-table">
+                                                                   <table id="datatables-example2" class="table dataTable no-footer" style="width: 1065px;">
+                                                                      <thead>
+                                                                         <tr>
+                                                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label=": activate to sort column descending" style="width: 39.8px;"></th>
+                                                                            <th class="sorting" tabindex="0" aria-controls="datatables-example2" rowspan="1" colspan="1" aria-label="ID: activate to sort column ascending" style="width: 24.8px;">ID</th>
+                                                                            <th class="sorting" tabindex="0" aria-controls="datatables-example2" rowspan="1" colspan="1" aria-label="Subject: activate to sort column ascending" style="width: 141.8px;">Subject</th>
+                                                                            <th class="sorting" tabindex="0" aria-controls="datatables-example2" rowspan="1" colspan="1" aria-label="Speciality: activate to sort column ascending" style="width: 293.8px;">Speciality</th>
+                                                                            <th class="sorting" tabindex="0" aria-controls="datatables-example2" rowspan="1" colspan="1" aria-label="Topic: activate to sort column ascending" style="width: 153.8px;">Topic</th>
+                                                                            <th class="sorting" tabindex="0" aria-controls="datatables-example2" rowspan="1" colspan="1" aria-label="choose Option: activate to sort column ascending" style="width: 98.8px;">choose Option</th>
+                                                                            <th class="sorting" tabindex="0" aria-controls="datatables-example2" rowspan="1" colspan="1" aria-label="Tim Spent (mm:ss): activate to sort column ascending" style="width: 124.8px;">Tim Spent (mm:ss)</th>
+                                                                            <th class="sorting" tabindex="0" aria-controls="datatables-example2" rowspan="1" colspan="1" aria-label=": activate to sort column ascending" style="width: 33.8px;"></th>
+                                                                         </tr>
+                                                                      </thead>
+                                                                      <tbody>
+                                                                         <tr class="odd">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la la-check ng-star-inserted" style="color: green;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>B</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                               <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                               </a>
+                                                                            </td>
+                                                                         </tr>
+                                                                         <tr class="even">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la-minus-circle ng-star-inserted" style="color: blue;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>Not Selected</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                                <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                                </a>
+                                                                             </td>
+                                                                         </tr>
+
+                                                                         <tr class="odd">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la la-times ng-star-inserted" style="color: red;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>B</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                               <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                               </a>
+                                                                            </td>
+                                                                         </tr>
+
+                                                                         <tr class="odd">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la la-check ng-star-inserted" style="color: green;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>B</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                               <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                               </a>
+                                                                            </td>
+                                                                         </tr>
+                                                                         <tr class="even">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la-minus-circle ng-star-inserted" style="color: blue;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>Not Selected</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                                <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                                </a>
+                                                                             </td>
+                                                                         </tr>
+
+                                                                         <tr class="odd">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la la-times ng-star-inserted" style="color: red;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>B</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                               <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                               </a>
+                                                                            </td>
+                                                                         </tr>
+
+                                                                         <tr class="odd">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la la-check ng-star-inserted" style="color: green;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>B</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                               <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                               </a>
+                                                                            </td>
+                                                                         </tr>
+                                                                         <tr class="even">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la-minus-circle ng-star-inserted" style="color: blue;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>Not Selected</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                                <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                                </a>
+                                                                             </td>
+                                                                         </tr>
+
+                                                                         <tr class="odd">
+                                                                            <td class="sorting_1"><i style="margin-left: 18px;"></i><i class="la la-lg la la-times ng-star-inserted" style="color: red;"></i></td>
+                                                                            <td>165</td>
+                                                                            <td>Obstetrics Gynecology</td>
+                                                                            <td>Reproductive Endocrinology and Infertility (REI)</td>
+                                                                            <td>in Vitro Fertilization (IVF)</td>
+                                                                            <td>B</td>
+                                                                            <td>04:44</td>
+                                                                            <td><a href="#" title="Preview Question">
+                                                                               <i class="la la-2x la-angle-right pointer fs-22 cursor-pointer ms-2"></i>
+                                                                               </a>
+                                                                            </td>
+                                                                         </tr>
+
+
+                                                                      </tbody>
+                                                                   </table>
+                                                                   <div class="bottom">
+                                                                      <div class="dt-buttons"></div>
+                                                                   </div>
+                                                                </div>
+                                                             </div>
 
                                                         </div>
 
@@ -1865,15 +1954,15 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->correct }}</div></td>
+                                                                    <td> <div class="score-badge float-end">90</div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Incorrect</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->incorrect }}</div></td>
+                                                                    <td> <div class="score-badge float-end">40</div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Omitted</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->omitted}}</div></td>
+                                                                    <td> <div class="score-badge float-end">20</div></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -1884,15 +1973,15 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Hard Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->hard_correct}} </div></td>
+                                                                    <td> <div class="score-badge float-end">30 </div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Fair Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->fair_correct}} </div></td>
+                                                                    <td> <div class="score-badge float-end">40 </div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Easy Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->easy_correct}} </div></td>
+                                                                    <td> <div class="score-badge float-end">20</div></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -1904,44 +1993,92 @@
                                                         <!--analytics graph end -->
 
 
-                                                        <!-- table filter start-->
-                                                    <div style="padding: 0 32px;">
-                                                        <div class="row mt-4">
-                                                            <div class="col-7">
-                                                                <div class="d-flex">
 
-
-
-
-
-                                                                </div>
-
-
-                                                            </div>
-                                                            <div class="col-5">
-                                                                <!--<input type="text" id="myInputTextField" class="form-control form-control-sm" placeholder="Search" aria-controls="employees">-->
-
-                                                                <div class="dataTables_filter" style="margin-right: 24px;"><label><input id="myInputTextField" type="text" class="form-control form-control-sm" placeholder="Search" aria-controls="datatables-example"></label></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
                                                     <!-- table filter end-->
 
-                                                        <!--table start-->
-                                                        <table id="employees" class="table table-striped" style="width:100%">
-                                                            <thead>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th>subject name</th>
+                                                    <div id="employees_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                                        <div class="top">
+                                                           <div id="employees_filter" class="dataTables_filter"><label><input type="text" class="form-control form-control-sm" placeholder="Search" aria-controls="employees"></label></div>
+                                                        </div>
+                                                        <div class="data-table">
+                                                           <table id="employees" class="table table-striped dataTable no-footer" style="width: 100%;">
+                                                              <thead>
+                                                                 <tr>
+                                                                    <th class="details-control sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 0px;"></th>
+                                                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="employees" rowspan="1" colspan="1" aria-label="subject name: activate to sort column descending" style="width: 0px;" aria-sort="ascending">subject name</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="employees" rowspan="1" colspan="1" aria-label="CORRECT: activate to sort column ascending" style="width: 0px;">CORRECT</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="employees" rowspan="1" colspan="1" aria-label="INCORRECT: activate to sort column ascending" style="width: 0px;">INCORRECT</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="employees" rowspan="1" colspan="1" aria-label="OMITTED: activate to sort column ascending" style="width: 0px;">OMITTED</th>
+                                                                 </tr>
+                                                              </thead>
+                                                              <tbody>
+                                                                 <tr class="odd">
+                                                                    <td class="  details-control"></td>
+                                                                    <td class="sorting_1">
+                                                                       <span>Obstetrics Gynecology</span>
+                                                                       <div class="progress mt-1" style="height:5px">
+                                                                          <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-danger" role="progressbar" style="width: 60%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-warning " role="progressbar" style="width: 20%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                       </div>
+                                                                    </td>
+                                                                    <td>20</td>
+                                                                    <td>10</td>
+                                                                    <td>5</td>
+                                                                 </tr>
 
-                                                                <th>CORRECT</th>
-                                                                <th>INCORRECT</th>
-                                                                <th>OMITTED</th>
+                                                                 <tr class="even">
+                                                                    <td class="  details-control"></td>
+                                                                    <td class="sorting_1">
+                                                                       <span>Medicine</span>
+                                                                       <div class="progress mt-1" style="height:5px">
+                                                                          <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-warning " role="progressbar" style="width: 50%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                       </div>
+                                                                    </td>
+                                                                    <td>20</td>
+                                                                    <td>12</td>
+                                                                    <td>5</td>
+                                                                 </tr>
 
-                                                            </tr>
-                                                            </thead>
-                                                        </table>
+                                                                 <tr class="even">
+                                                                    <td class="  details-control"></td>
+                                                                    <td class="sorting_1">
+                                                                       <span>Surgery</span>
+                                                                       <div class="progress mt-1" style="height:5px">
+                                                                          <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-warning " role="progressbar" style="width: 50%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                       </div>
+                                                                    </td>
+                                                                    <td>20</td>
+                                                                    <td>12</td>
+                                                                    <td>5</td>
+                                                                 </tr>
+
+                                                                 <tr class="even">
+                                                                    <td class="  details-control"></td>
+                                                                    <td class="sorting_1">
+                                                                       <span>Public Health</span>
+                                                                       <div class="progress mt-1" style="height:5px">
+                                                                          <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-warning " role="progressbar" style="width: 50%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                       </div>
+                                                                    </td>
+                                                                    <td>20</td>
+                                                                    <td>12</td>
+                                                                    <td>5</td>
+                                                                 </tr>
+                                                              </tbody>
+                                                           </table>
+                                                           <div class="bottom">
+                                                              <div class="dt-buttons"></div>
+                                                           </div>
+                                                        </div>
+                                                     </div>
 
                                                         <!--table end-->
 
@@ -1998,12 +2135,12 @@
 
 
 <script>
-    var hardCorrect = {{ $userCustomMocks->hard_correct }};
-    var fairCorrect = {{ $userCustomMocks->fair_correct }};
-    var easyCorrect = {{ $userCustomMocks->easy_correct }};
-    var correct = {{ $userCustomMocks->correct }};
-    var incorrect = {{ $userCustomMocks->incorrect }};
-    var omitted = {{ $userCustomMocks->omitted }};
+    var hardCorrect = 40;
+    var fairCorrect = 30;
+    var easyCorrect = 20;
+    var correct = 90;
+    var incorrect = 40;
+    var omitted = 20;
 
     function getChartColorsArray(elementId) {
         var element = document.getElementById(elementId);
@@ -2085,18 +2222,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     <script>
         function collapse(cell){
             var row = cell.parentElement;
@@ -2161,105 +2286,8 @@
     </script>
 
 
-    <script>
 
 
-        const dataSet = @json($dataTable);
-
-        $(function () {
-            $('#datatables-example2').DataTable({
-                // Table data
-                data: dataSet, // My JS array
-                columns: [ // Define table Headers for each column
-                    {title: ''},
-                    { title: 'ID' },
-                    { title: 'Subject' },
-                    { title: 'Speciality' },
-                    { title: 'Topic' },
-                    { title: 'choose Option' },
-                    { title: 'Tim Spent (mm:ss)' },
-                    { title: '' }, // Add an empty title for the 8th column
-
-                ],
-
-                "fnInitComplete": function (oSettings, json) {
-                    $('.dataTables_filter input').attr('type', 'text');
-                },
-            })
-            .on('page.dt', function () {
-                $('[data-toggle="tooltip"]').tooltip({ placement: 'bottom' })
-            });
-        });
-
-
-    </script>
-
-
-
-<script>
-
-    var data={!! $jsonData  !!}
-
-    function format(d) {
-    var specialitiesTable = '<table class="table mb-0 table-sub-rows">';
-
-    d.specialities.forEach(function (speciality) {
-        specialitiesTable += '<tr class="table-primary">' +
-            '<td>' + speciality.name + '</td>' +
-            '<td>' + speciality.correct + '</td>' +
-            '<td>' + speciality.incorrect + '</td>' +
-            '<td>' + speciality.omitted + '</td>' +
-            '</tr>';
-    });
-
-    specialitiesTable += '</table>';
-
-    return specialitiesTable;
-}
-
-
-    //table for mocks analytics
-
-    $(document).ready(function() {
-        var table = $("#employees").DataTable({
-            data: data,
-            columns: [
-                {
-                    className: "details-control",
-                    orderable: false,
-                    data: null,
-                    defaultContent: ''
-                },
-                { data: "name" },
-                { data: "correct" },
-                { data: "incorrect" },
-                { data: "omitted" },
-                { data: "specialities", visible: false }
-            ],
-            order: [[1, "asc"]],
-            "fnInitComplete": function (oSettings, json) {
-                $('.dataTables_filter input').attr('type', 'text');
-                $('#employees').DataTable().search( '' ).draw();
-            }
-        });
-
-        $('#myInputTextField').keyup(function(){
-            table.search($(this).val()).draw() ;
-        });
-        $("#employees tbody").on("click", "td.details-control", function() {
-            var tr = $(this).closest("tr");
-            var row = table.row(tr);
-
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass("shown");
-            } else {
-                row.child(format(row.data()), "p-0").show();
-                tr.addClass("shown");
-            }
-        });
-    });
-</script>
 
 <script>
 
@@ -2293,12 +2321,6 @@ $(document).ready(function() {
 </script>
 
 
-
-<script>
-    $(document).ready(function() {
-        $('#data-table').DataTable();
-    });
-</script>
 
 
 

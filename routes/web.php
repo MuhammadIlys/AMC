@@ -5,6 +5,7 @@ use App\Http\Controllers\super_admin\user_management\subscription\MainSubscripti
 use App\Http\Controllers\super_admin\user_management\user\MainUserController;
 use App\Http\Controllers\super_admin\user_management\mocks_management\MainMocksManagementController;
 use App\Http\Controllers\users\mocks_user\account_reset\MainAccountResetController;
+use App\Http\Controllers\users\mocks_user\demo\MainMocksDemoController;
 use App\Http\Controllers\users\mocks_user\exam\MainExamController;
 use App\Http\Controllers\users\mocks_user\graph\MainGraphController;
 use App\Http\Controllers\users\mocks_user\help\MainHelpController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\users\mocks_user\previous_mocks\MainPreviousMocksContro
 use App\Http\Controllers\users\mocks_user\question_preview\MainQuestionPreviewController;
 use App\Http\Controllers\users\mocks_user\report\MainReportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\super_admin\mocks\question_preview\MainQuestionPreview2Controller;
+
 
 // super-admin main controller
 use App\Http\Controllers\super_admin\MainController;
@@ -257,6 +260,15 @@ Route::post('/update-question', [MainQuestionController::class, 'updateQuestion'
 ->middleware('superadmin');
 
 
+
+// show question preview
+
+Route::get('/question_preview/{question_id}', [MainQuestionPreview2Controller::class, 'showQuestionPreview'])
+->middleware('superadmin');
+
+
+
+
 //TEST SECTION ######################################################
 
 
@@ -466,6 +478,45 @@ Route::get('/mocks_user_account_reset', [MainAccountResetController::class,'mock
 
 Route::get('/show_mocks_user_question_preview/{user_mocks_id}/{question_id?}', [MainQuestionPreviewController::class, 'showQuestionPreviewView'])
 ->middleware('subscription:MOCKS');
+
+// ###################################  MOCKS DEMO ROUTES ##################
+
+Route::get('/lunch_mocks_demo', [MainMocksDemoController::class,'lunchMocksDemo'])
+->middleware('user');
+
+Route::get('/mocks_list_demo', [MainMocksDemoController::class,'mocksListDemo'])
+->middleware('user');
+
+Route::get('/mocks_previous_demo', [MainMocksDemoController::class,'mocksPreviousDemo'])
+->middleware('user');
+
+Route::get('/mocks_result_demo', [MainMocksDemoController::class,'mocksResultDemo'])
+->middleware('user');
+
+Route::get('/mocks_analytics_demo', [MainMocksDemoController::class,'mocksAnalyticsDemo'])
+->middleware('user');
+
+Route::get('/mocks_preview_demo', [MainMocksDemoController::class,'mocksPreviewDemo'])
+->middleware('user');
+
+Route::get('/mocks_report_demo', [MainMocksDemoController::class,'mocksReportDemo'])
+->middleware('user');
+
+Route::get('/mocks_graph_demo', [MainMocksDemoController::class,'mocksGraphDemo'])
+->middleware('user');
+
+Route::get('/mocks_account_reset_demo', [MainMocksDemoController::class,'mocksAccountResetDemo'])
+->middleware('user');
+
+Route::get('/mocks_demo_exam_lunch', [MainMocksDemoController::class,'mocksDemoExamLunch'])
+->middleware('user');
+
+Route::get('/mocks_demo_before_exam', [MainMocksDemoController::class,'mocksDemoBeforeExam'])
+->middleware('user');
+
+Route::get('/mocks_demo_start_exam', [MainMocksDemoController::class,'mocksDemoStartExam'])
+->middleware('user');
+
 
 
 

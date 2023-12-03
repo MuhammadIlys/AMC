@@ -3,7 +3,7 @@
    <head>
       <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
       <title>
-        {{ $test->test_name }} Trial Examination
+        Demo Trial Examination
       </title>
 
       <link href='{{ asset("user/mock_user_assets/exam_assets/assets/css/screen.css")}}'  rel='stylesheet' type='text/css' />
@@ -17,7 +17,7 @@
             <div class='container'>
                <div id='header'>
                   <h1>
-                    <a href='#'>{{ $test->test_name }} Trial Examination</a>
+                    <a href='#'>Demo Trial Examination</a>
                   </h1>
 
                </div>
@@ -109,7 +109,7 @@
             // Check if the "Yes" radio button is selected
             if ($('#y').prop('checked')) {
                 // Redirect to another page
-                window.location.href = "{{ url('/mocks_start') }}";
+                window.location.href = "{{ url('/mocks_demo_start_exam') }}";
             } else {
                 // Show SweetAlert for confirmation
                 Swal.fire({

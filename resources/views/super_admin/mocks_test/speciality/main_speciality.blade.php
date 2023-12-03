@@ -273,7 +273,7 @@
                     <input type="hidden" name="speciality_id" id="speciality_id">
                     <div class="form-group">
                         <label for="speciality_name">Speciality Name:</label>
-                        <input type="text" class="form-control" id="speciality_name" name="speciality_name" readonly>
+                        <input type="text" class="form-control" id="speciality_name" name="speciality_name" >
                     </div>
 
                     <div class="form-group">

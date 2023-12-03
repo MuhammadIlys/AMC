@@ -4,7 +4,7 @@
       <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <title>
-         {{ $test->test_name }} Trial Examination
+         Demo Trial Examination
       </title>
        <!-- Add script for countdown timer -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

@@ -5,7 +5,7 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Mocks Test</title>
+    <title>Mocks Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="" name="description">
     <meta content="" name="author">
@@ -215,7 +215,7 @@
                     <!-- LOGO -->
                     <div class="navbar-brand-box horizontal-logo">
 
-                        <a href="{{ url('/user_dashboard') }}" class="logo logo-light">
+                        <a href="https://aceamcq.com/#SUBSCRIBE" class="logo logo-light">
                         <span class="logo-sm">
                             <img src="https://aceamcq.com/wp-content/uploads/2023/08/image-1.png" alt="" height="22">
                         </span>
@@ -302,20 +302,20 @@
 
 
                     <li class="nav-item mt-3">
-                        <a class="nav-link menu-link" href="{{ url('/mocks_user_welcome') }}">
+                        <a class="nav-link menu-link" href="{{ url('/lunch_mocks_demo') }}">
                             <i class='la la-md la-home icon-margin fs-18'></i> <span data-key="t-widgets">Welcome</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ url('/mocks_user_mocks_list') }}">
+                        <a class="nav-link menu-link" href="{{ url('/mocks_list_demo') }}">
                             <i class='la la-edit fs-18'></i> <span data-key="t-widgets">Mocks</span>
                         </a>
                     </li>
 
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ url('/mocks_user_previous_mocks') }}">
+                        <a class="nav-link menu-link" href="{{ url('/mocks_previous_demo') }}">
                             <i class='la la-list-alt fs-18'></i> <span data-key="t-widgets">Previous Mocks</span>
                         </a>
                     </li>
@@ -328,24 +328,24 @@
                         <div class="collapse menu-dropdown" id="sidebarLanding">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="{{ url('/mocks_user_welcome') }}" class="nav-link" data-key="t-one-page"> <i class="la la-clipboard-check fs-18"></i> Overall </a>
+                                    <a href="{{ url('/lunch_mocks_demo') }}" class="nav-link" data-key="t-one-page"> <i class="la la-clipboard-check fs-18"></i> Overall </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/mocks_user_report') }}" class="nav-link" data-key="t-one-page"> <i class="la la-chart-pie fs-18"></i> Reports </a>
+                                    <a href="{{ url('/mocks_report_demo') }}" class="nav-link" data-key="t-one-page"> <i class="la la-chart-pie fs-18"></i> Reports </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/mocks_user_graph') }}" class="nav-link" data-key="t-one-page"> <i class="la la-chart-line fs-18"></i> Graphs </a>
+                                    <a href="{{ url('/mocks_graph_demo') }}" class="nav-link" data-key="t-one-page"> <i class="la la-chart-line fs-18"></i> Graphs </a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ url('/account_reset_view') }}">
+                        <a class="nav-link menu-link" href="{{ url('/mocks_account_reset_demo') }}">
                             <i class="la la-undo fs-18"></i> <span data-key="t-widgets">Reset Options</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ url('/mocks_user_help') }}">
+                        <a class="nav-link menu-link" href="#">
                             <i class='la la-question-circle fs-18'></i> <span data-key="t-widgets">Help</span>
                         </a>
                     </li>
@@ -359,11 +359,9 @@
             <div class="row">
                 <div class="col-12">
                     <h5 class="text-white" style="margin: unset; color:#fff !important">Expiration Date </h5>
-                    <p class="text-muted" style="color: #fff !important">@if(session()->has('mocks_expiry_timestamp'))
-                        {{ session('mocks_expiry_timestamp') }}
-                    @else
-
-                    @endif EDT</p>
+                    <p class="text-muted" style="color: #fff !important">
+                        2099-10-13 22:33:00
+                    EDT</p>
                 </div>
             </div>
         </div>

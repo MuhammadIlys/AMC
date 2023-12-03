@@ -9,7 +9,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <style>
     body {
       min-height: 100vh;
@@ -159,13 +159,13 @@
         <div class="offcanvas-body">
             <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Qbanks</a>
+                <a class="nav-link" href="https://aceamcq.com/#SUBSCRIBE"><i class="fa fa-book"></i> AMC Qbanks</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Recalls</a>
+                <a class="nav-link" href="https://aceamcq.com/#SUBSCRIBE"><i class="fa fa-book"></i> AMC Recalls</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-book"></i> AMC Mocks</a>
+                <a class="nav-link" href="https://aceamcq.com/#SUBSCRIBE"><i class="fa fa-book"></i> AMC Mocks</a>
             </li>
             <hr>
 

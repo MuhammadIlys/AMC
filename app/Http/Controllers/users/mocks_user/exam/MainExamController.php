@@ -11,12 +11,28 @@ class MainExamController extends Controller
 {
     public function mocksLunchMocks(){
 
-        return view('users.mocks_user.exam.exam_start');
+        $testId = Session::get('user_mocks_id');
+        if ($testId === null) {
+            // Handle the case where the user does not have a mock test ID
+            return view('users.mocks_user.exam.exam_start');
+        }
+
+        $test=Test::find($testId)->first();
+
+        return view('users.mocks_user.exam.exam_start', compact('test'));
     }
 
     public function mocksTerms(){
 
-        return view('users.mocks_user.exam.before_start_exam');
+        $testId = Session::get('user_mocks_id');
+        if ($testId === null) {
+            // Handle the case where the user does not have a mock test ID
+            return view('users.mocks_user.exam.exam_start');
+        }
+
+        $test=Test::find($testId)->first();
+
+        return view('users.mocks_user.exam.before_start_exam', compact('test'));
     }
 
     public function mocksStart(){
@@ -30,8 +46,9 @@ class MainExamController extends Controller
 
         // Assuming you have a relationship between Test and Question model
         $questions = Test::find($testId)->questions;
+        $test=Test::find($testId)->first();
 
         // Pass the questions to the view
-        return view('users.mocks_user.exam.start_real_exam', compact('questions'));
+        return view('users.mocks_user.exam.start_real_exam', compact('questions','test'));
     }
 }

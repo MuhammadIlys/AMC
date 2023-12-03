@@ -1,5 +1,5 @@
 
-@extends('users.mocks_user.templates.main')
+@extends('users.mocks_user.demo.templates.main')
 @section('main-container')
 
 
@@ -283,20 +283,93 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <table id="employees" class="table table-striped" style="width:100%">
-                                                        <thead>
-                                                        <tr>
 
-                                                            <th></th>
-                                                            <th>subject name</th>
 
-                                                            <th>Correct</th>
-                                                            <th>Incorrect</th>
-                                                            <th>Omitted</th>
+                                                    <div id="employees_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                                        <div class="top">
+                                                           <div id="employees_filter" class="dataTables_filter"><label><input type="text" class="form-control form-control-sm" placeholder="Search" aria-controls="employees"></label></div>
+                                                        </div>
+                                                        <div class="data-table">
+                                                           <table id="employees" class="table table-striped dataTable no-footer" style="width: 100%;">
+                                                              <thead>
+                                                                 <tr>
+                                                                    <th class="details-control sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 34.8px;"></th>
+                                                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="employees" rowspan="1" colspan="1" aria-label="subject name: activate to sort column descending" style="width: 400.8px;" aria-sort="ascending">subject name</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="employees" rowspan="1" colspan="1" aria-label="Correct: activate to sort column ascending" style="width: 163.8px;">Correct</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="employees" rowspan="1" colspan="1" aria-label="Incorrect: activate to sort column ascending" style="width: 190.8px;">Incorrect</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="employees" rowspan="1" colspan="1" aria-label="Omitted: activate to sort column ascending" style="width: 171.8px;">Omitted</th>
+                                                                 </tr>
+                                                              </thead>
+                                                              <tbody>
+                                                                 <tr class="odd">
+                                                                    <td class="  details-control"></td>
+                                                                    <td class="sorting_1">
+                                                                       <span>Obstetrics Gynecology</span>
+                                                                       <div class="progress mt-1" style="height:5px">
+                                                                          <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-warning " role="progressbar" style="width: 50%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                       </div>
+                                                                    </td>
+                                                                    <td>40</td>
+                                                                    <td>60</td>
+                                                                    <td>50</td>
+                                                                 </tr>
 
-                                                        </tr>
-                                                        </thead>
-                                                    </table>
+                                                                 <tr class="even">
+                                                                    <td class="  details-control"></td>
+                                                                    <td class="sorting_1">
+                                                                       <span>Medicine</span>
+                                                                       <div class="progress mt-1" style="height:5px">
+                                                                          <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-warning " role="progressbar" style="width: 50%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                       </div>
+                                                                    </td>
+                                                                    <td>40</td>
+                                                                    <td>60</td>
+                                                                    <td>50</td>
+                                                                 </tr>
+
+                                                                 <tr class="odd">
+                                                                    <td class="  details-control"></td>
+                                                                    <td class="sorting_1">
+                                                                       <span>Surgery</span>
+                                                                       <div class="progress mt-1" style="height:5px">
+                                                                          <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-warning " role="progressbar" style="width: 20%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                       </div>
+                                                                    </td>
+                                                                    <td>40</td>
+                                                                    <td>60</td>
+                                                                    <td>50</td>
+                                                                 </tr>
+
+                                                                 <tr class="even">
+                                                                    <td class="  details-control"></td>
+                                                                    <td class="sorting_1">
+                                                                       <span>Public Health</span>
+                                                                       <div class="progress mt-1" style="height:5px">
+                                                                          <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                          <div class="progress-bar bg-warning " role="progressbar" style="width: 40%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                       </div>
+                                                                    </td>
+                                                                    <td>40</td>
+                                                                    <td>60</td>
+                                                                    <td>50</td>
+                                                                 </tr>
+
+
+                                                              </tbody>
+                                                           </table>
+                                                           <div class="bottom">
+                                                              <div class="dt-buttons"></div>
+                                                           </div>
+                                                        </div>
+                                                     </div>
+
                                                 </div>
 
                                             </div>
@@ -395,72 +468,7 @@
 
 </script>
 
-<script>
 
-    var data={!! $jsonData  !!}
-
-    function format(d) {
-    var specialitiesTable = '<table class="table mb-0 table-sub-rows">';
-
-    d.specialities.forEach(function (speciality) {
-        specialitiesTable += '<tr class="table-primary">' +
-            '<td>' + speciality.name + '</td>' +
-            '<td>' + speciality.correct + '</td>' +
-            '<td>' + speciality.incorrect + '</td>' +
-            '<td>' + speciality.omitted + '</td>' +
-            '</tr>';
-    });
-
-    specialitiesTable += '</table>';
-
-    return specialitiesTable;
-    }
-
-
-    //table for mocks analytics
-
-    $(document).ready(function() {
-        var table = $("#employees").DataTable({
-            data: data,
-            columns: [
-                {
-                    className: "details-control",
-                    orderable: false,
-                    data: null,
-                    defaultContent: ''
-                },
-                { data: "name" },
-                { data: "correct" },
-                { data: "incorrect" },
-                { data: "omitted" },
-                { data: "specialities", visible: false }
-            ],
-            order: [[1, "asc"]],
-            "fnInitComplete": function (oSettings, json) {
-                $('.dataTables_filter input').attr('type', 'text');
-                $('#employees').DataTable().search( '' ).draw();
-            }
-        });
-
-        $('#myInputTextField').keyup(function(){
-            table.search($(this).val()).draw() ;
-        });
-        $("#employees tbody").on("click", "td.details-control", function() {
-            var tr = $(this).closest("tr");
-            var row = table.row(tr);
-
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass("shown");
-            } else {
-                row.child(format(row.data()), "p-0").show();
-                tr.addClass("shown");
-            }
-        });
-    });
-
-
-</script>
 
 
 

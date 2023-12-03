@@ -3,7 +3,7 @@
    <head>
       <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
       <title>
-        {{ $test->test_name }} Trial Examination
+        Demo Trial Examination
       </title>
 
       <link href='{{ asset("user/mock_user_assets/exam_assets/assets/css/screen.css")}}'  rel='stylesheet' type='text/css' />
@@ -16,7 +16,7 @@
             <div class='container'>
                <div id='header'>
                   <h1>
-                    <a href='#'>{{ $test->test_name }} Trial Examination</a>
+                    <a href='#'>Demo Trial Examination</a>
                   </h1>
                </div>
             </div>
@@ -59,7 +59,7 @@
                      </legend>
                      <ol>
                         <li class='button'>
-                           <a href="{{ url('/mocks_terms') }}"><input id='next_button' type='button' value='Next Step' /></a>
+                           <a href="{{ url('/mocks_demo_before_exam') }}"><input id='next_button' type='button' value='Next Step' /></a>
                         </li>
                      </ol>
                   </fieldset>

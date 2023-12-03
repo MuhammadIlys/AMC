@@ -74,17 +74,10 @@ $(document).ready(function () {
             ajax: '{{ route('get_question_data') }}',
             columns: [
                 { data: 'question_track_id' },
+
                 {
-                    data: 'question_text',
-                    render: function (data, type, row) {
-                        if (type === 'display' || type === 'filter') {
-                            // Ensure that text wraps and add a tooltip with the full content
-                            if (data.length > 10) {
-                                return '<div class="dt-wrap-text" title="' + data + '">' + data + '</div>';
-                            }
-                        }
-                        return data;
-                    }
+                    data: 'question_text'
+
                 },
 
                 {
@@ -102,6 +95,9 @@ $(document).ready(function () {
                                     data-speciality_id="${data.speciality_id}"
                                     data-topic_id="${data.topic_id}"
                                     data-subject_id="${data.subject_id}">Delete</button>
+                            <button class="qpreview-btn btn btn-sm mb-1 waves-effect waves-light btn-info"
+                                    data-question_id="${data.question_id}"
+                                    ">Q.Preview</button>
                         `;
                     }
                 }
@@ -393,6 +389,21 @@ $(document).ready(function () {
     });
 
   });
+
+
+  // question preview
+
+  $('#question_table').on('click', '.qpreview-btn', function () {
+    // Retrieve data attributes from the clicked button
+    const data = $(this).data();
+    var questionId = data.question_id;
+
+    // Assuming your URL is '/question_preview' and you want to append the questionId parameter
+    var previewUrl = '/question_preview/' + questionId;
+
+    // Open the preview URL in a new tab
+    window.open(previewUrl, '_blank');
+});
 
 
 

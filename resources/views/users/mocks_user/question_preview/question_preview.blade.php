@@ -4,8 +4,7 @@
       <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <title>
-         Question 1 of 676
-         &rsaquo; AMC MCQ Online Trial Examination
+        {{ $mocksName }} Question Preview
       </title>
 
 
@@ -52,37 +51,37 @@
                             <form class="edit_answer" id="edit_answer_2585551" method="post">
                                 <fieldset>
                                     <p id="question_text">
-                                        {{ $questions[0]->question_text }}
+
                                     </p>
                                     <ol>
                                         <li>
                                             <label for='answer_a'>
                                                 <input id='answer_1' name='options' type='radio' value='1' />
-                                                <span>A. <span id="option1"> {{ $questions[0]->option1 }}</span></span>
+                                                <span>A. <span id="option1"> </span></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label for='answer_b'>
                                                 <input id='answer_2' name='options' type='radio' value='2' />
-                                                <span>B. <span id="option2">{{ $questions[0]->option2 }}</span> </span>
+                                                <span>B. <span id="option2"></span> </span>
                                             </label>
                                         </li>
                                         <li>
                                             <label for='answer_c'>
                                                 <input id='answer_3' name='options' type='radio' value='3' />
-                                                <span>C. <span id="option3">{{ $questions[0]->option3 }}</span></span>
+                                                <span>C. <span id="option3"></span></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label for='answer_d'>
                                                 <input id='answer_4' name='options' type='radio' value='4' />
-                                                <span>D. <span id="option4">{{ $questions[0]->option4 }}</span></span>
+                                                <span>D. <span id="option4"></span></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label for='answer_e'>
                                                 <input id='answer_5' name='options' type='radio' value='5' />
-                                                <span>E. <span id="option5">{{ $questions[0]->option5 }}</span></span>
+                                                <span>E. <span id="option5"></span></span>
                                             </label>
                                         </li>
                                     </ol>
@@ -93,7 +92,7 @@
                             <hr>
                             <div id="question_explanation">
 
-                                {{ $questions[0]->question_explanation }}
+
 
                             </div>
                         </div>
@@ -304,6 +303,76 @@
 
         });
     </script>
+
+
+
+<script>
+  // Function to apply CSS styles to all elements within the specified elements
+  function applyFontStylesToElements(selector) {
+    const elements = $(selector);
+
+    if (elements.length) {
+      const fontSize = '100%'; // Change to your desired font size
+      const fontFamily = 'inherit'; // Change to your desired font family
+
+      elements.each(function () {
+        // Remove existing font styles
+        $(this).css({
+          'font-size': '',
+          'font-family': ''
+        });
+
+        // Select all elements within the specified element
+        const childElements = $(this).find('*');
+
+        childElements.each(function () {
+          $(this).css({
+            'font-size': fontSize,
+            'font-family': fontFamily
+          });
+        });
+      });
+    }
+  }
+
+  // Function to observe changes in the specified elements' content
+  function observeElementChanges(selector) {
+    const elements = $(selector);
+
+    if (elements.length) {
+      elements.each(function () {
+        const observer = new MutationObserver(function (mutationsList) {
+          for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+              applyFontStylesToElements(selector);
+            }
+          }
+        });
+
+        observer.observe(this, { childList: true, subtree: true });
+      });
+    }
+  }
+
+  // Call the functions when the page loads
+  $(document).ready(function () {
+
+    applyFontStylesToElements('#question_text');
+    applyFontStylesToElements('#option1');
+    applyFontStylesToElements('#option2');
+    applyFontStylesToElements('#option3');
+    applyFontStylesToElements('#option4');
+    applyFontStylesToElements('#option5');
+    applyFontStylesToElements('#question_explanation');
+    observeElementChanges('#question-text');
+    observeElementChanges('#option1');
+    observeElementChanges('#option2');
+    observeElementChanges('#option3');
+    observeElementChanges('#option4');
+    observeElementChanges('#option5');
+    observeElementChanges('#question_explanation');
+  });
+</script>
 
 
 
