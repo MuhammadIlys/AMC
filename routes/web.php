@@ -47,509 +47,378 @@ use App\Http\Controllers\super_admin\mocks\test\MainTestController;
 // show main login page
 Route::get('/', [MainLoginRegistrationController::class, 'showLogin']);
 
-// logout function for super admin
-Route::match(['get', 'post'],'/super_logout', [MainLoginRegistrationController::class, 'superAdminLogout'])
-->middleware('superadmin');
-
-// logout function for users
-Route::match(['get', 'post'],'/user_logout', [MainLoginRegistrationController::class, 'userLogout'])
-->middleware('user');
-
-
 // Handle login form request
 Route::post('/login', [MainLoginRegistrationController::class, 'login']);
 
 // Handle registration form request
 Route::post('/register', [MainLoginRegistrationController::class, 'register']);
 
+//#################################  EMAIL SENDING ROUTES ##################################################
+
 Route::get('/email_verification/{token}', [MainLoginRegistrationController::class, 'emailVerification'])->name('email.verification');
 
 Route::post('/forgot_password', [MainLoginRegistrationController::class, 'forgotPassword'])->name('forgot.password');
-Route::post('/change_password', [MainLoginRegistrationController::class, 'changePassword'])->name('change.password');
 
+Route::post('/change_password', [MainLoginRegistrationController::class, 'changePassword'])->name('change.password');
 
 Route::get('/reset_password/{token}', [MainLoginRegistrationController::class, 'passwordRest'])->name('password.reset');
 
 Route::post('/contact_us', [MainLoginRegistrationController::class, 'ContactUs'])->name('contact.us');
 
 
-// show main login page
-Route::get('/email_testing', [MainLoginRegistrationController::class, 'emailtesting']);
 
+//#################################  MAIN DASHBOARD FOR  SUPER ADMIN ROUTES ##################################################
 
+Route::middleware('superadmin')->group(function () {
+    // Super admin main route
+    Route::match(['get', 'post'], '/super_dashboard', [MainController::class, 'superAdminView']);
 
-//#################################  MAIN DASHBOARD FOR USER AND SUPER ADMIN ROUTES ##################################################
+    // logout function for super admin
+    Route::match(['get', 'post'],'/super_logout', [MainLoginRegistrationController::class, 'superAdminLogout']);
+});
 
+//#################################  MAIN DASHBOARD FOR USER ROUTES ##################################################
 
-// super admin main route
-Route::match(['get', 'post'],'/super_dashboard', [MainController::class,'superAdminView'])->middleware('superadmin');
+Route::middleware('user')->group(function () {
+    // User main dashboard
+    Route::match(['get', 'post'], '/user_dashboard', [MainController::class, 'userAdminView']);
 
-// user main dashbaord
-Route::match(['get', 'post'],'/user_dashboard', [MainController::class,'userAdminView'])
-->middleware('user');
+    // Update the user profile information on the main index page
+    Route::post('/update_user_profile_info', [MainController::class, 'updateUserProfileInfo']);
 
+    // Change user password
+    Route::post('/change_user_password', [MainController::class, 'updateUserPassword']);
 
-// update the user profile information main index page
-
-Route::post('/update_user_profile_info', [MainController::class, 'updateUserProfileInfo'])
-->middleware('user');
-
-//
-
-Route::post('/change_user_password', [MainController::class, 'updateUserPassword'])
-->middleware('user');
+    // logout function for users
+    Route::match(['get', 'post'],'/user_logout', [MainLoginRegistrationController::class, 'userLogout']);
+});
 
 
 
 //#################################  MOCK SUPER ADMIN ROUTES ##################################################
 
+Route::middleware('superadmin')->group(function () {
+    // Subject routes
+    Route::match(['get', 'post'], '/subject_view', [MainSubjectController::class, 'mainView']);
 
-//subject routes
-Route::match(['get', 'post'],'/subject_view', [MainSubjectController::class,'mainView'])->middleware('superadmin');
-Route::match(['get', 'post'],'/subject_add', [MainSubjectController::class,'addView'])->middleware('superadmin');
+    Route::match(['get', 'post'], '/subject_add', [MainSubjectController::class, 'addView']);
 
-// add the subject to the table route
-Route::match(['get', 'post'], '/add_subject', [MainSubjectController::class, 'addSubject'])
-->name('super_admin.add_subject')
-->middleware('superadmin');
+    // Add the subject to the table route
+    Route::match(['get', 'post'], '/add_subject', [MainSubjectController::class, 'addSubject'])
+        ->name('super_admin.add_subject');
 
-// load data to datatable
-Route::match(['get', 'post'], '/load_subject', [MainSubjectController::class, 'getSubjectsForDataTable'])
-->name('super_admin.load_subject')
-->middleware('superadmin');
+    // Load data to datatable
+    Route::match(['get', 'post'], '/load_subject', [MainSubjectController::class, 'getSubjectsForDataTable'])
+        ->name('super_admin.load_subject');
 
-// delete subject from table
-Route::delete('/delete_subject/{subjectId}', [MainSubjectController::class, 'deleteSubject'])
-    ->name('super_admin.delete_subject')
-    ->middleware('superadmin');
+    // Delete subject from the table
+    Route::delete('/delete_subject/{subjectId}', [MainSubjectController::class, 'deleteSubject'])
+        ->name('super_admin.delete_subject');
 
-//load data to model of the subject
+    // Load data to model of the subject
+    Route::get('/edit_subject/{subjectId}', [MainSubjectController::class, 'editSubject'])
+        ->name('super_admin.edit_subject');
 
-Route::get('/edit_subject/{subjectId}', [MainSubjectController::class, 'editSubject'])
-->name('super_admin.edit_subject')
-->middleware('superadmin');
-
-//update the subject data in database
-Route::put('/update_subject/{subjectId}', [MainSubjectController::class, 'updateSubject'])
-    ->name('super_admin.update_subject')
-    ->middleware('superadmin');
+    // Update the subject data in the database
+    Route::put('/update_subject/{subjectId}', [MainSubjectController::class, 'updateSubject'])
+        ->name('super_admin.update_subject');
+});
 
 
 /// SPECIALITY SECTION  ////////////////////////////////////////////////////
 
+Route::middleware('superadmin')->group(function () {
+    // Speciality routes
+    Route::get('/speciality_view', [MainSpecialityController::class, 'mainView']);
 
-Route::get('/speciality_view', [MainSpecialityController::class,'mainView'])
-->middleware('superadmin');
+    Route::get('/speciality_add', [MainSpecialityController::class, 'addView']);
 
-Route::get('/speciality_add', [MainSpecialityController::class,'addView'])
-->middleware('superadmin');
+    // Add speciality to the database
+    Route::match(['get', 'post'], '/add_specialty', [MainSpecialityController::class, 'addSpeciality'])
+        ->name('addSpeciality');
 
+    // Load speciality data into datatable
+    Route::get('/get_speciality_data', [MainSpecialityController::class, 'getSpecialityData']);
 
+    // Delete speciality from the table
+    Route::delete('/delete_speciality/{id}', [MainSpecialityController::class, 'deleteSpeciality']);
 
-// add speciality to the database
+    // Load data to model speciality for update
+    Route::get('/load_data_to_model/{specialityId}', [MainSpecialityController::class, 'loadDataToModel']);
 
-Route::match(['get', 'post'],'/add_specialty', [MainSpecialityController::class, 'addSpeciality'])
-->name('addSpeciality')
-->middleware('superadmin');
-
-// load speciality data into datatable
-
-Route::get('/get_speciality_data', [MainSpecialityController::class, 'getSpecialityData'])
-->middleware('superadmin');
-
-// delete speciality from the table
-
-Route::delete('/delete_speciality/{id}', [MainSpecialityController::class, 'deleteSpeciality'])
-->middleware('superadmin');
-
-// load data to model speciality for update
-
-Route::get('/load_data_to_model/{specialityId}', [MainSpecialityController::class, 'loadDataToModel'])
-->middleware('superadmin');
-
-//pdate the speciality in the table
-
-Route::put('/update_speciality/{id}', [MainSpecialityController::class, 'updateSpeciality'])
-->middleware('superadmin');
+    // Update the speciality in the table
+    Route::put('/update_speciality/{id}', [MainSpecialityController::class, 'updateSpeciality']);
+});
 
 
 //TOPIC SECTION ####################################################################################
 
+Route::middleware('superadmin')->group(function () {
+    // Topic routes
+    Route::get('/topic_view', [MainTopicController::class, 'mainView']);
 
-Route::get('/topic_view', [MainTopicController::class,'mainView'])->middleware('superadmin');
-Route::get('/topic_add', [MainTopicController::class,'addView'])->middleware('superadmin');
+    Route::get('/topic_add', [MainTopicController::class, 'addView']);
 
-// fetch the subject to the select element
+    // Fetch the subject to the select element
+    Route::get('/fetch_subjects', [MainTopicController::class, 'fetchSubjects']);
 
-Route::get('/fetch_subjects', [MainTopicController::class, 'fetchSubjects'])
-->middleware('superadmin');
+    // Fetch speciality related to the subject to the form
+    Route::get('/load_specialities/{subjectId}', [MainTopicController::class, 'fetchSpecialities']);
 
-// fetch speciality related to the subject to the form
-Route::get('/load_specialities/{subjectId}', [MainTopicController::class, 'fetchSpecialities'])
-    ->middleware('superadmin');
+    // Add topic to the tables
+    Route::post('/add_topic', [MainTopicController::class, 'addTopic']);
 
-// add topic to the tables
-Route::post('/add_topic', [MainTopicController::class, 'addTopic'])
-->middleware('superadmin');
+    // Load topic data into the datatable
+    Route::get('/get_topic_data', [MainTopicController::class, 'getTopicData']);
 
-// load topic data into datatable
+    // Delete speciality from the table
+    Route::delete('/delete_topic/{id}', [MainTopicController::class, 'deleteTopic']);
 
-Route::get('/get_topic_data', [MainTopicController::class, 'getTopicData'])
-->middleware('superadmin');
+    // Load the speciality related to the subject
+    Route::post('/fetch_specialities', [MainTopicController::class, 'loadSpecialities']);
 
-
-// delete speciality from the table
-
-Route::delete('/delete_topic/{id}', [MainTopicController::class, 'deleteTopic'])
-->middleware('superadmin');
-
-//load the speciality related to subject
-
-Route::post('/fetch_specialities', [MainTopicController::class, 'loadSpecialities'])
-->middleware('superadmin');
-
-
-// update the topic and assoication
-
-
-Route::post('/update_topic/{topicId}', [MainTopicController::class, 'updateTopic'])
-->middleware('superadmin');
+    // Update the topic and association
+    Route::post('/update_topic/{topicId}', [MainTopicController::class, 'updateTopic']);
+});
 
 
 //QUESTION SECTION ###########################################################################################
 
-Route::get('/question_view', [MainQuestionController::class,'mainView'])
-->middleware('superadmin');
-Route::get('/question_add', [MainQuestionController::class,'addView'])
-->middleware('superadmin');
+Route::middleware('superadmin')->group(function () {
+    // Question routes
+    Route::get('/question_view', [MainQuestionController::class, 'mainView']);
 
-// load the topic which is related to subject and speciality
+    Route::get('/question_add', [MainQuestionController::class, 'addView']);
 
-Route::get('/load_topics/{subjectId}/{specialityId}', [MainQuestionController::class,'loadTopics'])
-->middleware('superadmin');
+    // Load the topic which is related to subject and speciality
+    Route::get('/load_topics/{subjectId}/{specialityId}', [MainQuestionController::class, 'loadTopics']);
 
-// add question to the table
+    // Add question to the table
+    Route::post('/questions/create', [MainQuestionController::class, 'questionStore'])
+        ->name('questions.create');
 
-Route::post('/questions/create', [MainQuestionController::class,'questionStore'])
-->name('questions.create')
-->middleware('superadmin');
+    // Load question to the datatable
+    Route::get('get_question_data', [MainQuestionController::class, 'getQuestionData'])
+        ->name('get_question_data');
 
+    // Delete question from the table
+    Route::delete('/delete/question/{question_id}', [MainQuestionController::class, 'deleteQuestion'])
+        ->name('questions.delete');
 
-// load question to the datatable
+    // Load the question data to the model for edit
+    Route::get('/edit_question_loader/{questionId}', [MainQuestionController::class, 'editQuestionLoader'])
+        ->name('question.update');
 
-Route::get('get_question_data', [MainQuestionController::class,'getQuestionData'])
-->name('get_question_data')
-->middleware('superadmin');
+    // Update the question
+    Route::post('/update-question', [MainQuestionController::class, 'updateQuestion'])
+        ->name('question.update');
 
-// delete question from table
-
-Route::delete('/delete/question/{question_id}', [MainQuestionController::class, 'deleteQuestion'])
-->name('questions.delete')
-->middleware('superadmin');
-
-// load the question data to model for edit
-
-Route::get('/edit_question_loader/{questionId}', [MainQuestionController::class, 'editQuestionLoader'])
-->name('question.update')
-->middleware('superadmin');
-
-
-//update the question
-
-Route::post('/update-question', [MainQuestionController::class, 'updateQuestion'])
-->name('question.update')
-->middleware('superadmin');
-
-
-
-// show question preview
-
-Route::get('/question_preview/{question_id}', [MainQuestionPreview2Controller::class, 'showQuestionPreview'])
-->middleware('superadmin');
+    // Show question preview
+    Route::get('/question_preview/{question_id}', [MainQuestionPreview2Controller::class, 'showQuestionPreview']);
+});
 
 
 
 
 //TEST SECTION ######################################################
 
+Route::middleware('superadmin')->group(function () {
+    // Test routes
+    Route::get('/test_view', [MainTestController::class, 'mainView']);
 
-Route::get('/test_view', [MainTestController::class,'mainView'])->middleware('superadmin');
-Route::get('/test_add', [MainTestController::class,'addView'])->middleware('superadmin');
+    Route::get('/test_add', [MainTestController::class, 'addView']);
 
+    // Load question to the datatable for selection
+    Route::get('/test/get_question_data', [MainTestController::class, 'getQuestionData'])
+        ->name('test.get_question_data');
 
-// load question to the datatable for selection
+    // Create test
+    Route::post('/create_test', [MainTestController::class, 'createTest'])
+        ->name('test.create');
 
-Route::get('/test/get_question_data', [MainTestController::class,'getQuestionData'])
-->name('test.get_question_data')
-->middleware('superadmin');
+    // Load tests data into table
+    Route::get('/get_test_data', [MainTestController::class, 'getTestData'])
+        ->name('get_test_data');
 
-// create test
+    // Delete the test
+    Route::delete('/delete_test/{test_id}', [MainTestController::class, 'deleteTest'])
+        ->name('tests.destroy');
 
-Route::post('/create_test',  [MainTestController::class,'createTest'])
-->name('test.create')
-->middleware('superadmin');
+    // Load edit test view
+    Route::get('/edit_test/{test_id}', [MainTestController::class, 'editTest'])
+        ->name('test.edit');
 
-// load tests data into table
-Route::get('/get_test_data',  [MainTestController::class,'getTestData'])
-->name('get_test_data')
-->middleware('superadmin');
+    // Load the question relation to the test and also null question
+    Route::post('/edit_test_data', [MainTestController::class, 'editQuestion'])
+        ->name('test.edit_test_data');
 
-// delete the test
+    // Load test data to the form
+    Route::get('/load_test_data/{test_id}', [MainTestController::class, 'loadTestData'])
+        ->name('test.load_test_data');
 
-Route::delete('/delete_test/{test_id}', [MainTestController::class,'deleteTest'])
-->name('tests.destroy')
-->middleware('superadmin');
-
-// load edit test view
-
-Route::get('/edit_test/{test_id}', [MainTestController::class,'editTest'])
-->name('test.edit')
-->middleware('superadmin');
-
-// load the question relation to the test and also null question
-
-Route::post('/edit_test_data', [MainTestController::class,'editQuestion'])
-->name('test.edit_test_data')
-->middleware('superadmin');
-
-// load test data to the form
-
-Route::get('/load_test_data/{test_id}', [MainTestController::class,'loadTestData'])
-->name('test.load_test_data')
-->middleware('superadmin');
-
-// update question
-
-Route::post('/test/update_test', [MainTestController::class,'updateTest'])
-->name('test.update_test')
-->middleware('superadmin');
+    // Update question
+    Route::post('/test/update_test', [MainTestController::class, 'updateTest'])
+        ->name('test.update_test');
+});
 
 
 //#################################  SUPER ADMIN USER MANAGEMENT ROUTES ##################################################
 
-Route::get('/user_view', [MainUserController::class,'userView'])
-->middleware('superadmin');
+Route::middleware('superadmin')->group(function () {
+    // User routes
+    Route::get('/user_view', [MainUserController::class, 'userView']);
 
-Route::get('/get_user_data', [MainUserController::class,'getUserData'])
-->middleware('superadmin');
+    Route::get('/get_user_data', [MainUserController::class, 'getUserData']);
 
+    Route::get('/add_user_view', [MainUserController::class, 'addUserView']);
 
-Route::get('/add_user_view', [MainUserController::class,'addUserView'])
-->middleware('superadmin');
+    Route::post('/add_user', [MainUserController::class, 'addUser']);
 
+    // Define the route for deleting a user
+    Route::delete('/delete_user/{userId}', [MainUserController::class, 'deleteUser']);
 
-Route::post('/add_user', [MainUserController::class,'addUser'])
-->middleware('superadmin');
+    Route::post('/update_user', [MainUserController::class, 'updateUser']);
 
-// Define the route for deleting a user
-Route::delete('/delete_user/{userId}', [MainUserController::class, 'deleteUser'])
-->middleware('superadmin');
-
-
-Route::post('/update_user', [MainUserController::class, 'updateUser'])
-->middleware('superadmin');
-
-// add subscription to the users
-
-Route::get('/add_subscription_to_user', [MainUserController::class, 'addSubscriptionToUser'])
-->middleware('superadmin');
-
+    // Add subscription to users
+    Route::get('/add_subscription_to_user', [MainUserController::class, 'addSubscriptionToUser']);
+});
 
 
 
 
 //#################################  SUPER ADMIN USER SUBSCRIPTION ROUTES ##################################################
 
+Route::middleware('superadmin')->group(function () {
+    // Subscription routes
+    Route::get('/add_subsription_view', [MainSubscriptionController::class, 'addSubscriptionView']);
 
+    Route::post('/add_subscription', [MainSubscriptionController::class, 'addSubscription']);
 
+    Route::get('/subscription_view', [MainSubscriptionController::class, 'subscriptionView']);
 
-Route::get('/add_subsription_view', [MainSubscriptionController::class,'addSubscriptionView'])
-->middleware('superadmin');
+    Route::get('/get_subscription_data', [MainSubscriptionController::class, 'getSubscriptionData']);
 
-Route::post('/add_subscription', [MainSubscriptionController::class,'addSubscription'])
-->middleware('superadmin');
+    Route::delete('/delete_subscription/{subscriptionId}', [MainSubscriptionController::class, 'deleteSubscription']);
 
+    Route::post('/update_subscription', [MainSubscriptionController::class, 'updateSubscription']);
 
-Route::get('/subscription_view', [MainSubscriptionController::class,'subscriptionView'])
-->middleware('superadmin');
+    // Add subscription to users
+    Route::get('/get_subscription_names', [MainSubscriptionController::class, 'getSubscriptions']);
 
-Route::get('/get_subscription_data', [MainSubscriptionController::class,'getSubscriptionData'])
-->middleware('superadmin');
+    Route::post('/add_subscription_to_user', [MainSubscriptionController::class, 'addSubscriptiontoUser']);
 
-Route::delete('/delete_subscription/{subscriptionId}',  [MainSubscriptionController::class,'deleteSubscription'])
-->middleware('superadmin');
+    Route::get('/load_subcription_data_to_table', [MainSubscriptionController::class, 'getSubscriptionDatatoTable']);
 
-Route::post('/update_subscription', [MainSubscriptionController::class,'updateSubscription'])
-->middleware('superadmin');
+    Route::delete('/delete_user_subscription/{subscriptionId}', [MainSubscriptionController::class, 'deleteUserSubscription']);
 
-// add subscription to the users
+    Route::post('/update_user_subscription_data', [MainSubscriptionController::class, 'updateUserSubscription']);
 
-Route::get('/get_subscription_names', [MainSubscriptionController::class,'getSubscriptions'])
-->middleware('superadmin');
+    // Manage mocks for different users routes
+    Route::get('/mocks_user_view', [MainMocksManagementController::class, 'mocksUserView']);
 
-Route::post('/add_subscription_to_user', [MainSubscriptionController::class,'addSubscriptiontoUser'])
-->middleware('superadmin');
+    // Load mocks subscribe user
+    Route::get('/get_mocks_user_data', [MainMocksManagementController::class, 'getMocksUserData']);
 
-Route::get('/load_subcription_data_to_table', [MainSubscriptionController::class,'getSubscriptionDatatoTable'])
-->middleware('superadmin');
+    // Add mocks to test to the user
+    Route::get('/add_mocks_to_mocks_user_view/{user_id}', [MainMocksManagementController::class, 'loadAddMocksUserView']);
 
-Route::delete('/delete_user_subscription/{subscriptionId}', [MainSubscriptionController::class,'deleteUserSubscription'])
-->middleware('superadmin');
-
-Route::post('/update_user_subscription_data', [MainSubscriptionController::class,'updateUserSubscription'])
-->middleware('superadmin');
-
-// manage mocks for different users routes
-
-Route::get('/mocks_user_view', [MainMocksManagementController::class,'mocksUserView'])
-->middleware('superadmin');
-// this will load mocks subscribe user
-Route::get('/get_mocks_user_data', [MainMocksManagementController::class,'getMocksUserData'])
-->middleware('superadmin');
-
-// add mocks to test to the user
-
-Route::get('/add_mocks_to_mocks_user_view/{user_id}', [MainMocksManagementController::class,'loadAddMocksUserView'])
-->middleware('superadmin');
-
-
-Route::post('/save-mocks-to-user', [MainMocksManagementController::class, 'saveMocksToUser'])
-->name('save-mocks-to-user')
-->middleware('superadmin');
+    Route::post('/save-mocks-to-user', [MainMocksManagementController::class, 'saveMocksToUser'])
+        ->name('save-mocks-to-user');
+});
 
 
 //#################################  SUPER ADMIN MOCKS DEMO ROUTES ##################################################
 
-Route::get('/show_add_mocks_demo_question_view', [MainMocksDemoController2::class,'showAddMocksDemoQuestionView'])
-->middleware('superadmin');
+Route::middleware('superadmin')->group(function () {
 
-Route::post('/add_mocks_demo_question', [MainMocksDemoController2::class,'addMocksDemoQuestion'])
-->middleware('superadmin');
+    Route::get('/show_add_mocks_demo_question_view', [MainMocksDemoController2::class, 'showAddMocksDemoQuestionView']);
 
-Route::get('/mocks_demo_question_view', [MainMocksDemoController2::class,'showDemoQuestionView'])
-->middleware('superadmin');
+    Route::post('/add_mocks_demo_question', [MainMocksDemoController2::class, 'addMocksDemoQuestion']);
 
+    Route::get('/mocks_demo_question_view', [MainMocksDemoController2::class, 'showDemoQuestionView']);
 
-Route::get('/mocks_demo_question_load', [MainMocksDemoController2::class,'showDemoQuestionInTable'])
-->middleware('superadmin');
+    Route::get('/mocks_demo_question_load', [MainMocksDemoController2::class, 'showDemoQuestionInTable']);
 
-Route::delete('/delete_mocks_demo_question/{question_id}', [MainMocksDemoController2::class,'deleteMocksDemoQuestion'])
-->middleware('superadmin');
+    Route::delete('/delete_mocks_demo_question/{question_id}', [MainMocksDemoController2::class, 'deleteMocksDemoQuestion']);
 
-Route::get('/load_mocks_demo_question/{questionId}', [MainMocksDemoController2::class,'editQuestionLoader'])
-->middleware('superadmin');
+    Route::get('/load_mocks_demo_question/{questionId}', [MainMocksDemoController2::class, 'editQuestionLoader']);
 
-Route::post('/updat_mocks_demo_question', [MainMocksDemoController2::class,'updateMocksDemoQuestion'])
-->middleware('superadmin');
+    Route::post('/updat_mocks_demo_question', [MainMocksDemoController2::class, 'updateMocksDemoQuestion']);
 
-Route::get('/mocks_demo_question_preview/{questionId}', [MainMocksDemoController2::class,'showMocksDemoQuestionPreview'])
-->middleware('superadmin');
-
-
-
-
-
-
+    Route::get('/mocks_demo_question_preview/{questionId}', [MainMocksDemoController2::class, 'showMocksDemoQuestionPreview']);
+});
 
 //#################################  MOCKS USERS ROUTES ##################################################
 
-Route::get('/mocks_user_welcome/{subscription_id?}', [MocksUserMainController::class,'welcomeView'])
-->middleware('subscription:MOCKS');
+Route::middleware('subscription:MOCKS')->group(function () {
 
+    Route::get('/mocks_user_welcome/{subscription_id?}', [MocksUserMainController::class, 'welcomeView']);
 
-Route::get('/mocks_user_graph', [MainGraphController::class,'graphView'])
-->middleware('subscription:MOCKS');
+    Route::get('/mocks_user_graph', [MainGraphController::class, 'graphView']);
 
-Route::get('/mocks_user_report', [MainReportController::class,'reportView'])
-->middleware('subscription:MOCKS');
-Route::get('/mocks_user_help', [MainHelpController::class,'helpView'])
-->middleware('subscription:MOCKS');
+    Route::get('/mocks_user_report', [MainReportController::class, 'reportView']);
 
-// mocklist routes ########################################################
-Route::get('/mocks_user_mocks_list', [MainMocksListController::class,'mocksListView'])
-->middleware('subscription:MOCKS');
+    Route::get('/mocks_user_help', [MainHelpController::class, 'helpView']);
 
-Route::get('/store_user_mocks_id', [MainMocksListController::class,'storeMocksId'])
-->middleware('subscription:MOCKS');
+    // mocklist routes ########################################################
+    Route::get('/mocks_user_mocks_list', [MainMocksListController::class, 'mocksListView']);
 
+    Route::get('/store_user_mocks_id', [MainMocksListController::class, 'storeMocksId']);
 
+    Route::get('/mocks_user_previous_mocks', [MainPreviousMocksController::class, 'previousMocksView']);
 
+    Route::get('/mocks_user_mocks_result/{custom_mocks_id}', [MainMocksResultController::class, 'mocksResultView']);
 
-Route::get('/mocks_user_previous_mocks', [MainPreviousMocksController::class,'previousMocksView'])
-->middleware('subscription:MOCKS');
+    Route::get('/mocks_user_mocks_analytics/{custom_mocks_id}', [MainMocksResultController::class, 'mocksAnalyticsView']);
 
-Route::get('/mocks_user_mocks_result/{custom_mocks_id}', [MainMocksResultController::class,'mocksResultView'])
-->middleware('subscription:MOCKS');
+    //#################################  MOCKS EXAM LUNCH ROUTES ##################################################
+    Route::get('/mocks_lunch', [MainExamController::class, 'mocksLunchMocks']);
 
-Route::get('/mocks_user_mocks_analytics/{custom_mocks_id}', [MainMocksResultController::class,'mocksAnalyticsView'])
-->middleware('subscription:MOCKS');
+    Route::get('/mocks_terms', [MainExamController::class, 'mocksTerms']);
 
-//#################################  MOCKS EXAM LUNCH ROUTES ##################################################
+    Route::get('/mocks_start', [MainExamController::class, 'mocksStart']);
 
-Route::get('/mocks_lunch', [MainExamController::class,'mocksLunchMocks'])
-->middleware('subscription:MOCKS');
-Route::get('/mocks_terms', [MainExamController::class,'mocksTerms'])
-->middleware('subscription:MOCKS');
-Route::get('/mocks_start', [MainExamController::class,'mocksStart'])
-->middleware('subscription:MOCKS');
+    // ###################################  MOCKS USER HISTORY ROUTES ##################
+    Route::post('/generate_user_mock_history', [MainMocksUserTestHistoryController::class, 'generateMocksHistory']);
 
+    // ###################################  MOCKS USER ACCOUNT RESET ROUTES ##################
+    Route::get('/account_reset_view', [MainAccountResetController::class, 'showAccountResetView']);
 
-// ###################################  MOCKS USER HISTORY ROUTES ##################
+    Route::get('/mocks_user_account_reset', [MainAccountResetController::class, 'mocksUserAccountReset']);
 
-Route::post('/generate_user_mock_history', [MainMocksUserTestHistoryController::class,'generateMocksHistory'])
-->middleware('subscription:MOCKS');
-
-
-// ###################################  MOCKS USER ACCOUNT RESET ROUTES ##################
-Route::get('/account_reset_view', [MainAccountResetController::class,'showAccountResetView'])
-->middleware('subscription:MOCKS');
-
-
-Route::get('/mocks_user_account_reset', [MainAccountResetController::class,'mocksUserAccountReset'])
-->middleware('subscription:MOCKS');
-
-// ###################################  MOCKS USER  QUESTION PREVIEW ROUTES ##################
-
-Route::get('/show_mocks_user_question_preview/{user_mocks_id}/{question_id?}', [MainQuestionPreviewController::class, 'showQuestionPreviewView'])
-->middleware('subscription:MOCKS');
+    // ###################################  MOCKS USER  QUESTION PREVIEW ROUTES ##################
+    Route::get('/show_mocks_user_question_preview/{user_mocks_id}/{question_id?}', [MainQuestionPreviewController::class, 'showQuestionPreviewView']);
+});
 
 // ###################################  MOCKS USER DEMO ROUTES ##################
 
-Route::get('/lunch_mocks_demo', [MainMocksDemoController::class,'lunchMocksDemo'])
-->middleware('user');
+Route::middleware('user')->group(function () {
 
-Route::get('/mocks_list_demo', [MainMocksDemoController::class,'mocksListDemo'])
-->middleware('user');
+    Route::get('/lunch_mocks_demo', [MainMocksDemoController::class, 'lunchMocksDemo']);
 
-Route::get('/mocks_previous_demo', [MainMocksDemoController::class,'mocksPreviousDemo'])
-->middleware('user');
+    Route::get('/mocks_list_demo', [MainMocksDemoController::class, 'mocksListDemo']);
 
-Route::get('/mocks_result_demo', [MainMocksDemoController::class,'mocksResultDemo'])
-->middleware('user');
+    Route::get('/mocks_previous_demo', [MainMocksDemoController::class, 'mocksPreviousDemo']);
 
-Route::get('/mocks_analytics_demo', [MainMocksDemoController::class,'mocksAnalyticsDemo'])
-->middleware('user');
+    Route::get('/mocks_result_demo', [MainMocksDemoController::class, 'mocksResultDemo']);
 
-Route::get('/mocks_preview_demo', [MainMocksDemoController::class,'mocksPreviewDemo'])
-->middleware('user');
+    Route::get('/mocks_analytics_demo', [MainMocksDemoController::class, 'mocksAnalyticsDemo']);
 
-Route::get('/mocks_report_demo', [MainMocksDemoController::class,'mocksReportDemo'])
-->middleware('user');
+    Route::get('/mocks_preview_demo', [MainMocksDemoController::class, 'mocksPreviewDemo']);
 
-Route::get('/mocks_graph_demo', [MainMocksDemoController::class,'mocksGraphDemo'])
-->middleware('user');
+    Route::get('/mocks_report_demo', [MainMocksDemoController::class, 'mocksReportDemo']);
 
-Route::get('/mocks_account_reset_demo', [MainMocksDemoController::class,'mocksAccountResetDemo'])
-->middleware('user');
+    Route::get('/mocks_graph_demo', [MainMocksDemoController::class, 'mocksGraphDemo']);
 
-Route::get('/mocks_demo_exam_lunch', [MainMocksDemoController::class,'mocksDemoExamLunch'])
-->middleware('user');
+    Route::get('/mocks_account_reset_demo', [MainMocksDemoController::class, 'mocksAccountResetDemo']);
 
-Route::get('/mocks_demo_before_exam', [MainMocksDemoController::class,'mocksDemoBeforeExam'])
-->middleware('user');
+    Route::get('/mocks_demo_exam_lunch', [MainMocksDemoController::class, 'mocksDemoExamLunch']);
 
-Route::get('/mocks_demo_start_exam', [MainMocksDemoController::class,'mocksDemoStartExam'])
-->middleware('user');
+    Route::get('/mocks_demo_before_exam', [MainMocksDemoController::class, 'mocksDemoBeforeExam']);
+
+    Route::get('/mocks_demo_start_exam', [MainMocksDemoController::class, 'mocksDemoStartExam']);
+
+});
 
 
 
