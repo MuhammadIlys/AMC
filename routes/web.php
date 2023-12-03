@@ -18,6 +18,7 @@ use App\Http\Controllers\users\mocks_user\question_preview\MainQuestionPreviewCo
 use App\Http\Controllers\users\mocks_user\report\MainReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\super_admin\mocks\question_preview\MainQuestionPreview2Controller;
+use App\Http\Controllers\super_admin\mocks\demo\MainMocksDemoController2;
 
 
 // super-admin main controller
@@ -417,6 +418,39 @@ Route::post('/save-mocks-to-user', [MainMocksManagementController::class, 'saveM
 ->middleware('superadmin');
 
 
+//#################################  SUPER ADMIN MOCKS DEMO ROUTES ##################################################
+
+Route::get('/show_add_mocks_demo_question_view', [MainMocksDemoController2::class,'showAddMocksDemoQuestionView'])
+->middleware('superadmin');
+
+Route::post('/add_mocks_demo_question', [MainMocksDemoController2::class,'addMocksDemoQuestion'])
+->middleware('superadmin');
+
+Route::get('/mocks_demo_question_view', [MainMocksDemoController2::class,'showDemoQuestionView'])
+->middleware('superadmin');
+
+
+Route::get('/mocks_demo_question_load', [MainMocksDemoController2::class,'showDemoQuestionInTable'])
+->middleware('superadmin');
+
+Route::delete('/delete_mocks_demo_question/{question_id}', [MainMocksDemoController2::class,'deleteMocksDemoQuestion'])
+->middleware('superadmin');
+
+Route::get('/load_mocks_demo_question/{questionId}', [MainMocksDemoController2::class,'editQuestionLoader'])
+->middleware('superadmin');
+
+Route::post('/updat_mocks_demo_question', [MainMocksDemoController2::class,'updateMocksDemoQuestion'])
+->middleware('superadmin');
+
+Route::get('/mocks_demo_question_preview/{questionId}', [MainMocksDemoController2::class,'showMocksDemoQuestionPreview'])
+->middleware('superadmin');
+
+
+
+
+
+
+
 //#################################  MOCKS USERS ROUTES ##################################################
 
 Route::get('/mocks_user_welcome/{subscription_id?}', [MocksUserMainController::class,'welcomeView'])
@@ -479,7 +513,7 @@ Route::get('/mocks_user_account_reset', [MainAccountResetController::class,'mock
 Route::get('/show_mocks_user_question_preview/{user_mocks_id}/{question_id?}', [MainQuestionPreviewController::class, 'showQuestionPreviewView'])
 ->middleware('subscription:MOCKS');
 
-// ###################################  MOCKS DEMO ROUTES ##################
+// ###################################  MOCKS USER DEMO ROUTES ##################
 
 Route::get('/lunch_mocks_demo', [MainMocksDemoController::class,'lunchMocksDemo'])
 ->middleware('user');

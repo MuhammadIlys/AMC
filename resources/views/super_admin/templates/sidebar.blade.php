@@ -360,6 +360,35 @@
               </li>
 
 
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-file-pencil"></i>
+                  </span>
+                  <span class="hide-menu">Mocks Demo</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ url('/test_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Question View</span>
+                    </a>
+                  </li>
+
+                  <li class="sidebar-item">
+                    <a href="{{ url('/test_add') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Add Question</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+
 
               <!-- ============================= -->
               <!-- Email Marketing -->
