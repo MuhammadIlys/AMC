@@ -26,12 +26,12 @@ class MainMocksUploadController extends Controller
         // Save the image directly to the public directory
         $image->move(public_path('super_admin_assets/mocks_upload'), $filename);
 
-        $path="super_admin_assets/mocks_upload/" . $filename;
+        $path='super_admin_assets/mocks_upload/' . $filename;
 
         $image_link='<span class="modal_image"
-        style="font-family: Arial, sans-serif; font-size: 16px;
+        style="font-family: inherit; font-size: 100%;
         cursor: pointer; color: blue;"
-        onclick="openModal(event,'.$path.')">'.$request->input('hyper_link_text').'</span>';
+        onclick="openModal(event,\''.$path.'\')">'.$request->input('hyper_link_text').'</span>';
 
         // Create a new MocksImageUpload model instance
         $imageData = MocksImageUpload::create([

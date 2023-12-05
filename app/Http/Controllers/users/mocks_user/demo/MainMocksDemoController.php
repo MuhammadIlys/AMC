@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\users\mocks_user\demo;
 
 use App\Http\Controllers\Controller;
+use App\Models\super_admin\mocks\demo\MocksDemoQuestion;
 use Illuminate\Http\Request;
 
 class MainMocksDemoController extends Controller
@@ -68,7 +69,12 @@ class MainMocksDemoController extends Controller
 
     public function mocksDemoStartExam(){
 
-        return view('users.mocks_user.demo.demo_exam.mocks_demo_start_real_exam');
+        $questions=MocksDemoQuestion::all();
+
+        return view('users.mocks_user.demo.demo_exam.mocks_demo_start_real_exam',[
+         'questions'=>$questions
+
+        ]);
     }
 
 

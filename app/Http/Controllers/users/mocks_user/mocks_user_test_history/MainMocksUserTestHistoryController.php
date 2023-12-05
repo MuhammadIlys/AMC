@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\users\mocks_user\mocks_user_test_history\MocksUserTestHistory;
 use App\Models\users\mocks_user\mocks_user_question_history\MocksUserQuestionHistory;
+use App\Models\users\mocks_user\mocks_user_attempt\MocksUserAttempt;
 
 
 class MainMocksUserTestHistoryController extends Controller
@@ -331,6 +332,11 @@ class MainMocksUserTestHistoryController extends Controller
         }
 
 
+      // update the user attempts accordingly;
+
+        $this->updateRemainingAttempts($user_id, $test_id);
+
+
 
         return response()->json([
             'user_mocks_id' => $mocksUserTestHistory->user_mocks_id,
@@ -346,6 +352,34 @@ class MainMocksUserTestHistoryController extends Controller
 
 
 
+}
+
+
+
+function updateRemainingAttempts($user_id, $test_id)
+{
+    // Find the MocksUserAttempt record for the given test_id and user_id
+    $mocksUserAttempt = MocksUserAttempt::where('test_id', $test_id)
+        ->where('user_id', $user_id)
+        ->first();
+
+    if ($mocksUserAttempt) {
+        // Get the current remaining_attempts value
+        $remainingAttempts = $mocksUserAttempt->remaining_attempts;
+
+        // Subtract 1 from the current value if it's greater than 0
+        if ($remainingAttempts > 0) {
+            $mocksUserAttempt->update(['remaining_attempts' => $remainingAttempts - 1]);
+
+            return true; // Indicate that the update was successful
+        } else {
+
+            return false; // Indicate that the update was skipped
+        }
+    } else {
+
+        return false; // Indicate that the update was not performed
+    }
 }
 
 

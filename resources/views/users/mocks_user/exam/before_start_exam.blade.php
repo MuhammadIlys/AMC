@@ -10,11 +10,14 @@
       <!-- Include jQuery and SweetAlert libraries -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
+
    </head>
    <body>
       <div id='root'>
          <div id='titlebar'>
-            <div class='container'>
+            <div class='container2'>
                <div id='header'>
                   <h1>
                     <a href='#'>{{ $test->test_name }} Trial Examination</a>
@@ -25,10 +28,10 @@
          </div>
          <div id='flag'>
          </div>
-         <div class='container' id='main'>
+         <div class='container2' id='main'>
             <div id='messages'></div>
             <div class='left'>
-               <h1>Welcome to the MCQ Trial Examination</h1>
+               <h4>Welcome to the MCQ Trial Examination</h4>
                <p>Copyright of all examination materials rests with the Australian Medical Council &copy;. No part of any examination may be reproduced, stored or transmitted by any means.</p>
                <p>Any attempt to reproduce examination materials will be considered a breach of examination procedures and constitutes a breach of Australian Copyright Law. The AMC Board of Examiners will investigate any such breaches and the AMC may take action against individual candidates that may include, but not be limited to:</p>
                <ul>
@@ -51,15 +54,15 @@
                         <li>
                             <label for='y'>
                                 <input checked='checked' id='y' name='accept_copyright' type='radio' value='Y' />
-                                <span>Y.</span>
-                                I Agree
+                                <span>Y. I Agree</span>
+
                             </label>
                         </li>
                         <li>
                             <label for='n'>
                                 <input id='n' name='accept_copyright' type='radio' value='N' />
-                                <span>N.</span>
-                                I Do Not Agree
+                                <span>N. I Do Not Agree</span>
+
                             </label>
                         </li>
                         <li class='button'>
@@ -121,5 +124,20 @@
             }
         });
     });
+</script>
+
+<script>
+    // Document ready function
+    $(document).ready(function () {
+
+        // Clear stored data
+        localStorage.removeItem('timer');
+        localStorage.removeItem('currentQuestionIndex');
+        localStorage.removeItem('questionData');
+        localStorage.removeItem('startTimeForNextQuestion');
+
+    });
+
+
 </script>
 </html>

@@ -233,7 +233,7 @@
                     <ul aria-expanded="false" class="collapse first-level">
 
                         <li class="sidebar-item">
-                            <a href="{{ url('/subject_view') }}" class="sidebar-link">
+                            <a href="{{ url('/show_mocks_image_view') }}" class="sidebar-link">
                             <div class="round-16 d-flex align-items-center justify-content-center">
                                 <i class="ti ti-circle"></i>
                             </div>

@@ -7,13 +7,14 @@
       </title>
 
       <link href='{{ asset("user/mock_user_assets/exam_assets/assets/css/screen.css")}}'  rel='stylesheet' type='text/css' />
-
+       <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
 
     </head>
    <body>
       <div id='root'>
          <div id='titlebar'>
-            <div class='container'>
+            <div class='container2'>
                <div id='header'>
                   <h1>
                     <a href='#'>Demo Trial Examination</a>
@@ -23,10 +24,10 @@
          </div>
          <div id='flag'>
          </div>
-         <div class='container' id='main'>
+         <div class='container2' id='main'>
             <div id='messages'></div>
             <div class='left'>
-               <h1>Supervisor's announcements</h1>
+               <h4>Supervisor's announcements</h4>
 
                <div class='alert'>
                   <p>Please note: these announcements reflect those presented to you prior to the commencement of an AMC MCQ examination. Please read the announcements written below.</p>

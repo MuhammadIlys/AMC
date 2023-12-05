@@ -130,9 +130,7 @@
                             data: null,
                             render: function (data) {
                                 return `
-                                    <button class="edit-btn btn btn-sm mb-1 waves-effect waves-light btn-secondary"
-                                        data-image_id="${data.image_id}"
-                                    >Edit</button>
+
                                     <button class="delete-btn btn btn-sm mb-1 waves-effect waves-light btn-danger"
                                         data-image_id="${data.image_id}"
                                     ">Delete</button>
@@ -163,7 +161,7 @@
 
 
             // Call initializeDataTable and store the DataTable instance
-            const mocksImageTable = initializeDataTable();
+            var mocksImageTable = initializeDataTable();
 
 
             $('#upload_image').on('click', function (event) {
@@ -184,14 +182,16 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
+
+                        mocksImageTable.destroy();
+                        mocksImageTable = initializeDataTable();
                         // Reset the form after successful submission
                         $('#upload_mocks_image')[0].reset();
 
                         // Handle the success response
                         displaySuccessAlert('Success','image upload successfully!');
 
-                        mocksImageTable.destroy();
-                        mocksImageTable = initializeDataTable();
+
                     },
                     error: function (error) {
                         // Handle the error response

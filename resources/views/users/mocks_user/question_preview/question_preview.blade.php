@@ -12,15 +12,27 @@
 
 
 
+           <!-- jQuery -->
+           <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+           <!-- Bootstrap CSS -->
+           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
 
 
+           <!-- Bootstrap Bundle (includes Popper.js) -->
+           <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+           <!-- jQuery UI -->
+           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+           <!-- Include Interact.js (for touch-based interaction) -->
+           <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.12/dist/interact.min.js"></script>
 
 
 
 
     </head>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 
    <body>
@@ -29,10 +41,10 @@
 
       <div id='root'>
          <div id='titlebar'>
-            <div class='container'>
+            <div class='container2'>
                <div id='header'>
                   <h1>
-                     <a href='#'><span>{{ $mocksName }}</span>: Questions Preview</a>
+                     <a href='#'><span>{{ $mocksName }}</span> <span>: Questions Preview</span></a>
                   </h1>
 
                </div>
@@ -40,13 +52,13 @@
          </div>
          <div id='flag'>
          </div>
-         <div class='container' id='main'>
+         <div class='container2' id='main'>
             <div id='root'>
-                <div class='container' id='main'>
+                <div class='container2' id='main'>
                     <div class='left'>
-                        <h3 id="question_count">
+                        <h5 id="question_count">
                             Question 1 of {{ count($questions) }}
-                        </h3>
+                        </h5>
                         <div class='question'>
                             <form class="edit_answer" id="edit_answer_2585551" method="post">
                                 <fieldset>
@@ -373,6 +385,192 @@
     observeElementChanges('#question_explanation');
   });
 </script>
+
+
+<!--##################################### Custom Code start for image popup in question ###################################################-->
+
+
+<style>
+    /* Add custom styles for the draggable and resizable modal */
+    .draggable {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .resizable {
+        resize: both;
+        overflow: hidden;
+    }
+
+    .modal-footer {
+        background-color: transparent;
+        border: none;
+    }
+
+    .modal-footer button {
+        background-color: transparent;
+        border: none;
+        margin: 0 10px;
+    }
+
+    .modal-footer button:focus {
+        outline: none;
+    }
+
+    .modal-footer button:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .model-mobile-desktop{
+
+            left: 304px;
+            top: -5.5px;
+            max-width: 95%;
+            width: auto;
+            heigh: auto;
+    }
+
+    @media (max-width: 768px) {
+        /* Your mobile-specific styles go here */
+        .model-mobile-desktop{
+
+                    left: 0px;
+                    top: -5.5px;
+                    max-width: 95%;
+                    width: auto;
+                    heigh: auto;
+            }
+    }
+
+
+    </style>
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-xl modal-dialog-centered draggable resizable  model-mobile-desktop" >
+            <div class="modal-content">
+            <div class="modal-header" style="background-color: #3852A4; color: #fff;">
+                <p style="color:white;" class="modal-title"> Exhibit Display </p>
+                <button type="button" id="close_model" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="iframeContent" style="border: none; width:  100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="zoomIn()"><i style ="color:#3852A4; font-size:20px;" class="fas fa-search-plus"></i></button>
+                <button class="btn btn-secondary" onclick="zoomOut()"><i style ="color:#3852A4; font-size:20px;" class="fas fa-search-minus"></i></button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+        // Function to open the modal window
+        function openModal(event, url) {
+
+            var baseUrl = '{{ url('/') }}';
+            url = baseUrl + '/'+ url;
+            event.preventDefault(); // Prevent the default link behavior
+
+            // Set the URL of the image
+            $('#iframeContent').attr('src', url);
+
+            // Open the modal
+            $('#myModal').modal('show');
+
+            // Make the modal draggable
+            $('.modal-dialog').draggable();
+
+            // Make the modal resizable
+            $('.modal-dialog').resizable({
+            alsoResize: "#iframeContent",
+            aspectRatio: true
+            });
+
+            // Reset image scale to 1 when modal opens
+            $('#iframeContent').css('transform', 'scale(1)');
+        }
+
+        // Zoom In function
+        function zoomIn() {
+            const currentScale = parseFloat($('#iframeContent').css('transform').split(',')[3]);
+            const newScale = currentScale + 0.1;
+            $('#iframeContent').css('transform', `scale(${newScale})`);
+        }
+
+        // Zoom Out function
+        function zoomOut() {
+            const currentScale = parseFloat($('#iframeContent').css('transform').split(',')[3]);
+            const newScale = currentScale - 0.1;
+            if (newScale >= 0.1) {
+            $('#iframeContent').css('transform', `scale(${newScale})`);
+            }
+        }
+
+
+            // Function to close the modal
+            function closeModal() {
+            $('#myModal').modal('hide');
+        }
+
+        // Attach click event to the element with ID "close_model"
+        $(document).on('click', '#close_model', function() {
+            closeModal();
+        });
+            // Set up interact.js for touch-based dragging and resizing
+        interact('.draggable').draggable({
+            listeners: {
+                move(event) {
+                    const target = event.target
+                    // Keep the dragged position in the data-x/data-y attributes
+                    const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+                    const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+                    // Translate the element
+                    target.style.transform = `translate(${x}px, ${y}px)`
+                    // Update the position attributes
+                    target.setAttribute('data-x', x)
+                    target.setAttribute('data-y', y)
+                }
+            }
+        }).resizable({
+            edges: { top: true, left: true, bottom: true, right: true },
+            listeners: {
+                move(event) {
+                    const target = event.target
+                    const x = (parseFloat(target.getAttribute('data-x')) || 0)
+                    const y = (parseFloat(target.getAttribute('data-y')) || 0)
+                    // Update the element's dimensions
+                    target.style.width = event.rect.width + 'px'
+                    target.style.height = event.rect.height + 'px'
+                    // Translate when resizing from top or left edges
+                    target.style.transform = `translate(${x}px, ${y}px)`
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+    </script>
+    <!--##################################### Custom Code End for image popup in question ###################################################-->
+
+
 
 
 

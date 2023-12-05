@@ -367,13 +367,13 @@ body {
           #main .left fieldset ol li .fieldWithErrors input, #main .left fieldset ol li .fieldWithErrors select, #main .question fieldset ol li .fieldWithErrors input, #main .question fieldset ol li .fieldWithErrors select {
             border: 2px solid #900; }
 
-.container {
+.container2 {
   min-width: 950px;
   width: 80%;
   margin: 0 auto;
   overflow: hidden;
   display: inline-block; }
-  .container {
+  .container2 {
     display: block; }
 
 .span-1 {
@@ -1021,14 +1021,14 @@ div.last {
   margin-right: -79.968em;
   margin-bottom: 0; }
 
-body .container {
+body .container2 {
   min-width: 950px;
   width: 80%;
   margin: 0 auto;
   overflow: hidden;
   display: inline-block;
   width: 98%; }
-  body .container {
+  body .container2 {
     display: block; }
 
 h1 {

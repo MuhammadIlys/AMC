@@ -56,6 +56,7 @@
 
 
 
+
 <div class="main-content">
 
     <div class="page-content">
@@ -200,5 +201,21 @@
 
         });
     });
+</script>
+
+
+<script>
+// Document ready function
+$(document).ready(function () {
+
+    // Clear stored data
+    localStorage.removeItem('timer');
+    localStorage.removeItem('currentQuestionIndex');
+    localStorage.removeItem('questionData');
+    localStorage.removeItem('startTimeForNextQuestion');
+
+});
+
+
 </script>
 @endsection

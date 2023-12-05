@@ -261,6 +261,12 @@ class MainLoginRegistrationController extends Controller
         $user->token_expires_at = null;
         $user->save();
 
+        $email=$user->email;
+
+         Mail::send('mail.change_password_success.change_password_success', ['last_name' => $user->last_name], function ($message) use ($email) {
+                $message->to($email)->subject('Your Account Password has been changed Successfully- AceAmcQ');
+            });
+
         // Redirect the user after successful password reset
         return redirect('/')->with('success', 'Password reset successfully! Please login with your new password.');
 

@@ -3,6 +3,7 @@
 namespace App\Models\super_admin\mocks\test;
 
 use App\Models\super_admin\mocks\question\Question;
+use App\Models\users\mocks_user\mocks_user_attempt\MocksUserAttempt;
 use App\Models\users\mocks_user\mocks_user_test_history\MocksUserTestHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,4 +44,12 @@ class Test extends Model
         return $this->belongsToMany(Users::class, 'mocks_management', 'test_id', 'user_id')
             ->withPivot('mocks_management_id'); // Add any additional pivot columns if needed
     }
+
+
+     // Define the many-to-many relationship with the MocksUserAttempt model
+     public function mocksUserAttempts()
+     {
+         return $this->belongsToMany(MocksUserAttempt::class, 'mocks_user_attempt', 'test_id', 'user_id')
+             ->withPivot('remaining_attempts'); // Add any additional pivot columns if needed
+     }
 }

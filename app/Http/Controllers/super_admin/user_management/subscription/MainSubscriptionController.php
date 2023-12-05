@@ -7,6 +7,7 @@ use App\Models\super_admin\user_management\subscription\Subscription;
 use App\Models\super_admin\user_management\user_subscription\UserSubscription;
 use App\Models\super_admin\user_management\Users;
 use Illuminate\Http\Request;
+use Mail;
 
 class MainSubscriptionController extends Controller
 {
@@ -144,6 +145,15 @@ class MainSubscriptionController extends Controller
         $userSubscription->expiry_timestamp = $request->end_date;
 
         $userSubscription->save();
+
+        $user = Users::find($request->user_id);
+        $subscription = Subscription::find($request->subscription_id);
+        $email = $user->email;
+        $subscription_name = $subscription->subscription_name;
+
+        Mail::send('mail.subscription.subscription_add_success', ['last_name' => $user->last_name, 'subscription_name'=>$subscription_name], function ($message) use ($email) {
+            $message->to($email)->subject('Subscription Successfully Activated - AceAmcQ');
+        });
 
         return response()->json(['message' => 'Subscription added successfully', 'status' => '1']);
     }

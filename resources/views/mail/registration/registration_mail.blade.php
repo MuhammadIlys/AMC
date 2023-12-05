@@ -38,9 +38,9 @@
                 <div>
 
                     <p style="margin-bottom:10px" >
-                        <h5>Hello, {{ $last_name }}</h5>
+                        <b>Hello {{ $last_name }},</b><br><br>
                         <span>Your <strong >AceAmcQ</strong> account has been successfully created.</span>
-                        <br>
+
                     </p>
 
                 </div>
@@ -52,7 +52,7 @@
                             <p style="margin-bottom:10px" >
 
                                 <a href="{{ $emailVerificationLink }}">{{ $emailVerificationLink }}</a>
-                                <br>
+
                             </p>
                         </div>
                     </p>

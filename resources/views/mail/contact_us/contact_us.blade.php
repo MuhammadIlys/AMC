@@ -36,7 +36,7 @@
 
                 <div>
                     <p style="margin-bottom: 10px;">
-                        <p>Hello, I am {{ $name }},</p>
+                        <b>Hello, I am {{ $name }},</b>
                     </p>
                 </div>
 

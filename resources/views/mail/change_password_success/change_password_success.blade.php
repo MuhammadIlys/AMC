@@ -38,14 +38,12 @@
                 <div>
 
                     <p style="margin-bottom:10px" >
-                        <b>Hello,</b>
-
+                        <b>Hello {{ $last_name }},</b>
                     </p>
 
                     <p style="margin-bottom:10px" >
-                        <p>Click the following link to reset your password:</p>
-                        <a href="{{ $resetLink }}">{{ $resetLink }}</a>
-                        <br>
+                        <p>Your Account password has been changed sucessfully.</p>
+
                     </p>
                 </div>
 

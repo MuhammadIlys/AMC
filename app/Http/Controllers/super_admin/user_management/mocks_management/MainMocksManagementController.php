@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\super_admin\user_management\mocks_management;
 
 use App\Http\Controllers\Controller;
+use App\Models\users\mocks_user\mocks_user_attempt\MocksUserAttempt;
 use Illuminate\Http\Request;
 use App\Models\super_admin\user_management\Users;
 use Carbon\Carbon;
@@ -90,11 +91,32 @@ class MainMocksManagementController extends Controller
 
         // Update or create records based on the selected tests
         foreach ($linked_tests as $test_id) {
+
+            $test = Test::find($test_id);
+
+            // Check if the record exists in MocksUserAttempt
+            $existingRecord = MocksUserAttempt::where(['user_id' => $user_id, 'test_id' => $test_id])->first();
+
+            // Update or create MocksUserAttempt
+            if (!$existingRecord) {
+                // If the record does not exist, create a new one with the remaining_attempts value
+                MocksUserAttempt::create([
+                    'user_id' => $user_id,
+                    'test_id' => $test_id,
+                    'remaining_attempts' => $test->allow_attempt
+                ]);
+            }
+
+
             MocksManagement::updateOrCreate(
                 ['user_id' => $user_id, 'test_id' => $test_id],
                 ['user_id' => $user_id, 'test_id' => $test_id]
             );
         }
+
+         // Remove records in MocksUserAttempt that are not in the $linked_tests array
+         MocksUserAttempt::where('user_id', $user_id)->whereNotIn('test_id', $linked_tests)->delete();
+
 
         // Redirect or perform additional actions as needed
         return redirect()->back()->with('success', 'Mocks updated successfully.');

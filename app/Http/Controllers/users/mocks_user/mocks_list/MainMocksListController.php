@@ -4,6 +4,7 @@ namespace App\Http\Controllers\users\mocks_user\mocks_list;
 
 use App\Http\Controllers\Controller;
 use App\Models\super_admin\mocks\test\Test;
+use App\Models\users\mocks_user\mocks_user_attempt\MocksUserAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -19,11 +20,27 @@ class MainMocksListController extends Controller
 
         // You can further customize the data preparation based on your needs
         $mocksData = $tests->map(function ($test) use ($user) {
-            // Check if the user has exceeded the allowed attempts for this test
-            $attemptsMade = $test->mockUserTestHistories()->where('user_id', $user->id)->count();
-            $remainingAttempts = max(0, $test->allow_attempt - $attemptsMade);
 
-            if ($attemptsMade >= $test->allow_attempt || $test->questions->isEmpty()) {
+            $attemptsMade = 0;
+            $remainingAttempts = 0;
+
+            $attemptsHistory = MocksUserAttempt::where('user_id', $user->id)
+                ->where('test_id', $test->test_id)
+                ->get();
+
+            // Check if there are any attempts in the history
+            if ($attemptsHistory->isNotEmpty()) {
+                // Assuming you are only interested in the first attempt, you can use first()
+                $firstAttempt = $attemptsHistory->first();
+
+                // Access the pivot attributes
+                $attemptsMade = $firstAttempt->remaining_attempts;
+                $remainingAttempts = $firstAttempt->remaining_attempts;
+            }
+
+
+
+            if ($attemptsMade == 0 || $test->questions->isEmpty()) {
                 // Skip the test if the user has exceeded the allowed attempts or if there are no questions
                 return null;
             }

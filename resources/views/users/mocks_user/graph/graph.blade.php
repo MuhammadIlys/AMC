@@ -264,9 +264,9 @@ if (linechartDatalabelColors) {
             ],
             title: {text: "Subjects"}
         },
-        yaxis: {title: {text: "Number of Answers"}, min: 0, max: 100},
+        yaxis: {title: {text: "Number of Answers"}, min: 0, max: 2000},
         legend: {position: "top", horizontalAlign: "right", floating: !0, offsetY: -25, offsetX: -5},
-        responsive: [{breakpoint: 600, options: {chart: {toolbar: {show: !1}}, legend: {show: !1}}}]
+        responsive: [{breakpoint: 1000, options: {chart: {toolbar: {show: !1}}, legend: {show: !1}}}]
     };
 
     var chart = new ApexCharts(document.querySelector("#line_chart_datalabel"), options);

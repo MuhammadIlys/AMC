@@ -38,21 +38,23 @@
                 <div>
 
                     <p style="margin-bottom:10px" >
-                        <b>Hello,</b>
+                        <b>Hello {{ $last_name }},</b>
 
                     </p>
 
                     <p style="margin-bottom:10px" >
-                        <p>Click the following link to reset your password:</p>
-                        <a href="{{ $resetLink }}">{{ $resetLink }}</a>
+                        <p>Subscription <b>{{ $subscription_name }}</b> is activated in your account successfully.</p>
+                        <p>Login to your account using your login details by clicking the link below:</p>
+                        <a href="{{ url('/') }}">{{ url('/') }}</a>
                         <br>
+
                     </p>
                 </div>
 
                 <div>
                     <p >
-                        <b>Don't recognize this activity?</b> <br>
-                         You can contact us at <a href="mailto:support@aceamcq.com" target="_blank">support@<span class="il">aceamcq</span>.com</a> to ensure your account security.
+                        <b>Do you have any question?</b> <br>
+                         You can contact us at <a href="mailto:support@aceamcq.com" target="_blank">support@<span class="il">aceamcq</span>.com</a> For more details.
                     </p>
                 </div>
 
