@@ -52,11 +52,11 @@
                                         </div>
                                         <div class="col-xxl-3 col-sm-6 col-lg-4">
                                             <table class="table align-middle table-nowrap mb-0">
-                                                <h5 class="ms-2 score-title">Time Performance</h5>
+                                                <h5 class="ms-2 score-title">Time Performance (HH:MM)</h5>
                                                 <tbody>
                                                 <tr>
                                                     <th scope="row"><a href="#" class="fw-medium">Last Recent Mocks</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $averageTimeSpentRecentMock ?? 0 }}</div></td>
+                                                    <td> <div class="score-badge float-end">{{ $totalTimeSpentInRecentMocks ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row"><a href="#" class="fw-medium">Avg. Time per Mocks</a></th>
@@ -205,7 +205,7 @@
             var totalMocksCompleted  = {{ $totalMocksCompleted ?? 0 }};
             var totalMocksPassed = {{ $totalMocksPassed ?? 0 }};
             var totalMocksFailed = {{ $totalMocksFailed ?? 0 }};
-            var averageTimeSpentRecentMock = '{{ $averageTimeSpentRecentMock ?? 0 }}';
+            var averageTimeSpentRecentMock = '{{ $totalTimeSpentInRecentMocks ?? 0 }}';
             var averageTimeSpent= '{{ $averageTimeSpent ?? 0 }}';
             var otherUserAverageTimeSpent = '03:05';
 

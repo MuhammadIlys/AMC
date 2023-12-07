@@ -110,54 +110,81 @@
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">AMC Recalls</span>
               </li>
+
               <li class="sidebar-item">
                 <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                   <span class="d-flex">
-                    <i class="ti ti-file"></i>
+                    <i class="ti ti-cards"></i>
                   </span>
-                  <span class="hide-menu">All Question</span>
+                  <span class="hide-menu">Recalls Upload</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-recall/View-allQuestion/index.php" class="sidebar-link">
+                    <a href="{{ url('/recalls_upload_image_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">View Questions</span>
+                      <span class="hide-menu">Upload Image</span>
                     </a>
                   </li>
-                    <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-recall/View-allQuestion/create.php" class="sidebar-link">
+                   <li class="sidebar-item">
+                    <a href="{{ url('/recalls_upload_video_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">Add Question</span>
+                      <span class="hide-menu">Upload Video</span>
                     </a>
                   </li>
                 </ul>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="https://mockuptest.aceamcq.com/amc/amc-recall/recall-timeFrame/index.php" aria-expanded="false">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-file"></i>
+                  </span>
+                  <span class="hide-menu">Recalls Years</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ url('/recalls_year_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">View Years</span>
+                    </a>
+                  </li>
+                    <li class="sidebar-item">
+                    <a href="{{ url('/recalls_year_add_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Add Year</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                   <span class="d-flex">
                     <i class="ti ti-article"></i>
                   </span>
-                  <span class="hide-menu">Recall TimeFrame</span>
+                  <span class="hide-menu">Recalls System</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                    <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-recall/recall-timeFrame/index.php" class="sidebar-link">
+                    <a href="{{ url('/recalls_system_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">View TimeFrame</span>
+                      <span class="hide-menu">View System</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-recall/recall-timeFrame/create.php" class="sidebar-link">
+                    <a href="{{ url('/recalls_system_add_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">Add Recall Year</span>
+                      <span class="hide-menu">Add System</span>
                     </a>
                   </li>
                 </ul>
@@ -167,11 +194,11 @@
                   <span class="d-flex">
                     <i class="ti ti-file-dots"></i>
                   </span>
-                  <span class="hide-menu">Demo Question</span>
+                  <span class="hide-menu">Recalls Question</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                    <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-recall/demo-question/index.php" class="sidebar-link">
+                    <a href="{{ url('/recalls_question_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
@@ -179,7 +206,7 @@
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-recall/demo-question/create.php" class="sidebar-link">
+                    <a href="{{ url('/recalls_question_add_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
@@ -193,23 +220,23 @@
                   <span class="d-flex">
                     <i class="ti ti-cards"></i>
                   </span>
-                  <span class="hide-menu">Upload Image</span>
+                  <span class="hide-menu">Recalls Demo</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-recall/upload-image/index.php" class="sidebar-link">
+                    <a href="{{ url('/recalls_demo_question_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">View Images</span>
+                      <span class="hide-menu">View Question</span>
                     </a>
                   </li>
                    <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-recall/upload-image/create.php" class="sidebar-link">
+                    <a href="{{ url('/recalls_demo_question_add_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">Add Image</span>
+                      <span class="hide-menu">Add Question</span>
                     </a>
                   </li>
                 </ul>
@@ -220,7 +247,7 @@
               <!-- ============================= -->
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">AMC Mocks Test</span>
+                <span class="hide-menu">AMC Mocks</span>
               </li>
 
                 <li class="sidebar-item">
@@ -228,7 +255,7 @@
                     <span class="d-flex">
                         <i class="ti ti-file-description"></i>
                     </span>
-                    <span class="hide-menu">Uploads</span>
+                    <span class="hide-menu">Mocks Uploads</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
 
@@ -259,7 +286,7 @@
                     <span class="d-flex">
                         <i class="ti ti-file-description"></i>
                     </span>
-                    <span class="hide-menu">Subjects</span>
+                    <span class="hide-menu">Mocks Subjects</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
 
@@ -289,7 +316,7 @@
                   <span class="d-flex">
                     <i class="ti ti-check"></i>
                   </span>
-                  <span class="hide-menu">Speciality</span>
+                  <span class="hide-menu">Mocks Speciality</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
@@ -316,7 +343,7 @@
                   <span class="d-flex">
                     <i class="ti ti-border-top"></i>
                   </span>
-                  <span class="hide-menu">Topic</span>
+                  <span class="hide-menu">Mocks Topic</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
@@ -343,7 +370,7 @@
                   <span class="d-flex">
                     <i class="ti ti-help"></i>
                   </span>
-                  <span class="hide-menu">Question </span>
+                  <span class="hide-menu">Mocks Question </span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
@@ -370,7 +397,7 @@
                   <span class="d-flex">
                     <i class="ti ti-file-pencil"></i>
                   </span>
-                  <span class="hide-menu">Test</span>
+                  <span class="hide-menu">Mocks Tests</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">

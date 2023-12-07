@@ -52,7 +52,7 @@ class MainQuestionController extends Controller
     {
         // Validate the form data
         $request->validate([
-            'question_track_id' => 'required|integer', // Requires a non-empty integer value
+            'question_track_id' => 'required|numeric', // Requires a non-empty numeric value
             'question_text' => 'required|string', // Requires a non-empty string
             'option1' => 'required|string',
             'option2' => 'required|string',

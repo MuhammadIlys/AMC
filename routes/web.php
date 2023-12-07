@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\login_registration\MainLoginRegistrationController;
+use App\Http\Controllers\super_admin\recalls\recalls_demo\MainRecallsDemoController;
+use App\Http\Controllers\super_admin\recalls\recalls_question\MainRecallsQuestionController;
+use App\Http\Controllers\super_admin\recalls\recalls_upload\MainRecallsUploadController;
 use App\Http\Controllers\super_admin\user_management\subscription\MainSubscriptionController;
 use App\Http\Controllers\super_admin\user_management\user\MainUserController;
 use App\Http\Controllers\super_admin\user_management\mocks_management\MainMocksManagementController;
@@ -19,6 +22,8 @@ use App\Http\Controllers\users\mocks_user\report\MainReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\super_admin\mocks\question_preview\MainQuestionPreview2Controller;
 use App\Http\Controllers\super_admin\mocks\demo\MainMocksDemoController2;
+use App\Http\Controllers\super_admin\recalls\recalls_system\MainRecallsSystemController;
+use App\Http\Controllers\super_admin\recalls\recalls_year\MainRecallsYearController;
 
 
 // super-admin main controller
@@ -443,6 +448,58 @@ Route::middleware('user')->group(function () {
 
 });
 
+
+//###################################### RECALLS SUPER ADMIN ROUTES ############################################
+
+Route::middleware('superadmin')->group(function () {
+
+    // recall year routes
+
+    Route::get('/recalls_year_view', [MainRecallsYearController::class, 'recallsYearView']);
+
+    Route::get('/recalls_year_add_view', [MainRecallsYearController::class, 'recallsYearAddView']);
+
+    Route::post('/add_recalls_year', [MainRecallsYearController::class, 'addRecallsYear']);
+
+    Route::get('/get_recalls_year_data', [MainRecallsYearController::class, 'getRecallsYearData']);
+
+    Route::delete('/delete_recalls_year/{recall_year_id}', [MainRecallsYearController::class, 'deleteRecallsYear']);
+
+    Route::get('/load_recalls_year_to_edit/{recall_year_id}', [MainRecallsYearController::class, 'loadRecallsYearToEdit']);
+
+    Route::put('/update_recalls_year/{recall_year_id}', [MainRecallsYearController::class, 'updateRecallsYear']);
+
+    // recall system routes
+
+    Route::get('/recalls_system_view', [MainRecallsSystemController::class, 'recallsSystemView']);
+
+    Route::get('/get_recalls_system_data', [MainRecallsSystemController::class, 'getRecallsSystemData']);
+
+    Route::delete('/delete_recalls_system/{recall_system_id}', [MainRecallsSystemController::class, 'deleteRecallsSystem']);
+
+    Route::get('/load_recalls_system_to_edit/{recall_system_id}', [MainRecallsSystemController::class, 'loadRecallsSystemToEdit']);
+
+    Route::put('/update_recalls_system/{recall_system_id}', [MainRecallsSystemController::class, 'updateRecallsSystem']);
+
+
+    Route::get('/recalls_system_add_view', [MainRecallsSystemController::class, 'recallsSystemAddView']);
+
+    Route::post('/add_recalls_system', [MainRecallsSystemController::class, 'saveRecallsSystem']);
+
+
+    Route::get('/recalls_question_view', [MainRecallsQuestionController::class, 'recallsQuestionView']);
+    Route::get('/recalls_question_add_view', [MainRecallsQuestionController::class, 'recallsQuestionAddView']);
+
+    Route::get('/recalls_upload_image_view', [MainRecallsUploadController::class, 'recallsUploadImagView']);
+
+    Route::get('/recalls_upload_video_view', [MainRecallsUploadController::class, 'recallsUploadVideoView']);
+
+    Route::get('/recalls_demo_question_view', [MainRecallsDemoController::class, 'recallsDemoQuestionView']);
+    Route::get('/recalls_demo_question_add_view', [MainRecallsDemoController::class, 'recallsDemoQuestionAddView']);
+
+
+
+});
 
 
 
