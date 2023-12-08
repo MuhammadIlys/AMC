@@ -116,10 +116,6 @@ Route::middleware('superadmin')->group(function () {
     Route::delete('/delete_mocks_image/{image_id}', [MainMocksUploadController::class, 'deleteMocksImage']);
 
 
-
-
-
-
 });
 
 
@@ -469,7 +465,7 @@ Route::middleware('superadmin')->group(function () {
 
     Route::put('/update_recalls_year/{recall_year_id}', [MainRecallsYearController::class, 'updateRecallsYear']);
 
-    // recall system routes
+    // recalls system routes
 
     Route::get('/recalls_system_view', [MainRecallsSystemController::class, 'recallsSystemView']);
 
@@ -486,16 +482,77 @@ Route::middleware('superadmin')->group(function () {
 
     Route::post('/add_recalls_system', [MainRecallsSystemController::class, 'saveRecallsSystem']);
 
+    //recalls question routes
+
 
     Route::get('/recalls_question_view', [MainRecallsQuestionController::class, 'recallsQuestionView']);
+
+    Route::get('/load_recalls_question_to_table',[MainRecallsQuestionController::class, 'loadRecallsQuestionsToTable']);
+
+    Route::get('/edit_recall_question_loader/{question_id}', [MainRecallsQuestionController::class, 'loadRecallsQuestionsToEdit']);
+
+    Route::post('/update_recalls_question', [MainRecallsQuestionController::class, 'updateRecallsQuestion']);
+
+    Route::delete('/delete_recalls_question/{question_id}',[MainRecallsQuestionController::class, 'deleteRecallsQuestion']);
+
+
+
+
     Route::get('/recalls_question_add_view', [MainRecallsQuestionController::class, 'recallsQuestionAddView']);
+
+
+    Route::get('/fetch_recalls_years', [MainRecallsQuestionController::class, 'fetchRecallsYears']);
+
+    Route::get('/fetch_recalls_months', [MainRecallsQuestionController::class, 'fetchRecallsMonths']);
+
+    Route::get('/fetch_recalls_systems', [MainRecallsQuestionController::class, 'fetchRecallsSystems']);
+
+    Route::post('/create_recalls_question', [MainRecallsQuestionController::class, 'createRecallsQuestion']);
+
+
+
+    Route::get('/recalls_demo_question_view', [MainRecallsDemoController::class, 'recallsDemoQuestionView']);
+
+    Route::get('/load_recalls_demo_question_to_table',[MainRecallsDemoController::class, 'loadRecallsQuestionsToTable']);
+
+    Route::get('/edit_recall_question_demo_loader/{question_id}', [MainRecallsDemoController::class, 'loadRecallsQuestionsToEdit']);
+
+    Route::post('/update_recalls_demo_question', [MainRecallsDemoController::class, 'updateRecallsQuestion']);
+
+    Route::delete('/delete_recalls_demo_question/{question_id}',[MainRecallsDemoController::class, 'deleteRecallsQuestion']);
+
+    Route::get('/recalls_demo_question_add_view', [MainRecallsDemoController::class, 'recallsDemoQuestionAddView']);
+
+    Route::post('/create_recalls_demo_question', [MainRecallsDemoController::class, 'createRecallsQuestion']);
+
+
+
+
+
+
+
+
 
     Route::get('/recalls_upload_image_view', [MainRecallsUploadController::class, 'recallsUploadImagView']);
 
+    // upload images view
+    Route::get('/show_recalls_image_view', [MainRecallsUploadController::class, 'showMocksImageView']);
+    // upload mocks image
+    Route::post('/upload_recalls_image', [MainRecallsUploadController::class, 'uploadMocksImage']);
+
+    // load image data to datatable
+    Route::get('/load_recalls_images', [MainRecallsUploadController::class, 'loadMocksImages']);
+
+    // delete mocks image
+    Route::delete('/delete_recalls_image/{image_id}', [MainRecallsUploadController::class, 'deleteMocksImage']);
+
+
+
+
+
     Route::get('/recalls_upload_video_view', [MainRecallsUploadController::class, 'recallsUploadVideoView']);
 
-    Route::get('/recalls_demo_question_view', [MainRecallsDemoController::class, 'recallsDemoQuestionView']);
-    Route::get('/recalls_demo_question_add_view', [MainRecallsDemoController::class, 'recallsDemoQuestionAddView']);
+
 
 
 

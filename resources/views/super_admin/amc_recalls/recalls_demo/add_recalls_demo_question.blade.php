@@ -1,193 +1,325 @@
-@extends('super-admin.templates.main')
+@extends('super_admin.templates.main')
 @section('main-container')
+
+
+<style>
+
+    .summernotemargin{
+        margin-bottom:10px !important;
+    }
+</style>
+
+
+
 
         <div class="container-fluid"><!--  container start -->
 
-        <div class="row">
+        <div class="card">
+                  <div class="card-body">
+                    <h5 class="mb-3">Add Recall Question</h5>
+                    <form id="question-form" >
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="question_track_id" name="question_track_id" placeholder="Enter Name here">
+                            <label for="tb-fname">Question Track ID</label>
+                            <span class="text-danger" id="question_track_id_error"></span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+
+                                <select class="form-select mr-sm-2" id="recalls_year_id" name="recalls_year_id">
+                                    <option  selected disabled>Choose Recalls Year</option>
+
+
+                                </select>
+                                <span class="text-danger" id="recalls_year_id_error"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+
+                                <select class="form-select mr-sm-2" id="recalls_month_id" name="recalls_month_id">
+                                    <option disabled selected>Choose  Recalls Month</option>
+
+                                </select>
+                                <span class="text-danger" id="recalls_month_id_error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+
+                                <select class="form-select mr-sm-2" id="recalls_system_id" name="recalls_system_id" >
+                                    <option selected disabled>Choose  Recalls System</option>
+
+                                </select>
+                                <span class="text-danger" id="recalls_system_id_error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 summernotemargin">
+                          <div class="form-floating">
+
+                            <textarea class="summernote" name="question_text" id="question_text" rows="4" cols="50">
+                                Enter Question
+                            </textarea>
+                            <span class="text-danger" id="question_text_error"></span>
+
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 summernotemargin">
+                          <div class="form-floating">
+
+                            <textarea class="summernote2" name="option1" id="option1" rows="4" cols="50">
+                                Option 1
+                            </textarea>
+                            <span class="text-danger" id="option1_error"></span>
+
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 summernotemargin">
+                          <div class="form-floating">
+
+                            <textarea class="summernote2" name="option2" id="option2"  rows="4" cols="50">
+                                Option 2
+                            </textarea>
+                            <span class="text-danger" id="option2_error"></span>
+
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 summernotemargin">
+                          <div class="form-floating">
+
+                            <textarea class="summernote2" name="option3" id="option3"  rows="4" cols="50">
+                                Option 3
+                            </textarea>
+                            <span class="text-danger" id="option2_error"></span>
+
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 summernotemargin">
+                          <div class="form-floating">
+
+                            <textarea class="summernote2" name="option4" id="option4"  rows="4" cols="50">
+                                Option 4
+                            </textarea>
+                            <span class="text-danger" id="option4_error"></span>
+
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 summernotemargin">
+                          <div class="form-floating">
+
+                            <textarea class="summernote2" name="option5" id="option5"  rows="4" cols="50">
+                                Option 5
+                            </textarea>
+                            <span class="text-danger" id="option5_error"></span>
+
+                          </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+
+                                <select class="form-select mr-sm-2" name="correct_option" id="correct_option" >
+                                    <option selected disabled>Choose  correct Option</option>
+                                    <option value="1">Option 1</option>
+                                    <option value="2">Option 2</option>
+                                    <option value="3">Option 3</option>
+                                    <option value="4">Option 4</option>
+                                    <option value="5">Option 5</option>
+                                </select>
+
+                                <span class="text-danger" id="correct_option_error"></span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-12">
+                          <div class="form-floating">
+
+                            <textarea class="summernote" name="question_explanation" id="question_explanation" rows="4" cols="50">
+                                Enter question_explanation
+                            </textarea>
+                            <span class="text-danger" id="question_explanation_error"></span>
+
+                          </div>
+                        </div>
+
+
                         <div class="col-12">
-                            <!-- ---------------------
-                                    start Zero Configuration
-                                ---------------- -->
-                            <div class="card">
-                                <div class="card-body">
-                                 <div style="margin-bottom:10px;" class="row gx-3">
-                    <div class="col-6">
                           <div class="d-md-flex align-items-center mt-3">
 
-                            <div class=" mt-3 mt-md-0">
-                              <h4>Add Question</h4>
-                            </div>
-                          </div>
-                    </div>
-
-                    <div class="col-6">
-                          <div class="d-md-flex ms-1 mt-3">
-
-                            <div class="ms-auto ms-5  mt-md-0">
-                              <button id="addRecallModal" type="button" class="btn btn-info font-medium rounded-pill px-3" style="margin-right:10px" >
-                                <div class="d-flex align-items-center">
-                                  <i class="ti ti-plus me-3 fs-3"></i>
-                                <a class="text-white" href="https://mockuptest.aceamcq.com/amc/amc-recall/View-allQuestion/create.php">Add Question</a>
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                    </div>
-                  </div>
-
-                 <div class="table-responsive">
-                        <div id="zero_config_wrapper" class="dataTables_wrapper">
-                            <table id="zero_config" class="table border table-striped table-bordered text-nowrap dataTable" aria-describedby="zero_config_info">
-                                <thead>
-                                                <!-- start row -->
-                                     <tr>
-                                        <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 141.234px;">ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 236.094px;">Opt:1</th>
-                                        <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 236.094px;">Opt:2</th>
-                                        <th class="sorting" tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 39.7969px;">Action</th>
-                                     </tr>
-                                                <!-- end row -->
-                                 </thead>
-                                <tbody>
-                                <tr class="odd">
-                                    <td class="">Angelica Ramos</td>
-                                        <td>Chief Executive Officer (CEO)</td>
-                                         <td>Recall Year Image Url</td>
-                                                <td>
-                                                    <button class=" btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                </td>
-                                                </tr>
-                                                 <tr class="even">
-                                                    <td class="">Fiona Green</td>
-                                                    <td>Chief Operating Officer (COO)</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                        <button class=" btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class=" btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr>
-                                                <tr class="odd">
-                                                    <td class="">Paul Byrd</td>
-                                                    <td>Chief Financial Officer (CFO)</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr>
-                                                <tr class="even">
-                                                    <td class="">Yuri Berry</td>
-                                                    <td>Chief Marketing Officer (CMO)</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr><tr class="odd">
-                                                    <td class="">Jackson Bradshaw</td>
-                                                    <td>Director</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class=" btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr><tr class="even">
-                                                    <td class="">Charde Marshall</td>
-                                                    <td>Regional Director</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr><tr class="odd">
-                                                    <td class="">Vivian Harrell</td>
-                                                    <td>Financial Controller</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr><tr class="even">
-                                                    <td class="">Cedric Kelly</td>
-                                                    <td>Senior Javascript Developer</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr><tr class="odd">
-                                                    <td class="">Tatyana Fitzpatrick</td>
-                                                    <td>Regional Director</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr><tr class="even">
-                                                    <td class="">Brielle Williamson</td>
-                                                    <td>Integration Specialist</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-
-                                                </tr>
-                                                </tr><tr class="odd">
-                                                    <td class="">Brielle Williamson</td>
-                                                    <td>Integration Specialist</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                    <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr>
-                                                </tr><tr class="even">
-                                                    <td class="">Brielle Williamson</td>
-                                                    <td>Integration Specialist</td>
-                                                    <td>Recall Year Image Url</td>
-                                                    <td>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-secondary">Edit</button>
-                                                        <button class="btn btn-sm mb-1 waves-effect waves-light btn-danger">Delete</button>
-                                                    </td>
-
-                                                </tr>
-
-
-                                            </tbody>
-
-
-                                            <tfoot>
-                                                <!-- start row -->
-                                                <tr>
-                                                    <th rowspan="1" colspan="1">ID</th>
-                                                    <th rowspan="1" colspan="1">Name</th>
-                                                    <th rowspan="1" colspan="1">Recall Year Image Url</th>
-                                                    <th rowspan="1" colspan="1">Action</th>
-
-                                                <!-- end row -->
-                                            </tfoot>
-                                        </table>
+                                <div class="ms-auto mt-3 mt-md-0">
+                                <button id="submitbtn"  type="submit" class="btn btn-info font-medium rounded-pill px-4">
+                                    <div class="d-flex align-items-center">
+                                    <i class="ti ti-send me-2 fs-4"></i>
+                                    Add Question
                                     </div>
+                                </button>
                                 </div>
-                            </div>
-                            <!-- ---------------------
-                                    end Zero Configuration
-                            ---------------- -->
+                          </div>
                         </div>
-                    </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
 
-        </div>
-        <!--  container end -->
+
+
+
+
+        </div><!--  container end -->
+
+
+        <script>
+
+            $(document).ready(function () {
+
+                // load recalls year to the form
+                loadRecallsYears();
+
+                // load recalls month to the form
+                loadRecallsMonths();
+
+
+                // load recalls system to the form
+                loadRecallsSystems();
+
+
+                function loadRecallsYears(){
+
+                    // Fetch recalls Years dynamically
+                    $.ajax({
+
+                    url: '/fetch_recalls_years',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        const recallsYearSelect = $('#recalls_year_id');
+                        recallsYearSelect.html(data.recallsYearOptions);
+
+
+                    },
+                    error: function(error) {
+                        console.error('Error fetching recalls year:', error);
+                    }
+
+                    });
+
+                }
+
+
+                function loadRecallsMonths(){
+
+                    // Fetch recalls Years dynamically
+                    $.ajax({
+
+                    url: '/fetch_recalls_months',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        const recallsMonthSelect = $('#recalls_month_id');
+                        recallsMonthSelect.html(data.recallsMonthOptions);
+
+
+                    },
+                    error: function(error) {
+                        console.error('Error fetching recalls month:', error);
+                    }
+
+                    });
+
+                }
+
+
+                function loadRecallsSystems(){
+
+                    // Fetch recalls system dynamically
+                    $.ajax({
+
+                    url: '/fetch_recalls_systems',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        const recallsSystemSelect = $('#recalls_system_id');
+                        recallsSystemSelect.html(data.recallsSystemOptions);
+
+
+                    },
+                    error: function(error) {
+                        console.error('Error fetching recalls system:', error);
+                    }
+
+
+                    });
+
+                }
+
+
+
+                $('#question-form').on('submit', function (e) {
+                    e.preventDefault();
+
+                    // Disable the button
+                    $('#submitbtn').prop('disabled', true);
+
+                    // Serialize the form data
+                    var formData = $(this).serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "/create_recalls_demo_question",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: formData,
+                        success: function (data) {
+                            // Handle the success response, e.g., show a success message
+                            $('#question-form')[0].reset();
+                            displaySuccessAlert("Success",data.message);
+                        },
+                        error: function (data) {
+                            // Handle validation errors
+                            if (data.status === 422) {
+                                // Clear any previous validation error messages
+                                $('.text-danger').text('');
+
+                                // Loop through the errors and display them next to the respective form fields
+                                $.each(data.responseJSON.errors, function (fieldName, errorMessage) {
+                                    $('#' + fieldName + '_error').text(errorMessage[0]);
+                                });
+                            }
+                        },
+                        complete: function() {
+                        // Enable the button after the request is complete (success or error)
+                          $('#submitbtn').prop('disabled', false);
+                        }
+
+                    });
+                });
+
+
+
+
+
+
+
+
+            });// ready function end
+
+
+
+
+
+        </script>
+
+
 @endsection

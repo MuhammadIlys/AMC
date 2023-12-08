@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\super_admin\recalls\recalls_question;
+namespace App\Models\super_admin\recalls\recalls_demo;
 
 use App\Models\super_admin\recalls\recalls_month\RecallsMonth;
 use App\Models\super_admin\recalls\recalls_system\RecallsSystem;
@@ -8,11 +8,12 @@ use App\Models\super_admin\recalls\recalls_Year\RecallsYear;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecallsQuestion extends Model
+class RecallsDemoQuestion extends Model
 {
     use HasFactory;
 
-    protected $table = 'recalls_questions';
+
+    protected $table = 'recalls_demo_questions';
     protected $primaryKey = 'recalls_question_id';
 
     protected $fillable = [
