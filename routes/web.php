@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\login_registration\MainLoginRegistrationController;
+use App\Http\Controllers\super_admin\qbank\qbank_qbank\MainQbankQbankController;
+use App\Http\Controllers\super_admin\qbank\qbank_question\MainQbankQuestionController;
+use App\Http\Controllers\super_admin\qbank\qbank_system\MainQbankSystemController;
+use App\Http\Controllers\super_admin\qbank\qbank_upload\MainQbankUploadController;
 use App\Http\Controllers\super_admin\recalls\recalls_demo\MainRecallsDemoController;
 use App\Http\Controllers\super_admin\recalls\recalls_question\MainRecallsQuestionController;
 use App\Http\Controllers\super_admin\recalls\recalls_upload\MainRecallsUploadController;
@@ -559,6 +563,70 @@ Route::middleware('superadmin')->group(function () {
 });
 
 
+//######################################   QBANK SUPER ADMIN ROUTES ############################################
+
+Route::middleware('superadmin')->group(function () {
+
+    Route::get('/qbank_qbank_view', [MainQbankQbankController::class, 'qbankQbankView']);
+
+    Route::get('/get_qbanks_data', [MainQbankQbankController::class, 'getQbankData']);
+
+    Route::get('/load_qbank_to_edit/{qbank_id}', [MainQbankQbankController::class, 'loadQbankToEdit']);
+
+    Route::put('/update_qbank/{qbank_id}', [MainQbankQbankController::class, 'updateQbank']);
+
+    Route::delete('/delete_qbank/{qbank_id}',[MainQbankQbankController::class, 'deleteQbank']);
+
+
+    Route::get('/qbank_qbank_add_view', [MainQbankQbankController::class, 'qbankQbankAddView']);
+
+    Route::post('/add_qbank', [MainQbankQbankController::class, 'addQbank']);
+
+    // qbank system  routes
+
+    Route::get('/qbank_system_view', [MainQbankSystemController::class, 'qbankSystemView']);
+
+    Route::get('/get_qbank_system_data', [MainQbankSystemController::class, 'getQbankSystemData']);
+
+
+
+    Route::get('/qbank_system_add_view', [MainQbankSystemController::class, 'qbankSystemAddView']);
+
+    Route::post('/add_qbank_system', [MainQbankSystemController::class, 'saveQbankSystem']);
+
+    Route::get('/load_qbank_system_to_edit/{qbank_system_id}', [MainQbankSystemController::class, 'loadQbankSystemToEdit']);
+
+    Route::put('/update_qbank_system/{qbank_system_id}', [MainQbankSystemController::class, 'updateQbankSystem']);
+
+    Route::delete('/delete_qbank_system/{qbank_system_id}', [MainQbankSystemController::class, 'deleteQbankSystem']);
+
+    // qbank question  routes
+    Route::get('/qbank_question_view', [MainQbankQuestionController::class, 'qbankQuestionView']);
+
+    Route::get('/load_recalls_question_to_table', [MainQbankQuestionController::class, 'loadQbankQuestionsToTable']);
+
+    Route::get('/edit_qbank_question_loader/{question_id}', [MainQbankQuestionController::class, 'loadQbankQuestionsToEdit']);
+
+    Route::post('/update_qbank_question', [MainQbankQuestionController::class, 'updateQbankQuestion']);
+
+    Route::delete('/delete_qbank_question/{question_id}', [MainQbankQuestionController::class, 'deleteQbankQuestion']);
+
+
+    Route::get('/qbank_question_add_view', [MainQbankQuestionController::class, 'qbankQuestionAddView']);
+
+    Route::get('/fetch_qbanks', [MainQbankQuestionController::class, 'fetchQbanks']);
+
+    Route::get('/fetch_qbank_systems', [MainQbankQuestionController::class, 'fetchQbankSystems']);
+
+    Route::post('/create_qbank_question', [MainQbankQuestionController::class, 'createQbankQuestion']);
+
+    // qbank upload image routes
+    Route::get('/qbank_upload_image_view', [MainQbankUploadController::class, 'qbankUploadImagView']);
+
+
+
+
+});
 
 
 

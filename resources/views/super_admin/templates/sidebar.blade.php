@@ -23,28 +23,55 @@
               <!-- =================== -->
               <!-- AMC Qbank -->
               <!-- =================== -->
+
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-file-text"></i>
+                  </span>
+                  <span class="hide-menu">Qbanks Upload </span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ url('/qbank_upload_image_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Upload Image</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Upload Video</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
               <li class="sidebar-item">
                 <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                   <span class="d-flex">
                     <i class="ti ti-file-export"></i>
                   </span>
-                  <span class="hide-menu">Subject</span>
+                  <span class="hide-menu">Qbanks</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-qbank/subject/index.php" class="sidebar-link">
+                    <a href="{{ url('/qbank_qbank_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">View Subject</span>
+                      <span class="hide-menu">View Qbanks</span>
                     </a>
                   </li>
                    <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-qbank/subject/create.php" class="sidebar-link">
+                    <a href="{{ url('/qbank_qbank_add_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">Add Subject</span>
+                      <span class="hide-menu">Add Qbanks</span>
                     </a>
                   </li>
                 </ul>
@@ -54,53 +81,55 @@
                   <span class="d-flex">
                     <i class="ti ti-calendar"></i>
                   </span>
-                  <span class="hide-menu">Questions</span>
+                  <span class="hide-menu">Qbank Systems</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-qbank/question/index.php" class="sidebar-link">
+                    <a href="{{ url('/qbank_system_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">View Question</span>
+                      <span class="hide-menu">View Systems</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-qbank/question/create.php" class="sidebar-link">
+                    <a href="{{ url('/qbank_system_add_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">Add Question</span>
+                      <span class="hide-menu">Add Systems</span>
                     </a>
                   </li>
                 </ul>
               </li>
+
               <li class="sidebar-item">
                 <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                   <span class="d-flex">
-                    <i class="ti ti-file-text"></i>
+                    <i class="ti ti-calendar"></i>
                   </span>
-                  <span class="hide-menu">Upload Image</span>
+                  <span class="hide-menu">Qbank Questions</span>
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-qbank/upload-image/index.php" class="sidebar-link">
+                    <a href="{{ url('/qbank_question_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">View Image</span>
+                      <span class="hide-menu">View Questions</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a href="https://mockuptest.aceamcq.com/amc/amc-qbank/upload-image/create.php" class="sidebar-link">
+                    <a href="{{ url('/qbank_question_add_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
-                      <span class="hide-menu">Add Image</span>
+                      <span class="hide-menu">Add Questions</span>
                     </a>
                   </li>
                 </ul>
               </li>
+
 
 
               <!-- ============================= -->
@@ -128,7 +157,7 @@
                     </a>
                   </li>
                    <li class="sidebar-item">
-                    <a href="{{ url('/recalls_upload_video_view') }}" class="sidebar-link">
+                    <a href="#" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
@@ -268,7 +297,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{ url('/subject_add') }}" class="sidebar-link">
+                            <a href="#" class="sidebar-link">
                             <div class="round-16 d-flex align-items-center justify-content-center">
                                 <i class="ti ti-circle"></i>
                             </div>
@@ -451,6 +480,93 @@
 
 
 
+                  <!-- ============================= -->
+              <!-- User Management -->
+              <!-- ============================= -->
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">User Management</span>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-help"></i>
+                  </span>
+                  <span class="hide-menu">Users</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ url('/user_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu"> Users View</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="{{ url('/add_user_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Add Users</span>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-help"></i>
+                  </span>
+                  <span class="hide-menu">Subscription</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ url('/subscription_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu"> Subscription View</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="{{ url('/add_subsription_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Add Subscription</span>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-help"></i>
+                  </span>
+                  <span class="hide-menu">Mocks</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ url('/') }}/mocks_user_view" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu"> Mocks User</span>
+                    </a>
+                  </li>
+
+
+                </ul>
+              </li>
+
+
+
               <!-- ============================= -->
               <!-- Email Marketing -->
               <!-- ============================= -->
@@ -546,93 +662,6 @@
                       <span class="hide-menu">Cards</span>
                     </a>
                   </li>
-                </ul>
-              </li>
-
-
-
-                  <!-- ============================= -->
-              <!-- User Management -->
-              <!-- ============================= -->
-              <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">User Management</span>
-              </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
-                  <span class="d-flex">
-                    <i class="ti ti-help"></i>
-                  </span>
-                  <span class="hide-menu">Users</span>
-                </a>
-                <ul aria-expanded="false" class="collapse first-level">
-                  <li class="sidebar-item">
-                    <a href="{{ url('/user_view') }}" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu"> Users View</span>
-                    </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="{{ url('/add_user_view') }}" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu">Add Users</span>
-                    </a>
-                  </li>
-
-                </ul>
-              </li>
-
-
-              <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
-                  <span class="d-flex">
-                    <i class="ti ti-help"></i>
-                  </span>
-                  <span class="hide-menu">Subscription</span>
-                </a>
-                <ul aria-expanded="false" class="collapse first-level">
-                  <li class="sidebar-item">
-                    <a href="{{ url('/subscription_view') }}" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu"> Subscription View</span>
-                    </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="{{ url('/add_subsription_view') }}" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu">Add Subscription</span>
-                    </a>
-                  </li>
-
-                </ul>
-              </li>
-
-              <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
-                  <span class="d-flex">
-                    <i class="ti ti-help"></i>
-                  </span>
-                  <span class="hide-menu">Mocks</span>
-                </a>
-                <ul aria-expanded="false" class="collapse first-level">
-                  <li class="sidebar-item">
-                    <a href="{{ url('/') }}/mocks_user_view" class="sidebar-link">
-                      <div class="round-16 d-flex align-items-center justify-content-center">
-                        <i class="ti ti-circle"></i>
-                      </div>
-                      <span class="hide-menu"> Mocks User</span>
-                    </a>
-                  </li>
-
-
                 </ul>
               </li>
 
