@@ -12,7 +12,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-2">
-                            <h5 class="mb-0">Upload Image</h5>
+                            <h5 class="mb-0">Upload QBank Image</h5>
                         </div>
                         <form id="upload_recalls_image" style="margin-top:20px;" enctype="multipart/form-data">
 
@@ -104,7 +104,7 @@
 
                 const dataTable = $('#mocks_images_table').DataTable({
                     ajax: {
-                        url: '/load_recalls_images',
+                        url: '/load_qbank_images',
                         dataSrc: 'data', // Adjust this based on your API response structure
                     },
                     columns: [
@@ -174,7 +174,7 @@
                 // Make an Ajax request
                 $.ajax({
                     type: 'POST',
-                    url: '/upload_recalls_image',
+                    url: '/upload_qbank_image',
                     headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -218,7 +218,7 @@
                     if (result.isConfirmed) {
                         // User confirmed the deletion, send an AJAX request to delete the record
                         $.ajax({
-                            url: '/delete_recalls_image/' + image_id, // Adjust the URL to your delete route
+                            url: '/delete_qbank_image/' + image_id, // Adjust the URL to your delete route
                             type: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

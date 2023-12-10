@@ -11,7 +11,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="mb-2">
-                                        <h5 class="mb-0">Qbank Questions</h5>
+                                        <h5 class="mb-0">Qbank Demo Questions</h5>
                                     </div>
 
                                     <div class="table-responsive">
@@ -72,7 +72,7 @@ $(document).ready(function () {
     function initializeDataTable() {
         return $('#question_table').DataTable({
 
-            ajax: '/load_qbank_question_to_table',
+            ajax: '/load_qbank_demo_question_to_table',
             columns: [
                 {
                      data: 'question_track_id' ,
@@ -190,7 +190,7 @@ $(document).ready(function () {
             // load question data to model for editing
             $.ajax({
 
-                url: `/edit_qbank_question_loader/${questionId}`, // Updated URL
+                url: `/edit_qbank_demo_question_loader/${questionId}`, // Updated URL
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -248,7 +248,7 @@ $(document).ready(function () {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '/update_qbank_question',
+            url: '/update_qbank_demo_question',
             data: formData,
             success: function (response) {
                 $('#question-form')[0].reset();
@@ -298,7 +298,7 @@ $(document).ready(function () {
                     if (result.isConfirmed) {
                         // User confirmed the deletion, send an AJAX request to delete the record
                         $.ajax({
-                            url: '/delete_qbank_question/' + question_id, // Adjust the URL to your delete route
+                            url: '/delete_qbank_demo_question/' + question_id, // Adjust the URL to your delete route
                             type: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

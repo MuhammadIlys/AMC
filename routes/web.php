@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\login_registration\MainLoginRegistrationController;
+use App\Http\Controllers\super_admin\qbank\qbank_demo\MainQbankDemoController;
 use App\Http\Controllers\super_admin\qbank\qbank_qbank\MainQbankQbankController;
 use App\Http\Controllers\super_admin\qbank\qbank_question\MainQbankQuestionController;
 use App\Http\Controllers\super_admin\qbank\qbank_system\MainQbankSystemController;
@@ -603,7 +604,7 @@ Route::middleware('superadmin')->group(function () {
     // qbank question  routes
     Route::get('/qbank_question_view', [MainQbankQuestionController::class, 'qbankQuestionView']);
 
-    Route::get('/load_recalls_question_to_table', [MainQbankQuestionController::class, 'loadQbankQuestionsToTable']);
+    Route::get('/load_qbank_question_to_table', [MainQbankQuestionController::class, 'loadQbankQuestionsToTable']);
 
     Route::get('/edit_qbank_question_loader/{question_id}', [MainQbankQuestionController::class, 'loadQbankQuestionsToEdit']);
 
@@ -620,9 +621,39 @@ Route::middleware('superadmin')->group(function () {
 
     Route::post('/create_qbank_question', [MainQbankQuestionController::class, 'createQbankQuestion']);
 
+
+
+    // qbank demo question  routes
+
+    Route::get('/qbank_demo_question_view', [MainQbankDemoController::class, 'qbankQuestionView']);
+
+    Route::get('/load_qbank_demo_question_to_table', [MainQbankDemoController::class, 'loadQbankQuestionsToTable']);
+
+    Route::get('/edit_qbank_demo_question_loader/{question_id}', [MainQbankDemoController::class, 'loadQbankQuestionsToEdit']);
+
+    Route::post('/update_qbank_demo_question', [MainQbankDemoController::class, 'updateQbankQuestion']);
+
+    Route::delete('/delete_qbank_demo_question/{question_id}', [MainQbankDemoController::class, 'deleteQbankQuestion']);
+
+
+    Route::get('/qbank_question_demo_add_view', [MainQbankDemoController::class, 'qbankQuestionAddView']);
+
+    Route::post('/create_qbank_demo_question', [MainQbankDemoController::class, 'createQbankQuestion']);
+
+
     // qbank upload image routes
     Route::get('/qbank_upload_image_view', [MainQbankUploadController::class, 'qbankUploadImagView']);
 
+     // upload images view
+     Route::get('/show_qbank_image_view', [MainQbankUploadController::class, 'showMocksImageView']);
+     // upload mocks image
+     Route::post('/upload_qbank_image', [MainQbankUploadController::class, 'uploadMocksImage']);
+
+     // load image data to datatable
+     Route::get('/load_qbank_images', [MainQbankUploadController::class, 'loadMocksImages']);
+
+     // delete mocks image
+     Route::delete('/delete_qbank_image/{image_id}', [MainQbankUploadController::class, 'deleteMocksImage']);
 
 
 

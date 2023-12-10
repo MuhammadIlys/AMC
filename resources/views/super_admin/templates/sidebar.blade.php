@@ -130,6 +130,33 @@
                 </ul>
               </li>
 
+              <li class="sidebar-item">
+                <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+                  <span class="d-flex">
+                    <i class="ti ti-calendar"></i>
+                  </span>
+                  <span class="hide-menu">Qbank Demo </span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    <a href="{{ url('/qbank_demo_question_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">View Questions</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="{{ url('/qbank_question_demo_add_view') }}" class="sidebar-link">
+                      <div class="round-16 d-flex align-items-center justify-content-center">
+                        <i class="ti ti-circle"></i>
+                      </div>
+                      <span class="hide-menu">Add Questions</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
 
 
               <!-- ============================= -->

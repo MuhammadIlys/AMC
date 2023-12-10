@@ -225,15 +225,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
         <!-- Registration Section -->
         <div class="col-md-6">
             <h5>Registration</h5>
