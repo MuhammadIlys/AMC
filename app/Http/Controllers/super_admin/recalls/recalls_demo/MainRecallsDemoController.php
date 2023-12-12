@@ -51,11 +51,7 @@ class MainRecallsDemoController extends Controller
                 'recalls_month_id' => 'required|exists:recalls_months,recalls_month_id',
                 'recalls_system_id' => 'required|exists:recalls_systems,recalls_system_id',
                 'question_text' => 'required|string',
-                'option1' => 'required|string',
-                'option2' => 'required|string',
-                'option3' => 'required|string',
-                'option4' => 'required|string',
-                'option5' => 'required|string',
+
                 'correct_option' => 'required|integer|between:1,5',
                 'question_explanation' => 'required|string',
             ]);
@@ -110,11 +106,7 @@ class MainRecallsDemoController extends Controller
                 'recalls_month_id' => 'required|exists:recalls_months,recalls_month_id',
                 'recalls_system_id' => 'required|exists:recalls_systems,recalls_system_id',
                 'question_text' => 'required|string',
-                'option1' => 'required|string',
-                'option2' => 'required|string',
-                'option3' => 'required|string',
-                'option4' => 'required|string',
-                'option5' => 'required|string',
+
                 'correct_option' => 'required|integer|between:1,5',
                 'question_explanation' => 'required|string',
             ];

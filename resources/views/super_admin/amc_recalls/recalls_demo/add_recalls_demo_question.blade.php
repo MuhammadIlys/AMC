@@ -69,60 +69,59 @@
                           </div>
                         </div>
 
-                        <div class="col-md-6 summernotemargin">
-                          <div class="form-floating">
+                        <div class="col-md-6 ">
+                            <div class="form-floating mb-3">
 
-                            <textarea class="summernote2" name="option1" id="option1" rows="4" cols="50">
-                                Option 1
-                            </textarea>
-                            <span class="text-danger" id="option1_error"></span>
+                              <input type="text" class="form-control" name="option1" id="option1" >
+                              <label for="option1"> Option 1</label>
 
+                              <span class="text-danger" id="option1_error"></span>
+
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-6 summernotemargin">
-                          <div class="form-floating">
+                          <div class="col-md-6 ">
+                            <div class="form-floating mb-3">
 
-                            <textarea class="summernote2" name="option2" id="option2"  rows="4" cols="50">
-                                Option 2
-                            </textarea>
-                            <span class="text-danger" id="option2_error"></span>
+                              <input type="text" class="form-control" name="option2" id="option2"  >
 
+                              <label for="option2"> Option 2</label>
+                              <span class="text-danger" id="option2_error"></span>
+
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-6 summernotemargin">
-                          <div class="form-floating">
+                          <div class="col-md-6 ">
+                            <div class="form-floating mb-3">
 
-                            <textarea class="summernote2" name="option3" id="option3"  rows="4" cols="50">
-                                Option 3
-                            </textarea>
-                            <span class="text-danger" id="option2_error"></span>
+                              <input type="text" class="form-control" name="option3" id="option3"  >
 
+                              <label for="option3"> Option 3</label>
+                              <span class="text-danger" id="option2_error"></span>
+
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-6 summernotemargin">
-                          <div class="form-floating">
+                          <div class="col-md-6 ">
+                            <div class="form-floating mb-3">
 
-                            <textarea class="summernote2" name="option4" id="option4"  rows="4" cols="50">
-                                Option 4
-                            </textarea>
-                            <span class="text-danger" id="option4_error"></span>
+                              <input type="text" class="form-control" name="option4" id="option4" >
+                              <label for="option4">option 4</label>
 
+                              <span class="text-danger" id="option4_error"></span>
+
+                            </div>
                           </div>
-                        </div>
 
-                        <div class="col-md-12 summernotemargin">
-                          <div class="form-floating">
+                          <div class="col-md-12">
+                            <div class="form-floating mb-3">
 
-                            <textarea class="summernote2" name="option5" id="option5"  rows="4" cols="50">
-                                Option 5
-                            </textarea>
-                            <span class="text-danger" id="option5_error"></span>
+                              <input type="text" class="form-control" name="option5" id="option5"  >
+                              <label for="option5">option 5</label>
+                              <span class="text-danger" id="option5_error"> </span>
 
+                            </div>
                           </div>
-                        </div>
 
                         <div class="col-md-12">
                             <div class="form-floating mb-3">

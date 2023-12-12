@@ -20,8 +20,6 @@ class SubscriptionAccessMiddleware
 
         if ($user && !$user->isSuperAdmin()) {
 
-
-
             // Check if the user has a subscription of the specified type
             if ($user->hasSubscription($subscriptionType)) {
                 return $next($request);

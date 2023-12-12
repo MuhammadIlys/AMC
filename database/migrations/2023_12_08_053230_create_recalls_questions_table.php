@@ -19,11 +19,11 @@ return new class extends Migration
             $table->unsignedBigInteger('recalls_system_id');
             $table->unsignedBigInteger('question_track_id');
             $table->longText('question_text');
-            $table->longText('option1');
-            $table->longText('option2');
-            $table->longText('option3');
-            $table->longText('option4');
-            $table->longText('option5');
+            $table->longText('option1')->nullable();
+            $table->longText('option2')->nullable();
+            $table->longText('option3')->nullable();
+            $table->longText('option4')->nullable();
+            $table->longText('option5')->nullable();
             $table->unsignedInteger('correct_option'); // Integer data type for correct_option
             $table->longText('question_explanation');
             $table->timestamps();

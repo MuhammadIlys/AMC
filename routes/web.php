@@ -24,6 +24,7 @@ use App\Http\Controllers\users\mocks_user\MocksUserMainController;
 use App\Http\Controllers\users\mocks_user\previous_mocks\MainPreviousMocksController;
 use App\Http\Controllers\users\mocks_user\question_preview\MainQuestionPreviewController;
 use App\Http\Controllers\users\mocks_user\report\MainReportController;
+use App\Http\Controllers\users\qbank_user\MainUserQbankController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\super_admin\mocks\question_preview\MainQuestionPreview2Controller;
 use App\Http\Controllers\super_admin\mocks\demo\MainMocksDemoController2;
@@ -658,6 +659,35 @@ Route::middleware('superadmin')->group(function () {
 
 
 });
+
+// ######################################### QBANK USER DASHBOARD ROUTES ##########################################
+
+    Route::middleware('subscription:QBANK')->group(function () {
+
+        Route::get('/lunch_user_qbank_dashboard/{subscription_id?}', [MainUserQbankController::class, 'lunchUserQbankDashboard']);
+
+        Route::get('/lunch_user_qbank_create_test', [MainUserQbankController::class, 'lunchUserQbankCreateTest']);
+
+        Route::get('/lunch_user_qbank_previous_test', [MainUserQbankController::class, 'lunchUserQbankPreviousTests']);
+
+        Route::get('/lunch_user_qbank_test_result', [MainUserQbankController::class, 'lunchUserQbankTestResults']);
+
+        Route::get('/lunch_user_qbank_test_analytics', [MainUserQbankController::class, 'lunchUserQbankTestAnalytics']);
+
+        Route::get('/lunch_user_qbank_test_reports', [MainUserQbankController::class, 'lunchUserQbankTestReports']);
+
+        Route::get('/lunch_user_qbank_test_graphs', [MainUserQbankController::class, 'lunchUserQbankTestGraphs']);
+
+        Route::get(' /lunch_user_qbank_search', [MainUserQbankController::class, 'lunchUserQbankSearch']);
+
+        Route::get(' /lunch_user_qbank_notes', [MainUserQbankController::class, 'lunchUserQbankNotes']);
+
+
+        Route::get('/lunch_user_qbank_test_account_reset', [MainUserQbankController::class, 'lunchUserQbankTestResetAccount']);
+
+        Route::get('/lunch_user_qbank_test_help', [MainUserQbankController::class, 'lunchUserQbankTestHelp']);
+
+    });
 
 
 

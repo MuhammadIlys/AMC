@@ -49,11 +49,7 @@ class MainQbankQuestionController extends Controller
                 'qbank_id' => 'required|exists:qbank_qbanks,qbank_id',
                 'qbank_system_id' => 'required|exists:qbank_systems,qbank_system_id',
                 'question_text' => 'required|string',
-                'option1' => 'required|string',
-                'option2' => 'required|string',
-                'option3' => 'required|string',
-                'option4' => 'required|string',
-                'option5' => 'required|string',
+
                 'correct_option' => 'required|integer|between:1,5',
                 'question_explanation' => 'required|string',
             ]);
@@ -151,11 +147,7 @@ class MainQbankQuestionController extends Controller
                     'qbank_id' => 'required|exists:qbank_qbanks,qbank_id',
                     'qbank_system_id' => 'required|exists:qbank_systems,qbank_system_id',
                     'question_text' => 'required|string',
-                    'option1' => 'required|string',
-                    'option2' => 'required|string',
-                    'option3' => 'required|string',
-                    'option4' => 'required|string',
-                    'option5' => 'required|string',
+
                     'correct_option' => 'required|integer|between:1,5',
                     'question_explanation' => 'required|string',
                 ];
