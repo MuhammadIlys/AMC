@@ -5,7 +5,7 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Mocks Demo</title>
+    <title>AceamcQ QBank</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="" name="description">
     <meta content="" name="author">
@@ -215,7 +215,7 @@
                     <!-- LOGO -->
                     <div class="navbar-brand-box horizontal-logo">
 
-                        <a href="https://aceamcq.com/#SUBSCRIBE" class="logo logo-light">
+                        <a href="{{ url('/user_dashboard') }}" class="logo logo-light">
                         <span class="logo-sm">
                             <img src="https://aceamcq.com/wp-content/uploads/2023/08/image-1.png" alt="" height="22">
                         </span>
@@ -302,21 +302,21 @@
 
 
                     <li class="nav-item mt-3">
-                        <a class="nav-link menu-link" href="{{ url('/lunch_mocks_demo') }}">
+                        <a class="nav-link menu-link" href="{{ url('/lunch_user_qbank_dashboard') }}">
                             <i class='la la-md la-home icon-margin fs-18'></i> <span data-key="t-widgets">Welcome</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ url('/mocks_list_demo') }}">
-                            <i class='la la-edit fs-18'></i> <span data-key="t-widgets">Mocks</span>
+                        <a class="nav-link menu-link" href="{{ url('/lunch_user_qbank_create_test') }}">
+                            <i class='la la-edit fs-18'></i> <span data-key="t-widgets">Create Test</span>
                         </a>
                     </li>
 
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ url('/mocks_previous_demo') }}">
-                            <i class='la la-list-alt fs-18'></i> <span data-key="t-widgets">Previous Mocks</span>
+                        <a class="nav-link menu-link" href="{{ url('/lunch_user_qbank_previous_test') }}">
+                            <i class='la la-list-alt fs-18'></i> <span data-key="t-widgets">Previous Tests</span>
                         </a>
                     </li>
 
@@ -328,24 +328,38 @@
                         <div class="collapse menu-dropdown" id="sidebarLanding">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="{{ url('/lunch_mocks_demo') }}" class="nav-link" data-key="t-one-page"> <i class="la la-clipboard-check fs-18"></i> Overall </a>
+                                    <a href="{{ url('/lunch_user_qbank_dashboard') }}" class="nav-link" data-key="t-one-page"> <i class="la la-clipboard-check fs-18"></i> Overall </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/mocks_report_demo') }}" class="nav-link" data-key="t-one-page"> <i class="la la-chart-pie fs-18"></i> Reports </a>
+                                    <a href="{{ url('/lunch_user_qbank_test_reports') }}" class="nav-link" data-key="t-one-page"> <i class="la la-chart-pie fs-18"></i> Reports </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/mocks_graph_demo') }}" class="nav-link" data-key="t-one-page"> <i class="la la-chart-line fs-18"></i> Graphs </a>
+                                    <a href="{{ url('/lunch_user_qbank_test_graphs') }}" class="nav-link" data-key="t-one-page"> <i class="la la-chart-line fs-18"></i> Graphs </a>
                                 </li>
                             </ul>
                         </div>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ url('/mocks_account_reset_demo') }}">
+                        <a class="nav-link menu-link" href="{{ url('/lunch_user_qbank_search') }}">
+                            <i class="ri-search-line fs-18"></i> <span data-key="t-widgets">Search</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link active" href="{{ url('/lunch_user_qbank_notes') }}">
+                            <i class="la la-file-alt fs-18"></i> <span data-key="t-widgets">Notes</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ url('/lunch_user_qbank_test_account_reset') }}">
                             <i class="la la-undo fs-18"></i> <span data-key="t-widgets">Reset Options</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="#">
+                        <a class="nav-link menu-link" href="{{ url('/lunch_user_qbank_test_help') }}">
                             <i class='la la-question-circle fs-18'></i> <span data-key="t-widgets">Help</span>
                         </a>
                     </li>
@@ -359,9 +373,11 @@
             <div class="row">
                 <div class="col-12">
                     <h5 class="text-white" style="margin: unset; color:#fff !important">Expiration Date </h5>
-                    <p class="text-muted" style="color: #fff !important">
-                        2099-10-13 22:33:00
-                    EDT</p>
+                    <p class="text-muted" style="color: #fff !important">@if(session()->has('mocks_expiry_timestamp'))
+                        {{ session('mocks_expiry_timestamp') }}
+                    @else
+
+                    @endif EDT</p>
                 </div>
             </div>
         </div>

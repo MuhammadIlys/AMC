@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\login_registration\MainLoginRegistrationController;
 use App\Http\Controllers\super_admin\qbank\qbank_demo\MainQbankDemoController;
+use App\Http\Controllers\super_admin\qbank\qbank_preview\MainQbankSuperPreviewController;
 use App\Http\Controllers\super_admin\qbank\qbank_qbank\MainQbankQbankController;
 use App\Http\Controllers\super_admin\qbank\qbank_question\MainQbankQuestionController;
 use App\Http\Controllers\super_admin\qbank\qbank_system\MainQbankSystemController;
 use App\Http\Controllers\super_admin\qbank\qbank_upload\MainQbankUploadController;
 use App\Http\Controllers\super_admin\recalls\recalls_demo\MainRecallsDemoController;
+use App\Http\Controllers\super_admin\recalls\recalls_preview\MainRecallsSuperQuestionPreviewController;
 use App\Http\Controllers\super_admin\recalls\recalls_question\MainRecallsQuestionController;
 use App\Http\Controllers\super_admin\recalls\recalls_upload\MainRecallsUploadController;
 use App\Http\Controllers\super_admin\user_management\subscription\MainSubscriptionController;
@@ -25,6 +27,17 @@ use App\Http\Controllers\users\mocks_user\previous_mocks\MainPreviousMocksContro
 use App\Http\Controllers\users\mocks_user\question_preview\MainQuestionPreviewController;
 use App\Http\Controllers\users\mocks_user\report\MainReportController;
 use App\Http\Controllers\users\qbank_user\MainUserQbankController;
+use App\Http\Controllers\users\qbank_user\qbank_account_reset\MainQbankAccountResetController;
+use App\Http\Controllers\users\qbank_user\qbank_corrects\QbankCorrectsController;
+use App\Http\Controllers\users\qbank_user\qbank_create_test\MainQbankCreateTestController;
+use App\Http\Controllers\users\qbank_user\qbank_exam\MainQbankExamController;
+use App\Http\Controllers\users\qbank_user\qbank_graph\MainQbankGraphController;
+use App\Http\Controllers\users\qbank_user\qbank_help\MainQbankHelpController;
+use App\Http\Controllers\users\qbank_user\qbank_notes\MainQbankNoteController;
+use App\Http\Controllers\users\qbank_user\qbank_previous_test\MainQbankPreviousTestController;
+use App\Http\Controllers\users\qbank_user\qbank_report\MainQbankReportController;
+use App\Http\Controllers\users\qbank_user\qbank_search\MainQbankSearchController;
+use App\Http\Controllers\users\qbank_user\qbank_test_result\MainQbankTestResultController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\super_admin\mocks\question_preview\MainQuestionPreview2Controller;
 use App\Http\Controllers\super_admin\mocks\demo\MainMocksDemoController2;
@@ -515,6 +528,7 @@ Route::middleware('superadmin')->group(function () {
 
     Route::post('/create_recalls_question', [MainRecallsQuestionController::class, 'createRecallsQuestion']);
 
+    Route::get('/recalls_question_preview/{question_id}', [MainRecallsSuperQuestionPreviewController::class, 'recallsQuestionPreview']);
 
 
     Route::get('/recalls_demo_question_view', [MainRecallsDemoController::class, 'recallsDemoQuestionView']);
@@ -531,10 +545,7 @@ Route::middleware('superadmin')->group(function () {
 
     Route::post('/create_recalls_demo_question', [MainRecallsDemoController::class, 'createRecallsQuestion']);
 
-
-
-
-
+    Route::get('/recalls_demo_question_preview/{question_id}', [MainRecallsDemoController::class, 'recallsDemoQuestionPreview']);
 
 
 
@@ -551,9 +562,6 @@ Route::middleware('superadmin')->group(function () {
 
     // delete mocks image
     Route::delete('/delete_recalls_image/{image_id}', [MainRecallsUploadController::class, 'deleteMocksImage']);
-
-
-
 
 
     Route::get('/recalls_upload_video_view', [MainRecallsUploadController::class, 'recallsUploadVideoView']);
@@ -641,6 +649,15 @@ Route::middleware('superadmin')->group(function () {
 
     Route::post('/create_qbank_demo_question', [MainQbankDemoController::class, 'createQbankQuestion']);
 
+    Route::get('/qbank_demo_question_preview/{question_id}', [MainQbankDemoController::class, 'qbankDemoQuestionPreviewView']);
+
+
+    // qbank question preview routes
+    Route::get('/qbank_question_preview_view/{question_id}', [MainQbankSuperPreviewController::class, 'qbankQuestionPreviewView']);
+
+
+
+
 
     // qbank upload image routes
     Route::get('/qbank_upload_image_view', [MainQbankUploadController::class, 'qbankUploadImagView']);
@@ -666,26 +683,36 @@ Route::middleware('superadmin')->group(function () {
 
         Route::get('/lunch_user_qbank_dashboard/{subscription_id?}', [MainUserQbankController::class, 'lunchUserQbankDashboard']);
 
-        Route::get('/lunch_user_qbank_create_test', [MainUserQbankController::class, 'lunchUserQbankCreateTest']);
+        // create test routes
+        Route::get('/lunch_user_qbank_create_test', [MainQbankCreateTestController::class, 'lunchUserQbankCreateTest']);
 
-        Route::get('/lunch_user_qbank_previous_test', [MainUserQbankController::class, 'lunchUserQbankPreviousTests']);
+        Route::post('/load_qbank_all_question_Systems', [MainQbankCreateTestController::class, 'loadAllQuestion']);
 
-        Route::get('/lunch_user_qbank_test_result', [MainUserQbankController::class, 'lunchUserQbankTestResults']);
-
-        Route::get('/lunch_user_qbank_test_analytics', [MainUserQbankController::class, 'lunchUserQbankTestAnalytics']);
-
-        Route::get('/lunch_user_qbank_test_reports', [MainUserQbankController::class, 'lunchUserQbankTestReports']);
-
-        Route::get('/lunch_user_qbank_test_graphs', [MainUserQbankController::class, 'lunchUserQbankTestGraphs']);
-
-        Route::get(' /lunch_user_qbank_search', [MainUserQbankController::class, 'lunchUserQbankSearch']);
-
-        Route::get(' /lunch_user_qbank_notes', [MainUserQbankController::class, 'lunchUserQbankNotes']);
+        Route::post('/load_qbank_correct_question_Systems', [QbankCorrectsController::class, 'loadCorrectSystems']);
 
 
-        Route::get('/lunch_user_qbank_test_account_reset', [MainUserQbankController::class, 'lunchUserQbankTestResetAccount']);
 
-        Route::get('/lunch_user_qbank_test_help', [MainUserQbankController::class, 'lunchUserQbankTestHelp']);
+
+        Route::get('/lunch_user_qbank_previous_test', [MainQbankPreviousTestController ::class, 'lunchUserQbankPreviousTests']);
+
+        Route::get('/lunch_user_qbank_test_result', [MainQbankTestResultController::class, 'lunchUserQbankTestResults']);
+
+        Route::get('/lunch_user_qbank_test_analytics', [MainQbankTestResultController::class, 'lunchUserQbankTestAnalytics']);
+
+        Route::get('/lunch_user_qbank_test_reports', [MainQbankReportController::class, 'lunchUserQbankTestReports']);
+
+        Route::get('/lunch_user_qbank_test_graphs', [MainQbankGraphController::class, 'lunchUserQbankTestGraphs']);
+
+        Route::get(' /lunch_user_qbank_search', [MainQbankSearchController::class, 'lunchUserQbankSearch']);
+
+        Route::get(' /lunch_user_qbank_notes', [MainQbankNoteController::class, 'lunchUserQbankNotes']);
+
+
+        Route::get('/lunch_user_qbank_test_account_reset', [MainQbankAccountResetController::class, 'lunchUserQbankTestResetAccount']);
+
+        Route::get('/lunch_user_qbank_test_help', [MainQbankHelpController::class, 'lunchUserQbankTestHelp']);
+
+        Route::get('/lunch_user_qbank_test_exam',[MainQbankExamController::class,'lunchUserQbankTestExam']);
 
     });
 

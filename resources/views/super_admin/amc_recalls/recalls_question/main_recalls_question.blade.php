@@ -61,6 +61,8 @@
 }
 
 
+
+
 </style>
 
 
@@ -357,7 +359,7 @@ $(document).ready(function () {
         var questionId = data.question_id;
 
         // Assuming your URL is '/question_preview' and you want to append the questionId parameter
-        var previewUrl = '/question_preview/' + questionId;
+        var previewUrl = '/recalls_question_preview/' + questionId;
 
         // Open the preview URL in a new tab
         window.open(previewUrl, '_blank');

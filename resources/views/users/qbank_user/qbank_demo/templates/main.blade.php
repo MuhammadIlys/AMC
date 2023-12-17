@@ -1,5 +1,5 @@
-@include('users.mocks_user.demo.templates.header')
+@include('users.qbank_user.templates.header')
 
 @yield('main-container')
 
-@include('users.mocks_user.demo.templates.footer')
+@include('users.qbank_user.templates.footer')

@@ -5,6 +5,12 @@ namespace App\Models\super_admin\user_management;
 use App\Models\super_admin\user_management\subscription\Subscription;
 use App\Models\users\mocks_user\mocks_user_attempt\MocksUserAttempt;
 use App\Models\users\mocks_user\mocks_user_test_history\MocksUserTestHistory;
+use App\Models\users\qbank_user\qbank_corrects\QbankCorrects;
+use App\Models\users\qbank_user\qbank_incorrects\QbankIncorrects;
+use App\Models\users\qbank_user\qbank_marked\QbankMarked;
+use App\Models\users\qbank_user\qbank_omitted\QbankOmitted;
+use App\Models\users\qbank_user\qbank_unused\QbankUnused;
+use App\Models\users\qbank_user\qbank_used\QbankUsed;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\super_admin\mocks\test\Test;
@@ -74,6 +80,46 @@ class Users extends Model
          return $this->belongsToMany(MocksUserAttempt::class, 'mocks_user_attempt', 'user_id', 'test_id')
              ->withPivot('remaining_attempts'); // Add any additional pivot columns if needed
      }
+
+
+     // ##############################  QBANK RELATIONSHIP ###################################
+
+
+     // Relationship with QbankCorrects model
+    public function qbankCorrectQuestion()
+    {
+        return $this->hasMany(QbankCorrects::class, 'id');
+    }
+
+     // Relationship with QbankIncorrects model
+     public function qbankIncorrectQuestion()
+     {
+         return $this->hasMany(QbankIncorrects::class, 'id');
+     }
+
+      // Relationship with QbankMarked model
+      public function qbankMarkedQuestion()
+      {
+          return $this->hasMany(QbankMarked::class, 'id');
+      }
+
+      // Relationship with QbankOmitted model
+      public function qbankOmittedQuestion()
+      {
+          return $this->hasMany(QbankOmitted::class, 'id');
+      }
+
+       // Relationship with QbankUsed model
+       public function qbankUsedQuestion()
+       {
+           return $this->hasMany(QbankUsed::class, 'id');
+       }
+
+        // Relationship with QbankUnused model
+        public function qbankUnusedQuestion()
+        {
+            return $this->hasMany(QbankUnused::class, 'id');
+        }
 
 
 }

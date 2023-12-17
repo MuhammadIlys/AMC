@@ -198,8 +198,30 @@
     .test-card:hover {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
+
+    .btn-success {
+
+    background-color: #013884;
+
+    }
+
+    .btn-success:hover {
+
+background-color: #013884;
+
+}
   </style>
 
+
+<!-- Bootstrap JS (Popper.js and Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<!-- Choose one version of jQuery and include it -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Bootstrap Toggle JS - Include it after jQuery -->
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 </head>
 
@@ -308,6 +330,12 @@
                     </li>
 
                     <li class="nav-item">
+                        <a  class="nav-link menu-link" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center" href="#">
+                            <i class='la la-book fs-18  '></i> <span data-key="t-widgets">Choose Qbank</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ url('/lunch_user_qbank_create_test') }}">
                             <i class='la la-edit fs-18'></i> <span data-key="t-widgets">Create Test</span>
                         </a>
@@ -387,3 +415,77 @@
     <!-- Left Sidebar End -->
     <!-- Vertical Overlay-->
     <div class="vertical-overlay"></div>
+
+
+
+
+    <div class="modal fade bs-example-modal-center" aria-labelledby="mySmallModalLabel" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center ">
+
+                    <div class="row" style=" ">
+
+                        <h6>  <strong> Activate QBank</strong></h6> <br>
+
+
+                        <div class="col-md-6">
+                            <label class="checkbox-inline">
+                              <input id="qbank1" type="checkbox" data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="default"   checked>
+                               Qbank 1
+                            </label>
+                          </div>
+
+                          <div class="col-md-6">
+                            <label class="checkbox-inline">
+                              <input id="qbank2" type="checkbox" data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="default" >
+                              Qbank 2
+                            </label>
+                          </div>
+
+                    </div>
+
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+
+<script>
+    $(document).ready(function(){
+
+         // Toggle for Tutor button
+      $('#qbank1').change(function() {
+        if ($(this).prop('checked')) {
+          // Turn off the Timed button
+          $('#qbank2').bootstrapToggle('off');
+
+          alert('qbank2 off');
+
+
+        }
+
+
+
+      });
+
+      // Toggle for Timed button
+      $('#qbank2').change(function() {
+        if ($(this).prop('checked')) {
+          // Turn off the Tutor button
+          $('#qbank1').bootstrapToggle('off');
+
+          alert('qbank1 off');
+        }
+
+
+
+
+    });
+
+});
+
+
+</script>
+

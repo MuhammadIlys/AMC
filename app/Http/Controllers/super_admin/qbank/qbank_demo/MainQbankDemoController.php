@@ -133,4 +133,14 @@ class MainQbankDemoController extends Controller
                 return response()->json(['error' => 'An error occurred while processing the request'], 500);
             }
         }
+
+
+        public function qbankDemoQuestionPreviewView($question_id){
+
+            // Fetch the question based on the provided $question_id
+        $question = QbankDemoQuestion::find($question_id);
+        // Pass the question data to the view
+        return view('super_admin.amc_qbank.qbank_preview.qbank_lunch_preview', ['question' => $question]);
+
+    }
 }

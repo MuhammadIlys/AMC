@@ -486,7 +486,7 @@
                 </a>
                 <ul aria-expanded="false" class="collapse first-level">
                   <li class="sidebar-item">
-                    <a href="{{ url('/test_view') }}" class="sidebar-link">
+                    <a href="{{ url('/mocks_demo_question_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>
@@ -495,7 +495,7 @@
                   </li>
 
                   <li class="sidebar-item">
-                    <a href="{{ url('/test_add') }}" class="sidebar-link">
+                    <a href="{{ url('/show_add_mocks_demo_question_view') }}" class="sidebar-link">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
                       </div>

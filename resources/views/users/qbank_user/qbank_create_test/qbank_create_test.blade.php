@@ -687,6 +687,26 @@
     }
 </style>
 
+<style>
+    /* Your existing styles */
+
+    .center-on-mobile {
+        display: flex;
+        float: right;
+      }
+
+    @media (max-width: 767px) {
+      /* Styles for screens smaller than 768px (mobile) */
+
+      .center-on-mobile {
+
+        margin-top: 30px;
+        margin-left: 50px;
+        float: unset;
+      }
+
+    }
+  </style>
 
 
 
@@ -752,20 +772,26 @@
                                         <div class="accordion_2_body">
                                            <div class="">
 
-                                              <input type="radio" id="test1" name="radio-group" checked>
-                                              <label for="test1">All <span class="span_coutner">122</span></label>
-                                              <input type="radio" id="test2" name="radio-group" >
-                                              <label for="test2">Correct <span class="span_coutner">0</span></label>
-                                              <input type="radio" id="test3" name="radio-group">
-                                              <label for="test3">Incorrect <span class="span_coutner">0</span></label>
-                                              <input type="radio" id="test4" name="radio-group">
-                                              <label for="test3">Omitted <span class="span_coutner">0</span></label>
-                                              <input type="radio" id="test4" name="radio-group">
-                                              <label for="test4">Marked <span class="span_coutner">0</span></label>
-                                              <input type="radio" id="test5" name="radio-group">
-                                              <label for="test5">Used <span class="span_coutner">0</span></label>
-                                              <input type="radio" id="test5" name="radio-group">
-                                              <label for="test5">Unused <span class="span_coutner">0</span></label>
+                                              <input type="radio" id="all_question" name="radio-group" checked>
+                                              <label for="all_question">All <span class="span_coutner">{{ $totalQuestionCount }}</span></label>
+
+                                              <input type="radio" id="correct_question" name="radio-group" {{ $correctQuestionCount == 0 ? 'disabled' : '' }}>
+                                              <label for="correct_question">Correct <span class="span_coutner">{{ $correctQuestionCount }}</span></label>
+
+                                              <input type="radio" id="incorrect_question" name="radio-group" {{ $incorrectQuestionCount == 0 ? 'disabled' : '' }}>
+                                              <label for="incorrect_question">Incorrect <span class="span_coutner">{{ $incorrectQuestionCount }}</span></label>
+
+                                              <input type="radio" id="omitted_question" name="radio-group" {{ $omittedQuestionCount == 0 ? 'disabled' : '' }}>
+                                              <label for="omitted_question">Omitted <span class="span_coutner">{{ $omittedQuestionCount }}</span></label>
+
+                                              <input type="radio" id="marked_question" name="radio-group" {{ $markedQuestionCount == 0 ? 'disabled' : '' }}>
+                                              <label for="marked_question">Marked <span class="span_coutner">{{ $markedQuestionCount }}</span></label>
+
+                                              <input type="radio" id="used_question" name="radio-group" {{ $usedQuestionCount == 0 ? 'disabled' : '' }}>
+                                              <label for="used_question">Used <span class="span_coutner">{{ $usedQuestionCount }}</span></label>
+
+                                              <input type="radio" id="unused_question" name="radio-group" {{ $unusedQuestionCount == 0 ? 'disabled' : '' }}>
+                                              <label for="unused_question">Unused <span class="span_coutner">{{ $unusedQuestionCount }}</span></label>
 
 
                                             </div>
@@ -776,73 +802,43 @@
 
                                      <div class="panel-heading">
                                         <div class="form-group" style="margin-bottom: 6px;">
-                                           <input type="checkbox" id="subjects">
-                                           <label for="subjects"> <strong>Subjects</strong></label>
+                                           <input type="checkbox" id="systems">
+                                           <label for="systems"> <strong>Systems</strong></label>
                                            <span style="float: right; cursor: pointer" class="accordion_3"><i class="accordion_3_icon fa fa-angle-up" style="font-size: 20px;"></i></span>
                                         </div>
                                         <hr>
                                      </div>
 
 
-                                    <div class="panel-body pb_3">
-                                            <div class="accordion_3_body">
-                                                <div class="subject_area">
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-sm-4 col-lg-4 col-12">
+                                     <div class="panel-body pb_3">
+                                        <div class="accordion_3_body">
+                                            <div class="subject_area">
+                                                <div class="row">
+                                                    <div id="show_systems" class="col-md-4 col-sm-4 col-lg-4 col-12">
+                                                        @php $count = 0; @endphp
+                                                        @foreach ($systems as $system)
+                                                            @if($count % 4 == 0 && $count != 0)
+                                                                </div><div class="col-md-4 col-sm-4 col-lg-4 col-12">
+                                                            @endif
                                                             <div class="form-group">
-                                                                <input type="checkbox" id="html" checked="">
-                                                                <label for="html">HTML <span class="span_coutner">12</span></label>
+                                                                <input class="system-checkbox" type="checkbox" value="{{ $system->qbank_system_id }}" id="{{ $system->qbank_system_id }}" >
+                                                                <label for="{{ $system->qbank_system_id }}">{{ $system->system_name }} <span class="span_coutner">{{ $system->qbank_question_count }}</span></label>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="css">
-                                                                <label for="css">CSS <span class="span_coutner">0</span></label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="javascript">
-                                                                <label for="javascript">Javascript <span class="span_coutner">0</span></label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4 col-sm-4 col-lg-4 col-12">
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="html1">
-                                                                <label for="html1">HTML1 <span class="span_coutner">0</span></label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="css1" checked="">
-                                                                <label for="css1">CSS1 <span class="span_coutner">0</span></label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="javascript1">
-                                                                <label for="javascript1">Javascript1 <span class="span_coutner">0</span></label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4 col-sm-4 col-lg-4 col-12">
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="html2">
-                                                                <label for="html2">HTML2 <span class="span_coutner">0</span></label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="css2" checked="">
-                                                                <label for="css2">CSS2 <span class="span_coutner">0</span></label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="checkbox" id="javascript2">
-                                                                <label for="javascript2">Javascript2 <span class="span_coutner">0</span></label>
-                                                            </div>
-                                                        </div>
+                                                            @php $count++; @endphp
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+
 
 
 
                                         <div class="panel-heading">
                                         <div class="form-group" style="margin-bottom: 6px;">
                                             <strong>No. of Questions</strong>
-                                            <span style="float: right; cursor: pointer" class="accordion_4"><i class="accordion_1_icon fa fa-angle-up" style="font-size: 20px;"></i></span>
+                                            <span style="float: right; cursor: pointer" class="accordion_4"><i class="accordion_4_icon fa fa-angle-up" style="font-size: 20px;"></i></span>
                                             <hr>
                                         </div>
                                         </div>
@@ -858,30 +854,9 @@
                                                         </div>
                                                     </div>
 
-                                                    <style>
-                                                        /* Your existing styles */
-
-                                                        .center-on-mobile {
-                                                            display: flex;
-                                                            float: right;
-                                                          }
-
-                                                        @media (max-width: 767px) {
-                                                          /* Styles for screens smaller than 768px (mobile) */
-
-                                                          .center-on-mobile {
-
-                                                            margin-top: 30px;
-                                                            margin-left: 50px;
-                                                            float: unset;
-                                                          }
-
-                                                        }
-                                                      </style>
-
                                                     <div class="col-md-6 col-sm-6 col-lg-6 col-12 ">
                                                         <div class="center-on-mobile">
-                                                            <button class="btn btn-lg btn-success button" style="margin: unset;">Generate Test</button>
+                                                            <button id="create-test"   class="btn btn-lg btn-success button" style="margin: unset;">Generate Test</button>
                                                         </div>
                                                     </div>
 
@@ -925,15 +900,262 @@
 
 
 
-<!-- Bootstrap JS (Popper.js and Bootstrap JS) -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<!-- Bootstrap Toggle JS -->
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<script>
 
 
+$(document).ready(function() {
+
+        $('#all_question').change(function() {
+
+            if ($(this).is(':checked')) {
+
+                performAjaxForAllQuestion('/load_qbank_all_question_Systems');
+
+            }
+        });
+
+
+        $('#correct_question').change(function() {
+
+
+            if ($(this).is(':checked')) {
+
+                performAjax('/load_qbank_correct_question_Systems');
+            }
+        });
+
+        $('#incorrect_question').change(function() {
+            if ($(this).is(':checked')) {
+                performAjax('incorrect');
+            }
+        });
+
+        $('#omitted_question').change(function() {
+            if ($(this).is(':checked')) {
+                performAjax('omitted');
+            }
+        });
+
+        $('#marked_question').change(function() {
+            if ($(this).is(':checked')) {
+                performAjax('marked');
+            }
+        });
+
+        $('#used_question').change(function() {
+            if ($(this).is(':checked')) {
+                performAjax('used');
+            }
+        });
+
+        $('#unused_question').change(function() {
+            if ($(this).is(':checked')) {
+                performAjax('unused');
+            }
+        });
+
+
+        function performAjaxForAllQuestion(url){
+
+            $.ajax({
+
+                url: url,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+
+                },
+                success: function(response) {
+                    // Extract systems and questionCount from the JSON response
+                    var systems = response.systems;
+
+                    // Clear the existing content of the div with id "show_systems"
+                    $('#show_systems').empty();
+
+                    // Iterate through systems and populate the content dynamically
+                    var count = 0;
+                    var currentRow;
+
+                    systems.forEach(function (system) {
+
+                        if (count % 4 === 0) {
+
+                            // If count is a multiple of 4, start a new row
+                            currentRow = $('<div class="col-md-4 col-sm-4 col-lg-4 col-12">').appendTo('#show_systems');
+
+                        }
+
+                        // Create a form group for each system
+                        var formGroup = $('<div class="form-group">').appendTo(currentRow);
+
+                        // Create checkbox element
+                        $('<input>', {
+                            class: 'system-checkbox',
+                            type: 'checkbox',
+                            value: system.qbank_system_id,
+                            id: system.qbank_system_id
+                        }).appendTo(formGroup);
+
+                        // Create label element
+                        var label = $('<label>', {
+                            for: system.qbank_system_id,
+                            text: system.system_name + ' '
+                        }).appendTo(formGroup);
+
+                        // Create span element for the question count
+                        $('<span>', {
+                            class: 'span_coutner',
+                            text: system.qbank_question_count
+                        }).appendTo(label);
+
+                        count++;
+                    });
+
+
+                },
+                error: function(error) {
+                    console.error('Ajax request failed:', error);
+                }
+
+                });
+
+
+
+
+            }
+
+
+        function performAjax(url){
+
+            $.ajax({
+
+                url: url,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+
+                },
+                success: function(response) {
+                    // Extract systems and questionCount from the JSON response
+                    var systems = response.systems;
+
+                    // Clear the existing content of the div with id "show_systems"
+                    $('#show_systems').empty();
+
+                    // Iterate through systems and populate the content dynamically
+                    var count = 0;
+                    var currentRow;
+
+                    systems.forEach(function (system) {
+
+                        if (count % 4 === 0) {
+
+                            // If count is a multiple of 4, start a new row
+                            currentRow = $('<div class="col-md-4 col-sm-4 col-lg-4 col-12">').appendTo('#show_systems');
+
+                        }
+
+                        // Create a form group for each system
+                        var formGroup = $('<div class="form-group">').appendTo(currentRow);
+
+                        // Create checkbox element
+                        $('<input>', {
+                            class: 'system-checkbox',
+                            type: 'checkbox',
+                            value: system.qbank_system_id,
+                            id: system.qbank_system_id
+                        }).appendTo(formGroup);
+
+                        // Create label element
+                        var label = $('<label>', {
+                            for: system.qbank_system_id,
+                            text: system.system_name + ' '
+                        }).appendTo(formGroup);
+
+                        // Create span element for the question count
+                        $('<span>', {
+                            class: 'span_coutner',
+                            text: system.total_correct_count
+                        }).appendTo(label);
+
+                        count++;
+                    });
+
+
+                },
+                error: function(error) {
+                    console.error('Ajax request failed:', error);
+                }
+
+                });
+
+
+
+
+        }
+
+
+
+
+    });//ready function end
+
+
+
+</script>
+
+
+
+<script>
+
+    $(document).ready(function() {
+        // When an individual system checkbox is clicked
+        $(document).on('click', '.system-checkbox', function() {
+
+
+            // Check if all system checkboxes are checked
+            var allChecked = $(".system-checkbox").length === $(".system-checkbox:checked").length;
+
+            // Set the checked status for the "Systems" checkbox
+            $("#systems").prop("checked", allChecked);
+        });
+
+        // When the "Systems" checkbox is clicked
+        $(document).on('click', '#systems', function()  {
+
+
+            // Get the checked status of the "Systems" checkbox
+            var isChecked = $(this).prop("checked");
+
+            // Set the same checked status for all system checkboxes
+            $(".system-checkbox").prop("checked", isChecked);
+        });
+
+
+        $(document).on('click', '#create-test', function(){
+
+            getSelectedCheckboxValues();
+
+        });
+
+
+          // Function to get values of all selected checkboxes
+        function getSelectedCheckboxValues() {
+            var selectedValues = $(".system-checkbox:checked").map(function() {
+                return this.id;
+            }).get();
+
+            // Use the 'selectedValues' array as needed
+            alert(selectedValues);
+        }
+
+
+
+
+    });
+
+
+      </script>
 
 <script>
     $(document).ready(function(){
@@ -942,12 +1164,14 @@
         if ($(this).prop('checked')) {
           // Turn off the Timed button
           $('#toggleTimed').bootstrapToggle('off');
-        }else{
 
-            $('#toggleTutor').bootstrapToggle('off');
-            $('#toggleTimed').bootstrapToggle('on');
+          alert('time off');
+
+
         }
-        toggleWithSlide(this);
+
+
+
       });
 
       // Toggle for Timed button
@@ -955,29 +1179,16 @@
         if ($(this).prop('checked')) {
           // Turn off the Tutor button
           $('#toggleTutor').bootstrapToggle('off');
-        }else{
 
-            $('#toggleTutor').bootstrapToggle('on');
-            $('#toggleTimed').bootstrapToggle('off');
-
+          alert('totur off');
         }
-        toggleWithSlide(this);
+
+
+
+
       });
 
-      function toggleWithSlide(checkbox) {
-        var newState = $(checkbox).prop('checked') ? 'On' : 'Off';
-        var toggleHandleWidth = 25;
 
-        // Slide effect
-        var toggleGroup = $(checkbox).parent().find('.toggle-group');
-        toggleGroup.animate({
-          marginLeft: $(checkbox).prop('checked') ? 0 : toggleHandleWidth
-        }, 300);
-
-        // Update the button label
-        toggleGroup.find('.toggle-on, .toggle-off').toggleClass('active');
-        toggleGroup.find('.toggle-' + newState.toLowerCase()).toggleClass('active');
-      }
     });
   </script>
 
@@ -1058,31 +1269,6 @@
 
 
 </script>
-
-
-<script>
-    $(document).ready(function() {
-      // When the "Subjects" checkbox is clicked
-      $("#subjects").click(function() {
-        // Get the checked status of the "Subjects" checkbox
-        var isChecked = $(this).prop("checked");
-
-        // Set the same checked status for all subject checkboxes
-        $("[id^='html'], [id^='css'], [id^='javascript']").prop("checked", isChecked);
-      });
-
-      // When an individual subject checkbox is clicked
-      $("[id^='html'], [id^='css'], [id^='javascript']").click(function() {
-        // Check if all subject checkboxes are checked
-        var allChecked = $("[id^='html'], [id^='css'], [id^='javascript']").length === $("[id^='html']:checked, [id^='css']:checked, [id^='javascript']:checked").length;
-
-        // Set the checked status for the "Subjects" checkbox
-        $("#subjects").prop("checked", allChecked);
-      });
-    });
-  </script>
-
-
 
 
 @endsection

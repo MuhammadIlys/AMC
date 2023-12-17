@@ -128,4 +128,14 @@ class MainRecallsDemoController extends Controller
         }
     }
 
+
+    public function recallsDemoQuestionPreview($question_id){
+
+        // Fetch the question based on the provided $question_id
+        $question = RecallsDemoQuestion ::find($question_id);
+        // Pass the question data to the view
+        return view('super_admin.amc_recalls.recalls_preview.qbank_lunch_preview', ['question' => $question]);
+
+    }
+
 }

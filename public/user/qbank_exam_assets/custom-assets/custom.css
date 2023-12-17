@@ -1,0 +1,27 @@
+<style>
+    /* Styling for the loader container */
+    .loader-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Adjust the height as needed */
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background to dim the rest of the content */
+      display: none; /* Initially hide the loader container */
+    }
+
+    /* Styling for the loader animation */
+    .loader {
+      border: 4px solid #f3f3f3; /* Light grey border for the spinner */
+      border-top: 4px solid #3498db; /* Blue border for the spinning part */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite; /* Animation for rotation */
+    }
+
+    /* Keyframes for the spinner animation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>

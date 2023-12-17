@@ -37,6 +37,7 @@
 </div>
 
 
+
 <!-- JAVASCRIPT -->
 <script src="{{ asset('user/mock_user_assets/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('user/mock_user_assets/assets/libs/simplebar/simplebar.min.js') }}"></script>

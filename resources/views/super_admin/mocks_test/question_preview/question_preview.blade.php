@@ -279,28 +279,27 @@
 
         .model-mobile-desktop{
 
-                left: 304px;
-                top: -5.5px;
-                max-width: 95%;
-                width: auto;
-                heigh: auto;
+             left: 304px;
+             top: -5.5px;
+             max-width: 95%;
+             width: auto;
+             heigh: auto;
         }
 
         @media (max-width: 768px) {
-            /* Your mobile-specific styles go here */
-            .model-mobile-desktop{
+          /* Your mobile-specific styles go here */
+           .model-mobile-desktop{
 
-                        left: 0px;
-                        top: -5.5px;
-                        max-width: 95%;
-                        width: auto;
-                        heigh: auto;
+                     left: 0px;
+                     top: -5.5px;
+                     max-width: 95%;
+                     width: auto;
+                     heigh: auto;
                 }
         }
 
 
-        </style>
-
+    </style>
 
 
 
