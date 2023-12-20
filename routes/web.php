@@ -33,11 +33,18 @@ use App\Http\Controllers\users\qbank_user\qbank_create_test\MainQbankCreateTestC
 use App\Http\Controllers\users\qbank_user\qbank_exam\MainQbankExamController;
 use App\Http\Controllers\users\qbank_user\qbank_graph\MainQbankGraphController;
 use App\Http\Controllers\users\qbank_user\qbank_help\MainQbankHelpController;
+use App\Http\Controllers\users\qbank_user\qbank_incorrects\QbankIncorrectsController;
+use App\Http\Controllers\users\qbank_user\qbank_last_correct_fetch_question\QbankLastCorrectFetchedQuestionController;
+use App\Http\Controllers\users\qbank_user\qbank_last_fetch_question\QbankLastFetchedQuestionController;
+use App\Http\Controllers\users\qbank_user\qbank_marked\QbankMarkedController;
 use App\Http\Controllers\users\qbank_user\qbank_notes\MainQbankNoteController;
+use App\Http\Controllers\users\qbank_user\qbank_omitted\QbankOmittedController;
 use App\Http\Controllers\users\qbank_user\qbank_previous_test\MainQbankPreviousTestController;
 use App\Http\Controllers\users\qbank_user\qbank_report\MainQbankReportController;
 use App\Http\Controllers\users\qbank_user\qbank_search\MainQbankSearchController;
 use App\Http\Controllers\users\qbank_user\qbank_test_result\MainQbankTestResultController;
+use App\Http\Controllers\users\qbank_user\qbank_unused\QbankUnusedController;
+use App\Http\Controllers\users\qbank_user\qbank_used\QbankUsedController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\super_admin\mocks\question_preview\MainQuestionPreview2Controller;
 use App\Http\Controllers\super_admin\mocks\demo\MainMocksDemoController2;
@@ -683,12 +690,30 @@ Route::middleware('superadmin')->group(function () {
 
         Route::get('/lunch_user_qbank_dashboard/{subscription_id?}', [MainUserQbankController::class, 'lunchUserQbankDashboard']);
 
+        Route::post('/qbank_setup', [MainUserQbankController::class, 'qbankSetup']);
+
         // create test routes
         Route::get('/lunch_user_qbank_create_test', [MainQbankCreateTestController::class, 'lunchUserQbankCreateTest']);
 
         Route::post('/load_qbank_all_question_Systems', [MainQbankCreateTestController::class, 'loadAllQuestion']);
 
         Route::post('/load_qbank_correct_question_Systems', [QbankCorrectsController::class, 'loadCorrectSystems']);
+
+        Route::post('/load_qbank_incorrect_question_Systems', [QbankIncorrectsController::class, 'loadIncorrectSystems']);
+
+        Route::post('/load_qbank_omitted_question_Systems', [QbankOmittedController::class, 'loadOmittedSystems']);
+
+        Route::post('/load_qbank_marked_question_Systems', [QbankMarkedController::class, 'loadMarkedSystems']);
+
+        Route::post('/load_qbank_used_question_Systems', [QbankUsedController::class, 'loadUsedSystems']);
+
+        Route::post('/load_qbank_unused_question_Systems', [QbankUnusedController::class, 'loadUnusedSystems']);
+
+
+        //testing route
+
+        Route::post('/qbank_algorithm_testing', [QbankLastCorrectFetchedQuestionController::class, 'fetchCorrectQuestions']);
+
 
 
 

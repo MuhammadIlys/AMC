@@ -848,15 +848,15 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-6 col-lg-6 col-12">
                                                         <div style="display: flex;">
-                                                            <input type="number" class="form-control" name="name" value="0" id="name" style="width: 50px; text-align: center; min-height: 35px;" min="0" max="15" onkeyup="enforceMinMax(this)">
-                                                            <span style="margin: 7px 10px;"> Max allowed per block 50
+                                                            <input type="number" class="form-control" name="number_question" id="number_question" value="0"  style="width: 50px; text-align: center; min-height: 35px;" min="10" max="40"  >
+                                                            <span style="margin: 7px 10px;"> Max allowed per block
                                                             </span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6 col-sm-6 col-lg-6 col-12 ">
                                                         <div class="center-on-mobile">
-                                                            <button id="create-test"   class="btn btn-lg btn-success button" style="margin: unset;">Generate Test</button>
+                                                            <button id="create_test"   class="btn btn-lg btn-success button" style="margin: unset;">Generate Test</button>
                                                         </div>
                                                     </div>
 
@@ -899,6 +899,212 @@
 <!-- End Page-content -->
 
 
+<div id="myToast2" class="toast toast-border-danger fade " role="alert" aria-live="assertive" aria-atomic="true" data-bs-toggle="toast" style="position: fixed; bottom: 16px; right: 16px; z-index: 999;" data-bs-delay="3000">
+
+    <div class="toast-body">
+
+        <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 me-2">
+                <i class="ri-alert-line align-middle"></i>
+            </div>
+            <div class="flex-grow-1">
+                <h6 class="mb-0">QBank Activate Successfully!</h6>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+$(document).ready(function() {
+
+    $('#create_test').click(function(){
+
+        var testMode=checkTimeorTutorMode();
+
+        // Check conditions before proceeding with AJAX call
+        if (!checkTimeorTutorMode()) {
+            // Notify the user or handle the case where conditions are not met
+            showToast('Please select Tutor Mode or Timed Mode.');
+            return;
+        }
+
+        var numberQuestion=validateNumberQuestion();
+
+        if (!validateNumberQuestion()) {
+            // Notify the user or handle the case where the number of questions is not valid
+            showToast('Please enter a number between 10 and 40.');
+            return;
+        }
+
+        var systemIds= getSelectedCheckboxValues();
+
+
+        // Check if systemIds are selected
+        if (!systemIds) {
+
+            showToast('Please select at least one system.');
+            return;
+        }
+
+        var radioId = getSelectedRadioButton();
+
+
+
+          // Perform actions based on the selected ID
+          switch (radioId) {
+            case 'all_question':
+                // Logic for 'all_question' selected
+                console.log('All questions selected');
+                break;
+            case 'correct_question':
+                // Logic for 'correct_question' selected
+
+                alert('correct_question choose');
+                fetchQuestion('/qbank_algorithm_testing', systemIds, numberQuestion)
+                break;
+            case 'incorrect_question':
+                // Logic for 'incorrect_question' selected
+                console.log('Incorrect questions selected');
+                break;
+            case 'omitted_question':
+                // Logic for 'omitted_question' selected
+                console.log('Omitted questions selected');
+                break;
+            case 'marked_question':
+                // Logic for 'marked_question' selected
+                console.log('Marked questions selected');
+                break;
+            case 'used_question':
+                // Logic for 'used_question' selected
+                console.log('Used questions selected');
+                break;
+            case 'unused_question':
+                // Logic for 'unused_question' selected
+                console.log('Unused questions selected');
+                break;
+            default:
+                // Default case
+                console.log('Default case');
+                break;
+        }
+
+        function fetchQuestion(url, systemIds, numberQuestion) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    systemIds: systemIds,
+                    questionsPerBlock: numberQuestion
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Handle success
+                        console.log(response.message);
+                        console.log(response.result);
+                    } else {
+                        showToast('Error fetching questions: ' + response.message);
+                    }
+                },
+                error: function(error) {
+                    // Handle AJAX error
+                    console.error('AJAX error:', error);
+                }
+            });
+        }
+
+
+    });
+
+
+
+        // Function to get values of all selected checkboxes
+        function getSelectedCheckboxValues() {
+            var selectedSystems = $(".system-checkbox:checked").map(function() {
+                return this.id;
+            }).get();
+
+            // Check if the length of the array is zero
+            if (selectedSystems.length === 0) {
+                return false;
+            }
+
+            // Use the 'selectedSystems' array as needed
+            return selectedSystems;
+
+
+        }
+
+
+        // function for question select mode
+        function getSelectedRadioButton() {
+
+            var radioButtons = document.getElementsByName('radio-group');
+
+            for (var i = 0; i < radioButtons.length; i++) {
+                if (radioButtons[i].checked) {
+                    return radioButtons[i].id;
+                    break;
+                }
+            }
+        }
+
+
+
+        function checkTimeorTutorMode() {
+
+            var tutorMode = document.getElementById('toggleTutor');
+
+            var timeMode = document.getElementById('toggleTimed');
+
+
+            if (tutorMode.checked) {
+                return 'toggleTutor';
+            } else if( timeMode.checked) {
+                return 'toggleTimed';
+            }else{
+
+                return false
+
+
+            }
+
+        }
+
+        function validateNumberQuestion() {
+            var inputValue = parseInt($('#number_question').val());
+
+            // Check if the value is less than 10 or greater than 40
+            if (inputValue < 10 || inputValue > 40) {
+               return false;
+
+            }
+
+            return inputValue;
+
+        }
+
+        function showToast(message) {
+        $('#myToast2 .toast-body h6').text(message);
+        $('#myToast2').toast('show');
+
+        // Automatically hide after 5 seconds
+        setTimeout(function() {
+            $('#myToast2').toast('hide');
+        }, 5000);
+
+       }
+
+
+
+});//ready function end
+
+</script>
+
+
 
 
 <script>
@@ -927,31 +1133,31 @@ $(document).ready(function() {
 
         $('#incorrect_question').change(function() {
             if ($(this).is(':checked')) {
-                performAjax('incorrect');
+                performAjax('/load_qbank_incorrect_question_Systems');
             }
         });
 
         $('#omitted_question').change(function() {
             if ($(this).is(':checked')) {
-                performAjax('omitted');
+                performAjax('/load_qbank_omitted_question_Systems');
             }
         });
 
         $('#marked_question').change(function() {
             if ($(this).is(':checked')) {
-                performAjax('marked');
+                performAjax('/load_qbank_marked_question_Systems');
             }
         });
 
         $('#used_question').change(function() {
             if ($(this).is(':checked')) {
-                performAjax('used');
+                performAjax('/load_qbank_used_question_Systems');
             }
         });
 
         $('#unused_question').change(function() {
             if ($(this).is(':checked')) {
-                performAjax('unused');
+                performAjax('/load_qbank_unused_question_Systems');
             }
         });
 
@@ -981,9 +1187,16 @@ $(document).ready(function() {
 
                         if (count % 4 === 0) {
 
+                            if(count===0){
+
+                                currentRow = $('<div>').appendTo('#show_systems');
+
+
+                            }else{
+
                             // If count is a multiple of 4, start a new row
                             currentRow = $('<div class="col-md-4 col-sm-4 col-lg-4 col-12">').appendTo('#show_systems');
-
+                            }
                         }
 
                         // Create a form group for each system
@@ -1051,8 +1264,18 @@ $(document).ready(function() {
 
                         if (count % 4 === 0) {
 
-                            // If count is a multiple of 4, start a new row
+                            if(count===0){
+
+                                currentRow = $('<div>').appendTo('#show_systems');
+
+                            }else{
+
+                                 // If count is a multiple of 4, start a new row
                             currentRow = $('<div class="col-md-4 col-sm-4 col-lg-4 col-12">').appendTo('#show_systems');
+
+
+
+                            }
 
                         }
 
@@ -1132,22 +1355,7 @@ $(document).ready(function() {
         });
 
 
-        $(document).on('click', '#create-test', function(){
 
-            getSelectedCheckboxValues();
-
-        });
-
-
-          // Function to get values of all selected checkboxes
-        function getSelectedCheckboxValues() {
-            var selectedValues = $(".system-checkbox:checked").map(function() {
-                return this.id;
-            }).get();
-
-            // Use the 'selectedValues' array as needed
-            alert(selectedValues);
-        }
 
 
 
@@ -1165,7 +1373,6 @@ $(document).ready(function() {
           // Turn off the Timed button
           $('#toggleTimed').bootstrapToggle('off');
 
-          alert('time off');
 
 
         }
@@ -1180,7 +1387,7 @@ $(document).ready(function() {
           // Turn off the Tutor button
           $('#toggleTutor').bootstrapToggle('off');
 
-          alert('totur off');
+
         }
 
 

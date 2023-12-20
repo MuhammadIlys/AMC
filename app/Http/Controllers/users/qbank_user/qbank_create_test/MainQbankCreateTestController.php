@@ -17,7 +17,7 @@ class MainQbankCreateTestController extends Controller
 {
         public function lunchUserQbankCreateTest()
     {
-        $qbank_id = 1; // Replace with the desired qbank_id
+        $qbank_id = Session::get('qbank_id'); // Replace with the desired qbank_id
         // Get the user ID from the session
         $userId = Session::get('user')->id;
 
@@ -75,7 +75,9 @@ class MainQbankCreateTestController extends Controller
 
 
         // Replace with the desired qbank_id
-        $qbank_id = 1;
+        $qbank_id =  Session::get('qbank_id');
+
+
 
         // Get the user ID from the session
         $userId = Session::get('user')->id;

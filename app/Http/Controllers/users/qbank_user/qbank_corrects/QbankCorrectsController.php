@@ -16,7 +16,7 @@ class QbankCorrectsController extends Controller
        $userId = Session::get('user')->id;
 
        // Replace with the desired qbank_id or use a default value
-       $qbankId = 1;
+       $qbankId =  Session::get('qbank_id');
 
     // Fetch records based on user ID and qbank ID
     $corrects = QbankCorrects::where('id', $userId)
