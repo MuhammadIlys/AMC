@@ -36,6 +36,11 @@ use App\Http\Controllers\users\qbank_user\qbank_help\MainQbankHelpController;
 use App\Http\Controllers\users\qbank_user\qbank_incorrects\QbankIncorrectsController;
 use App\Http\Controllers\users\qbank_user\qbank_last_correct_fetch_question\QbankLastCorrectFetchedQuestionController;
 use App\Http\Controllers\users\qbank_user\qbank_last_fetch_question\QbankLastFetchedQuestionController;
+use App\Http\Controllers\users\qbank_user\qbank_last_incorrect_fetch_question\QbankLastIncorrectFetchedQuestionController;
+use App\Http\Controllers\users\qbank_user\qbank_last_marked_fetch_question\QbankLastMarkedFetchedQuestionController;
+use App\Http\Controllers\users\qbank_user\qbank_last_omitted_fetch_question\QbankLastOmittedFetchedQuestionController;
+use App\Http\Controllers\users\qbank_user\qbank_last_unused_fetch_question\QbankLastUnusedFetchedQuestionController;
+use App\Http\Controllers\users\qbank_user\qbank_last_used_fetch_question\QbankLastUsedFetchedQuestionController;
 use App\Http\Controllers\users\qbank_user\qbank_marked\QbankMarkedController;
 use App\Http\Controllers\users\qbank_user\qbank_notes\MainQbankNoteController;
 use App\Http\Controllers\users\qbank_user\qbank_omitted\QbankOmittedController;
@@ -710,9 +715,20 @@ Route::middleware('superadmin')->group(function () {
         Route::post('/load_qbank_unused_question_Systems', [QbankUnusedController::class, 'loadUnusedSystems']);
 
 
-        //testing route
+        //qbank question fetching routes
+        Route::post('/qbank_fetching_all_question', [QbankLastFetchedQuestionController::class, 'fetchAllQuestions']);
 
-        Route::post('/qbank_algorithm_testing', [QbankLastCorrectFetchedQuestionController::class, 'fetchCorrectQuestions']);
+        Route::post('/qbank_fetching_correct_question', [QbankLastCorrectFetchedQuestionController::class, 'fetchCorrectQuestions']);
+
+        Route::post('/qbank_fetching_incorrect_question', [QbankLastIncorrectFetchedQuestionController::class, 'fetchIncorrectQuestions']);
+
+        Route::post('/qbank_fetching_omitted_question', [QbankLastOmittedFetchedQuestionController::class, 'fetchOmittedQuestions']);
+
+        Route::post('/qbank_fetching_marked_question', [QbankLastMarkedFetchedQuestionController::class, 'fetchMarkedQuestions']);
+
+        Route::post('/qbank_fetching_Used_question', [QbankLastUsedFetchedQuestionController::class, 'fetchUsedQuestions']);
+
+        Route::post('/qbank_fetching_Unused_question', [QbankLastUnusedFetchedQuestionController::class, 'fetchUnusedQuestions']);
 
 
 
@@ -737,7 +753,7 @@ Route::middleware('superadmin')->group(function () {
 
         Route::get('/lunch_user_qbank_test_help', [MainQbankHelpController::class, 'lunchUserQbankTestHelp']);
 
-        Route::get('/lunch_user_qbank_test_exam',[MainQbankExamController::class,'lunchUserQbankTestExam']);
+        Route::get('/lunch_user_qbank_test_exam/{testMode}/{numberQuestion}/{systemIds}/{radioId}',[MainQbankExamController::class,'lunchUserQbankTestExam']);
 
     });
 

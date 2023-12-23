@@ -1,6 +1,478 @@
 @extends('users.qbank_user.qbank_exam.templates.main')
 @section('main-container')
 
+ <!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+ <!-- Bootstrap Bundle (includes Popper.js) -->
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+ <!-- jQuery UI -->
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+ <!-- Include Interact.js (for touch-based interaction) -->
+ <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.12/dist/interact.min.js"></script>
+
+ <style>
+
+.nav-tab-color {
+    background-color: #5590CC !important;
+    color:white;
+}
+
+.nav-tab-color a{
+
+    color:#fff !important;
+
+
+}
+
+ </style>
+
+  <script>
+
+     // Retrieve questions from localStorage
+     var questionsData;
+
+    // Retrieve questions from localStorage
+
+    var currentQuestionIndex = 0;
+    var totalQuestions ;
+
+
+    $(document).ready(function () {
+
+        $('#card-border').hide();
+        $('#hide-explanation').hide();
+
+
+        // Check if it's the first load
+        var isFirstLoad = localStorage.getItem('isFirstLoad') !== 'false';
+
+        if (isFirstLoad) {
+
+            // Set the flag to false for subsequent refreshes
+            localStorage.setItem('isFirstLoad', 'false');
+            var testMode ='{{ $testMode }}';
+            localStorage.setItem('testMode', testMode);
+            var numberQuestion={{ $numberQuestion }};
+            localStorage.setItem('numberQuestion', numberQuestion);
+
+            var systemIds=[{{ $systemIds }}];
+            localStorage.setItem('systemIds', systemIds);
+
+            var radioId='{{ $radioId }}';
+
+            localStorage.setItem('radioId', radioId);
+
+            // Perform actions based on the selected ID
+            switch (radioId) {
+                case 'all_question':
+                    // Logic for 'all_question' selected
+                    fetchQuestion('/qbank_fetching_all_question', systemIds, numberQuestion);
+                    break;
+                case 'correct_question':
+                    // Logic for 'correct_question' selected
+                    fetchQuestion('/qbank_fetching_correct_question', systemIds, numberQuestion);
+                    break;
+                case 'incorrect_question':
+                    // Logic for 'incorrect_question' selected
+                    fetchQuestion('/qbank_fetching_incorrect_question', systemIds, numberQuestion);
+                    break;
+                case 'omitted_question':
+                    // Logic for 'omitted_question' selected
+                    fetchQuestion('/qbank_fetching_omitted_question', systemIds, numberQuestion);
+                    break;
+                case 'marked_question':
+                    // Logic for 'marked_question' selected
+                    fetchQuestion('/qbank_fetching_marked_question', systemIds, numberQuestion);
+                    break;
+                case 'used_question':
+                    // Logic for 'used_question' selected
+                    fetchQuestion('/qbank_fetching_used_question', systemIds, numberQuestion);
+                    break;
+                case 'unused_question':
+                    // Logic for 'unused_question' selected
+                    fetchQuestion('/qbank_fetching_unused_question', systemIds, numberQuestion);
+                    break;
+                default:
+                    // Default case
+                    console.log('skip');
+                    break;
+            }
+
+
+
+
+        }
+
+
+
+
+            function fetchQuestion(url, systemIds, numberQuestion) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        systemIds: systemIds,
+                        questionsPerBlock: numberQuestion
+                    },
+                    success: function(response) {
+                        if (response.success) {
+
+                          var questions2=JSON.stringify(response.result);
+
+                          localStorage.setItem('questions',questions2 );
+
+                          var storedValue = localStorage.getItem('questions');
+
+                          if (storedValue !== null && storedValue !== undefined) {
+
+                            questionsData=JSON.parse(storedValue);
+
+                            totalQuestions = questionsData.length;
+                            loadQuestionByIndex(currentQuestionIndex );
+                          }
+
+
+                        } else {
+                            showToast('Error fetching questions: ' + response.message);
+                        }
+                    },
+                    error: function(error) {
+                        // Handle AJAX error
+                        console.error('AJAX error:', error);
+                    }
+                });
+            }
+
+
+
+            var countdown;
+
+            // Function to start the countdown timer
+            function startTimer() {
+                // Retrieve remaining time from localStorage or set to default (3600 seconds = 1 hour)
+                countdown = localStorage.getItem('timer') || 3600;
+
+                // Update timer every second
+                var interval = setInterval(function () {
+                    var hours = Math.floor(countdown / 3600);
+                    var minutes = Math.floor((countdown % 3600) / 60);
+                    var seconds = countdown % 60;
+
+                    // Display the remaining time
+                    $('#test_timing').text('Time:  '+pad(hours) + ':' + pad(minutes) + ':' + pad(seconds));
+
+                    // Save remaining time to localStorage every second
+                    localStorage.setItem('timer', countdown);
+
+                    // Check if the time has reached zero
+                    if (--countdown < 0) {
+                        clearInterval(interval);
+                        timerEnded();
+                    }
+                }, 1000);
+            }
+
+            // Function to pad single-digit numbers with leading zeros
+            function pad(val) {
+                var valString = val + "";
+                return valString.length < 2 ? "0" + valString : valString;
+            }
+
+            function timerEnded() {
+                // Add your logic to handle what happens when the time is up
+                alert('Time is up!');  // You can replace this with your own actions
+            }
+
+            function handleTestMode() {
+                // Check if testMode is set to 'toggleTimed' in localStorage
+                if (localStorage.getItem('testMode') === 'toggleTimed') {
+                    // Start the timer and keep the interval ID for possible future use
+                    startTimer();
+                } else {
+                    // Hide the time element if the condition is not met
+                    $('#test_timing').hide();
+                }
+            }
+
+            handleTestMode();
+
+
+
+
+
+        // loadQuestionByIndex(currentQuestionIndex );
+
+
+
+    });
+
+
+
+
+
+
+
+// Function to generate a random number between min and max (inclusive)
+function generateRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Function to get correct option text
+function getCorrectOptionText(correctOption) {
+    var optionIndex = parseInt(correctOption) - 1;
+    var optionLetters = ['A', 'B', 'C', 'D', 'E'];
+    return optionLetters[optionIndex];
+}
+
+// Function to load the next question
+function loadNextQuestion() {
+
+
+    if (currentQuestionIndex < totalQuestions - 1) {
+        // Increment the current question index and load the question
+        loadQuestionByIndex(currentQuestionIndex + 1);
+    }
+}
+
+// Function to load the previous question
+function loadPreviousQuestion() {
+
+
+    if (currentQuestionIndex > 0) {
+        // Decrement the current question index and load the question
+        loadQuestionByIndex(currentQuestionIndex - 1);
+    }
+}
+
+// Function to load a question by its index
+function loadQuestionByIndex(index) {
+
+    storeRadioButtonState();
+    var randomNumber = generateRandomNumber(30, 100);
+    $('#correct-ans-per').text(randomNumber + '%');
+    $('#card-border').hide();
+    $('#hide-explanation').hide();
+
+
+
+
+    if (index >= 0 && index < totalQuestions) {
+        var question = questionsData[index];
+
+        // Update the content in the specified elements with question details
+        $('#question-text').html(question.question_text);
+        $('#option-1').text(question.option1 || '');
+        $('#option-2').text(question.option2 || '');
+        $('#option-3').text(question.option3 || '');
+        $('#option-4').text(question.option4 || '');
+        $('#option-5').text(question.option5 || '');
+
+        var correctOptionText = getCorrectOptionText(question.correct_option);
+        $('#correct-option').text(correctOptionText);
+        $('#correction-option-text').css('color', 'green').text('Correct Option');
+        $('#card-border').css('border-left', '5px solid green');
+
+        // Update the question explanation as plain text
+        $('#question-explanation').html(question.question_explanation);
+        $('#question-id').text(question.qbank_question_id);
+
+        // Update the current question index
+        currentQuestionIndex = index;
+
+        // Update the question links with the highlighted class
+        updateQuestionLinks();
+
+        // Hide radio buttons for empty options
+        for (var i = 1; i <= 5; i++) {
+            var radioId = '#test' + i;
+
+            if ($('#option-' + i).text().trim() === '') {
+                $(radioId).parent().parent().hide();
+            } else {
+                $(radioId).parent().parent().show();
+            }
+        }
+
+        // Clear previous radio button state
+        $('input[name="radio-group"]').prop('checked', false);
+
+        // Restore the state of radio buttons from local storage if the question ID matches
+        var storedOption = localStorage.getItem('selectedOption_' + question.qbank_question_id);
+        var storedRadioId = localStorage.getItem('radioId_' + question.qbank_question_id);
+
+
+
+        if (storedOption !== null && storedRadioId !== null) {
+            $('#' + storedRadioId).prop('checked', true);
+
+            if (localStorage.getItem('testMode') === 'toggleTimed') {
+
+                $('#card-border').hide();
+                $('#hide-explanation').hide();
+
+
+            }else{
+
+                $('#card-border').show();
+                $('#hide-explanation').show();
+
+            }
+        }
+    }
+}
+
+// Function to update the question links
+function updateQuestionLinks() {
+    var questionsHtml = '';
+
+    questionsData.forEach(function (question, index) {
+        var questionNumber = index + 1;
+
+        // Add the class "nav-tab-color" to the current question link
+        var listItemClass = index === currentQuestionIndex ? 'nav-tab-color' : '';
+
+       // Assume index is the variable representing the current index in your loop
+        var backgroundStyle = index % 2 === 0 ? 'background-color: #EFEFEF;' : '';
+
+        // Concatenate the backgroundStyle to the inline style of the <li> element
+        questionsHtml += '<li style="width: 100%;' + backgroundStyle + '" class="nav-item ' + listItemClass + '"><a href="#" class="nav-link" onclick="loadQuestionByIndex(' + index + ')">' + questionNumber + '</a></li>';
+
+    });
+
+    // Display the questions links in the container
+    $('#navbar-nav').html(questionsHtml);
+
+    // Update the current question number and total number of questions
+    $('#current-question-no').text(currentQuestionIndex + 1);
+    $('#total-question-no').text(totalQuestions);
+}
+
+
+
+// Function to handle storing the state of radio buttons in local storage
+function storeRadioButtonState() {
+
+
+    var selectedOption = $('input[name="radio-group"]:checked').val();
+    var radioId = $('input[name="radio-group"]:checked').attr('id');
+
+    if (selectedOption !== undefined) {
+        localStorage.setItem('selectedOption_' + questionsData[currentQuestionIndex].qbank_question_id, selectedOption);
+        localStorage.setItem('radioId_' + questionsData[currentQuestionIndex].qbank_question_id, radioId);
+        localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
+    }
+}
+
+// Function to be called on page load
+$(document).ready(function () {
+
+    // Function to handle radio button click and store the selected option
+    $('input[name="radio-group"]').on('change', function () {
+
+        var selectedOption = $('input[name="radio-group"]:checked').val();
+        var radioId = $('input[name="radio-group"]:checked').attr('id');
+
+        // Store the selected option and radio button ID in localStorage only if a radio button is checked
+        if (selectedOption !== undefined) {
+            localStorage.setItem('selectedOption_' + questionsData[currentQuestionIndex].qbank_question_id, selectedOption);
+            localStorage.setItem('radioId_' + questionsData[currentQuestionIndex].qbank_question_id, radioId);
+        }
+
+        if (localStorage.getItem('testMode') === 'toggleTimed') {
+
+            $('#card-border').hide();
+            $('#hide-explanation').hide();
+
+
+        }else{
+
+            $('#card-border').show();
+            $('#hide-explanation').show();
+
+        }
+
+
+
+
+    });
+
+    if (questionsData == null && questionsData == undefined) {
+
+        var storedValue = localStorage.getItem('questions');
+
+        questionsData=JSON.parse(storedValue);
+
+        totalQuestions = questionsData.length;
+
+
+
+    }else{
+
+    }
+
+    // Check if the current question index exists in sessionStorage and restore it
+    var storedIndex = sessionStorage.getItem('currentQuestionIndex');
+    if (storedIndex !== null) {
+
+        currentQuestionIndex = parseInt(storedIndex);
+    }
+
+    // Load the question and restore the state of radio buttons
+    loadQuestionByIndex(currentQuestionIndex);
+
+     //Check if the radio button state exists in local storage and restore it
+     var storedOption = localStorage.getItem('selectedOption_' + questionsData[currentQuestionIndex].qbank_question_id);
+     var storedRadioId = localStorage.getItem('radioId_' + questionsData[currentQuestionIndex].qbank_question_id);
+
+    if (storedOption !== null && storedRadioId !== null) {
+        $('#' + storedRadioId).prop('checked', true);
+    }
+
+
+
+
+});
+
+// Handle page refresh by restoring the state of radio buttons and storing the current question index in sessionStorage
+window.onbeforeunload = function () {
+    // Store the state of radio buttons in local storage
+    storeRadioButtonState();
+    sessionStorage.setItem('currentQuestionIndex',currentQuestionIndex);
+};
+
+// Handle navigating to the last active question after page refresh
+window.onload = function () {
+    // Check if the current question index exists in sessionStorage and navigate to it
+    var storedIndex = sessionStorage.getItem('currentQuestionIndex');
+    if (storedIndex !== null) {
+        loadQuestionByIndex(parseInt(storedIndex));
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
 <style>
     .loader-container {
       position: fixed;
@@ -469,7 +941,7 @@ font-family: Arial, sans-serif !important;
                         </div>
                         <ul class="navbar-nav" id="navbar-nav">
 
-                            <li style=" width: 100%;" class="nav-item nav-tab-color"><a href="#" class="nav-link" onclick="loadQuestionByIndex(0)">1</a></li>
+
 
                         </ul>
                     </div>
@@ -515,41 +987,39 @@ font-family: Arial, sans-serif !important;
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
                                                                                         <input type="radio" id="test1" name="radio-group">
-                                                                                        <label for="test1" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">A. <span id="option-1"></span> </label>
+                                                                                        <label for="test1" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">A. <span id="option-1"></span></label>
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
-                                                                                <td class="tbl_radio">
-                                                                                    <input type="radio" id="test2" name="radio-group">
-                                                                                    <label for="test2" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">B. <span id="option-2"></span>
-                                                                                    </label>
-                                                                                </td>
+                                                                                    <td class="tbl_radio">
+                                                                                        <input type="radio" id="test2" name="radio-group">
+                                                                                        <label for="test2" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">B. <span id="option-2"></span></label>
+                                                                                    </td>
                                                                                 </tr>
 
                                                                                 <tr>
-                                                                                <td class="tbl_radio">
-                                                                                    <input type="radio" id="test3" name="radio-group">
-                                                                                    <label for="test3" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">C. <span id="option-3"></span>
-                                                                                    </label>
-                                                                                </td>
+                                                                                    <td class="tbl_radio">
+                                                                                        <input type="radio" id="test3" name="radio-group">
+                                                                                        <label for="test3" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">C. <span id="option-3"></span></label>
+                                                                                    </td>
                                                                                 </tr>
 
                                                                                 <tr>
-                                                                                <td class="tbl_radio">
-                                                                                    <input type="radio" id="test4" name="radio-group">
-                                                                                    <label for="test4" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">D. <span id="option-4"></span>
-                                                                                    </label>
-                                                                                </td>
+                                                                                    <td class="tbl_radio">
+                                                                                        <input type="radio" id="test4" name="radio-group">
+                                                                                        <label for="test4" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">D. <span id="option-4"></span></label>
+                                                                                    </td>
                                                                                 </tr>
+
                                                                                 <tr>
-                                                                                <td class="tbl_radio">
-                                                                                    <input type="radio" id="test5" name="radio-group">
-                                                                                    <label for="test5" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">E. <span id="option-5"></span>
-                                                                                    </label>
-                                                                                </td>
+                                                                                    <td class="tbl_radio">
+                                                                                        <input type="radio" id="test5" name="radio-group">
+                                                                                        <label for="test5" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">E. <span id="option-5"></span></label>
+                                                                                    </td>
                                                                                 </tr>
                                                                             </tbody>
+
                                                                         </table>
                                                                     </div>
                                                                 </div>
@@ -661,8 +1131,8 @@ font-family: Arial, sans-serif !important;
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6 col-6">
-                            <h5 class="text-white">
-                            Time: 00:16:06
+                            <h5 id="test_timing" class="text-white">
+
 
                             </h5>
                         </div>
@@ -708,6 +1178,14 @@ font-family: Arial, sans-serif !important;
 
 
 </html>
+
+
+
+
+
+
+
+
 
 
 <script>
@@ -857,11 +1335,13 @@ function observeElementChanges(selector) {
 
 // Call the functions when the page loads
 $(document).ready(function () {
+
   applyFontStylesToElements('#question-text');
   applyFontStylesToElements('#question-explanation');
 
   observeElementChanges('#question-text');
   observeElementChanges('#question-explanation');
+
 });
 
 
@@ -870,7 +1350,7 @@ $(document).ready(function () {
 
 </script>
 
-<!--##################################### designing the font for question and explination start ###################################################-->
+<!--##################################### designing the font for question and explination end ###################################################-->
 
 
 

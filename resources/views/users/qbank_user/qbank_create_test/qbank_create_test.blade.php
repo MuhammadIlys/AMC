@@ -920,7 +920,19 @@
 
 $(document).ready(function() {
 
+
+
+    // remove the exam local storage variables
+
+    localStorage.clear();
+
     $('#create_test').click(function(){
+
+    // remove the exam local storage variables
+
+       localStorage.clear();
+
+
 
         var testMode=checkTimeorTutorMode();
 
@@ -953,68 +965,9 @@ $(document).ready(function() {
 
 
 
-          // Perform actions based on the selected ID
-          switch (radioId) {
-            case 'all_question':
-                // Logic for 'all_question' selected
-                console.log('All questions selected');
-                break;
-            case 'correct_question':
-                // Logic for 'correct_question' selected
+        var url = "/lunch_user_qbank_test_exam/" +testMode+"/"+numberQuestion+"/"+systemIds+"/"+radioId;
 
-                alert('correct_question choose');
-                fetchQuestion('/qbank_algorithm_testing', systemIds, numberQuestion)
-                break;
-            case 'incorrect_question':
-                // Logic for 'incorrect_question' selected
-                console.log('Incorrect questions selected');
-                break;
-            case 'omitted_question':
-                // Logic for 'omitted_question' selected
-                console.log('Omitted questions selected');
-                break;
-            case 'marked_question':
-                // Logic for 'marked_question' selected
-                console.log('Marked questions selected');
-                break;
-            case 'used_question':
-                // Logic for 'used_question' selected
-                console.log('Used questions selected');
-                break;
-            case 'unused_question':
-                // Logic for 'unused_question' selected
-                console.log('Unused questions selected');
-                break;
-            default:
-                // Default case
-                console.log('Default case');
-                break;
-        }
-
-        function fetchQuestion(url, systemIds, numberQuestion) {
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    systemIds: systemIds,
-                    questionsPerBlock: numberQuestion
-                },
-                success: function(response) {
-                    if (response.success) {
-                        // Handle success
-                        console.log(response.message);
-                        console.log(response.result);
-                    } else {
-                        showToast('Error fetching questions: ' + response.message);
-                    }
-                },
-                error: function(error) {
-                    // Handle AJAX error
-                    console.error('AJAX error:', error);
-                }
-            });
-        }
+        window.location.href = url;
 
 
     });

@@ -24,8 +24,8 @@ class QbankLastUsedFetchedQuestionController extends Controller
         // Get the authenticated user's ID
         $user_id = Session::get('user')->id;
 
-        // Initialize an empty array to store the results
-        $result = [];
+        // Initialize an empty collection to store the results
+        $result = collect();
 
         // Fetch correct questions from QbankCorrects model that match qbank_id and user_id
         $correctQuestions = QbankUsed::where('qbank_id', $qbankId)
@@ -76,8 +76,8 @@ class QbankLastUsedFetchedQuestionController extends Controller
             // Remove duplicates based on qbank_question_id
             $systemCorrectQuestions = $systemCorrectQuestions->unique('qbankQuestion.qbank_question_id');
 
-            // Add the fetched correct questions to the result array
-            $result[$systemId] = $systemCorrectQuestions->pluck('qbankQuestion'); // Only store the question IDs
+            // Add the fetched correct questions to the result collection without associating with system IDs
+            $result = $result->merge($systemCorrectQuestions->pluck('qbankQuestion'));
 
             // Update the last fetched question for each system and user in the database
             if ($systemCorrectQuestions->isNotEmpty()) {
@@ -100,8 +100,11 @@ class QbankLastUsedFetchedQuestionController extends Controller
             }
         }
 
-        // Convert the result array to JSON
-        $jsonResult = json_encode($result);
+        // Remove duplicates based on qbank_question_id from the combined result collection
+        $result = $result->unique('qbank_question_id')->values();
+
+        // Convert the result collection to JSON
+        $jsonResult = $result->toJson();
 
         // Return a JSON response with success message and result
         return response()->json([
@@ -110,4 +113,5 @@ class QbankLastUsedFetchedQuestionController extends Controller
             'result' => json_decode($jsonResult, true),
         ]);
     }
+
 }

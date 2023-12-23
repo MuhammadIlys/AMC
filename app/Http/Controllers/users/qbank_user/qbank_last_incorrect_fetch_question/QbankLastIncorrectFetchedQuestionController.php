@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\users\qbank_user\qbank_last_omitted_fetch_question;
+namespace App\Http\Controllers\users\qbank_user\qbank_last_incorrect_fetch_question;
 
 use App\Http\Controllers\Controller;
-use App\Models\users\qbank_user\qbank_last_omitted_fetch_question\LastOmittedFetchedQuestion;
-use App\Models\users\qbank_user\qbank_omitted\QbankOmitted;
+use App\Models\users\qbank_user\qbank_incorrects\QbankIncorrects;
+use App\Models\users\qbank_user\qbank_last_incorrect_fetch_question\LastIncorrectFetchedQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class QbankLastOmittedFetchedQuestionController extends Controller
+class QbankLastIncorrectFetchedQuestionController extends Controller
 {
-    public function fetchOmittedQuestions(Request $request)
+    public function fetchIncorrectQuestions(Request $request)
     {
         // get selected systems ids
         $systemIds = $request->input('systemIds');
@@ -28,12 +28,12 @@ class QbankLastOmittedFetchedQuestionController extends Controller
         $result = collect();
 
         // Fetch correct questions from QbankCorrects model that match qbank_id and user_id
-        $correctQuestions = QbankOmitted::where('qbank_id', $qbankId)
+        $correctQuestions = QbankIncorrects::where('qbank_id', $qbankId)
             ->where('id', $user_id)
             ->get();
 
         // Get the last fetched question for each system and user
-        $lastCorrectFetchedQuestions = LastOmittedFetchedQuestion::whereIn('qbank_system_id', $systemIds)
+        $lastCorrectFetchedQuestions = LastIncorrectFetchedQuestion::whereIn('qbank_system_id', $systemIds)
             ->where('qbank_id', $qbankId)
             ->where('user_id', $user_id)
             ->get();
@@ -58,7 +58,7 @@ class QbankLastOmittedFetchedQuestionController extends Controller
 
             // If there are not enough questions, fetch additional random questions for that system
             if ($neededQuestions > 0) {
-                $additionalCorrectQuestions = QbankOmitted::where('qbank_id', $qbankId)
+                $additionalCorrectQuestions = QbankIncorrects::where('qbank_id', $qbankId)
                     ->whereHas('qbankQuestion', function ($query) use ($systemId) {
                         $query->where('qbank_system_id', $systemId);
                     })
@@ -90,7 +90,7 @@ class QbankLastOmittedFetchedQuestionController extends Controller
                 if ($lastCorrectFetchedQuestion) {
                     $lastCorrectFetchedQuestion->update(['last_fetched_question_id' => $lastFetchedQuestionId]);
                 } else {
-                    LastOmittedFetchedQuestion::create([
+                    LastIncorrectFetchedQuestion::create([
                         'qbank_system_id' => $systemId,
                         'qbank_id' => $qbankId,
                         'user_id' => $user_id,
@@ -113,5 +113,6 @@ class QbankLastOmittedFetchedQuestionController extends Controller
             'result' => json_decode($jsonResult, true),
         ]);
     }
+
 
 }

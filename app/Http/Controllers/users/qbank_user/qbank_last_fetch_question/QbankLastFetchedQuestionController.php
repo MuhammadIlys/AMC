@@ -11,25 +11,22 @@ use Illuminate\Support\Facades\Session;
 class QbankLastFetchedQuestionController extends Controller
 {
 
-    function fetchQuestions(Request $request)
+    public function fetchAllQuestions(Request $request)
     {
-
         // get selected systems ids
         $systemIds = $request->input('systemIds');
 
         // get question per block
-
         $questionsPerBlock = $request->input('questionsPerBlock');
 
         // Get the Qbank ID
-
         $qbankId = Session::get('qbank_id');
 
         // Get the authenticated user's ID
-        $user_id =  Session::get('user')->id;
+        $user_id = Session::get('user')->id;
 
-        // Initialize an empty array to store the results
-        $result = [];
+        // Initialize an empty collection to store the results
+        $result = collect();
 
         // Fetch questions from all systems
         $questions = QbankQuestion::whereIn('qbank_system_id', $systemIds)
@@ -78,8 +75,8 @@ class QbankLastFetchedQuestionController extends Controller
             // Remove duplicates based on qbank_question_id
             $systemQuestions = $systemQuestions->unique('qbank_question_id');
 
-            // Add the fetched questions to the result array
-            $result[$systemId] = $systemQuestions;
+            // Add the fetched questions to the result collection
+            $result = $result->merge($systemQuestions);
 
             // Update the last fetched question for each system and user in the database
             if ($systemQuestions->isNotEmpty()) {
@@ -102,8 +99,8 @@ class QbankLastFetchedQuestionController extends Controller
             }
         }
 
-        // Convert the result array to JSON
-        $jsonResult = json_encode($result);
+        // Convert the result collection to JSON
+        $jsonResult = $result->toJson();
 
         // Return a JSON response with success message and result
         return response()->json([
@@ -112,6 +109,7 @@ class QbankLastFetchedQuestionController extends Controller
             'result' => json_decode($jsonResult, true),
         ]);
     }
+
 
 
 
