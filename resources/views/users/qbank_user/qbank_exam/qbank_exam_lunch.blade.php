@@ -28,6 +28,27 @@
 
 }
 
+.questionmarked,
+.questionnotes {
+    background-repeat: no-repeat;
+    background-position: 50%;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.questionmarked {
+    background-image: url('{{ url("sitelogo/flag.png") }}');
+    height: 10px;
+    width: 50px;
+}
+
+.questionnotes {
+    background-image: url('{{ url("sitelogo/annotateIconTrans.png") }}');
+    height: 13px;
+    width: 15px;
+}
+
+
  </style>
 
   <script>
@@ -205,7 +226,7 @@
 
 
 
-        // loadQuestionByIndex(currentQuestionIndex );
+
 
 
 
@@ -257,6 +278,7 @@ function loadQuestionByIndex(index) {
     $('#correct-ans-per').text(randomNumber + '%');
     $('#card-border').hide();
     $('#hide-explanation').hide();
+    $('input[name="radio-group"]').prop('disabled', false);
 
 
 
@@ -309,8 +331,10 @@ function loadQuestionByIndex(index) {
 
         if (storedOption !== null && storedRadioId !== null) {
             $('#' + storedRadioId).prop('checked', true);
+            $('input[name="radio-group"]').prop('disabled', true);
 
             if (localStorage.getItem('testMode') === 'toggleTimed') {
+
 
                 $('#card-border').hide();
                 $('#hide-explanation').hide();
@@ -340,7 +364,7 @@ function updateQuestionLinks() {
         var backgroundStyle = index % 2 === 0 ? 'background-color: #EFEFEF;' : '';
 
         // Concatenate the backgroundStyle to the inline style of the <li> element
-        questionsHtml += '<li style="width: 100%;' + backgroundStyle + '" class="nav-item ' + listItemClass + '"><a href="#" class="nav-link" onclick="loadQuestionByIndex(' + index + ')">' + questionNumber + '</a></li>';
+        questionsHtml += '<li style="width: 100%;' + backgroundStyle + '" class="nav-item ' + listItemClass + '"> <a href="#" class="nav-link" onclick="loadQuestionByIndex(' + index + ')">' + questionNumber + '<span class="questionmarked marked216 ng-star-inserted"></span> <span class="questionnotes notes216 ng-star-inserted"></span> </a></li>';
 
     });
 
@@ -400,6 +424,26 @@ $(document).ready(function () {
 
 
     });
+
+
+
+    $("#question_mark").change(function () {
+            handleCheckboxChange(this);
+    });
+
+    function handleCheckboxChange(checkbox) {
+
+        // Add your custom event handling logic here
+        if (checkbox.checked) {
+            // Checkbox is checked
+            alert("Checkbox is checked");
+            // Add more actions as needed
+        } else {
+            // Checkbox is unchecked
+            alert("Checkbox is unchecked");
+            // Add more actions as needed
+        }
+    }
 
     if (questionsData == null && questionsData == undefined) {
 
@@ -644,7 +688,7 @@ font-family: Arial, sans-serif !important;
                         <div class="app-search d-none d-md-block" >
                             <div id="mark">
                                 <div class="d-flex" style="padding: 1px 12px 5px 12px;">
-                                    <input id="mark2" type="checkbox" class="flag_status">
+                                    <input id="question_mark" type="checkbox" class="flag_status">
                                     <span class="span_mark" style="margin-top: 3px;"><svg class="mark_svg"><svg id="whiteflag" viewBox="0 0 22 30"><g style="stroke: #FCFCFC; stroke-width: 2.2; fill: #B70808;"><g id="flag"><line x1="10" y1="35" x2="1.5" y2="4" class="icon"></line><path d="M20,8c-2,3-4,7-7,8c-2,1-5,2-7,3C5,14,4,9,1,5C8,1,13,10,20,8z" class="icon"></path></g></g></svg></svg></span>
                                     <!--<i class="bx bx-bookmark fs-22"></i>-->
                                     <span class="mt-2" style="margin-top: 11px !important;">Mark</span>
