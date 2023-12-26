@@ -70,6 +70,14 @@
         $('#card-border').hide();
         $('#hide-explanation').hide();
 
+
+        // Check if it's the first load
+        var isFirstLoad = localStorage.getItem('isFirstLoad') !== 'false';
+
+        if (isFirstLoad) {
+
+            // Set the flag to false for subsequent refreshes
+            localStorage.setItem('isFirstLoad', 'false');
             var testMode ='{{ $testMode }}';
             localStorage.setItem('testMode', testMode);
             var numberQuestion={{ $numberQuestion }};
@@ -121,6 +129,7 @@
 
 
 
+        }
 
 
 
@@ -140,13 +149,19 @@
 
                           var questions2=JSON.stringify(response.result);
 
-                            questionsData=JSON.parse(questions2);
+                          localStorage.setItem('questions',questions2 );
+
+                          var storedValue = localStorage.getItem('questions');
+
+                          if (storedValue !== null && storedValue !== undefined) {
+
+                            questionsData=JSON.parse(storedValue);
 
                             totalQuestions = questionsData.length;
                             loadQuestionByIndex(currentQuestionIndex );
                             sessionStorage.setItem('currentQuestionIndex',currentQuestionIndex);
 
-
+                          }
 
 
                         } else {
@@ -520,6 +535,13 @@ $(document).ready(function () {
     });
 
 
+    if (questionsData == null && questionsData == undefined) {
+        var storedValue = localStorage.getItem('questions');
+        questionsData = JSON.parse(storedValue);
+        totalQuestions = questionsData.length;
+    } else {
+        // Handle other cases if needed
+    }
 
     // Check if the current question index exists in sessionStorage and restore it
     var storedIndex = sessionStorage.getItem('currentQuestionIndex');
@@ -544,9 +566,11 @@ $(document).ready(function () {
 
 
 
+
+
+
+
 });
-
-
 
 // Handle page refresh by restoring the state of radio buttons and storing the current question index in sessionStorage
 window.onbeforeunload = function () {

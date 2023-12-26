@@ -8,6 +8,7 @@ use App\Models\users\mocks_user\mocks_user_test_history\MocksUserTestHistory;
 use App\Models\users\qbank_user\qbank_corrects\QbankCorrects;
 use App\Models\users\qbank_user\qbank_incorrects\QbankIncorrects;
 use App\Models\users\qbank_user\qbank_marked\QbankMarked;
+use App\Models\users\qbank_user\qbank_notes\QbankNote;
 use App\Models\users\qbank_user\qbank_omitted\QbankOmitted;
 use App\Models\users\qbank_user\qbank_unused\QbankUnused;
 use App\Models\users\qbank_user\qbank_used\QbankUsed;
@@ -120,6 +121,14 @@ class Users extends Model
         {
             return $this->hasMany(QbankUnused::class, 'id');
         }
+
+        // Relationship with QbankNote model
+        public function qbankNoteQuestion()
+        {
+            return $this->hasMany(QbankNote::class, 'id');
+        }
+
+
 
 
 }

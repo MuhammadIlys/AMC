@@ -7,6 +7,7 @@ use App\Models\super_admin\qbank\qbank_system\QbankSystem;
 use App\Models\users\qbank_user\qbank_corrects\QbankCorrects;
 use App\Models\users\qbank_user\qbank_incorrects\QbankIncorrects;
 use App\Models\users\qbank_user\qbank_marked\QbankMarked;
+use App\Models\users\qbank_user\qbank_notes\QbankNote;
 use App\Models\users\qbank_user\qbank_omitted\QbankOmitted;
 use App\Models\users\qbank_user\qbank_unused\QbankUnused;
 use App\Models\users\qbank_user\qbank_used\QbankUsed;
@@ -88,6 +89,12 @@ class QbankQuestion extends Model
     public function qbankUnusedQuestion()
     {
         return $this->hasMany(QbankUnused::class, 'qbank_question_id');
+    }
+
+    // Relationship with QbankNote model
+    public function qbankNoteQuestion()
+    {
+        return $this->hasMany(QbankNote::class, 'qbank_question_id');
     }
 
 

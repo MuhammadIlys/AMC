@@ -5,6 +5,8 @@ namespace App\Http\Controllers\users\qbank_user\qbank_last_fetch_question;
 use App\Http\Controllers\Controller;
 use App\Models\super_admin\qbank\qbank_question\QbankQuestion;
 use App\Models\users\qbank_user\qbank_last_fetch_question\LastFetchedQuestion;
+use App\Models\users\qbank_user\qbank_user_test_question_history\QbankUserTestQuestionHistory;
+use App\Models\users\qbank_user\qbank_user_tests\QbankUserTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -40,37 +42,50 @@ class QbankLastFetchedQuestionController extends Controller
             ->where('user_id', $user_id)
             ->get();
 
+
+
         // Fetch questions distributed among systems
         foreach ($systemIds as $systemId) {
-            // Get the last fetched question for the current system and user
-            $lastFetchedQuestion = $lastFetchedQuestions
+
+              // Get the last fetched question for the current system and user
+              $lastFetchedQuestion = $lastFetchedQuestions
                 ->where('qbank_system_id', $systemId)
                 ->first();
 
-            // Fetch questions for the current system starting from the last fetched question
-            $systemQuestions = $questions
-                ->where('qbank_system_id', $systemId)
-                ->when($lastFetchedQuestion, function ($query) use ($lastFetchedQuestion) {
-                    return $query->where('qbank_question_id', '>', $lastFetchedQuestion->last_fetched_question_id);
-                });
+                $isQuestionAvailable = QbankQuestion::where('qbank_question_id', $lastFetchedQuestion->last_fetched_question_id)
+               ->first();
 
-            // Calculate the number of questions needed to reach the target count
-            $neededQuestions = $questionsPerBlock / count($systemIds) - $systemQuestions->count();
+                 // Fetch the last ascending question for the current system
+                $lastAscendingQuestion = QbankQuestion::where('qbank_system_id', $systemId)
+                ->where('qbank_id', $qbankId)
+                ->orderBy('qbank_question_id', 'desc')
+                ->first();
 
-            // If there are not enough questions, fetch additional random questions for that system
-            if ($neededQuestions > 0) {
-                $additionalQuestions = QbankQuestion::where('qbank_system_id', $systemId)
+
+                // If last fetched question is not found or related question is null, start from the most ascending question
+                if (!$isQuestionAvailable || $lastFetchedQuestion->last_fetched_question_id === $lastAscendingQuestion->qbank_question_id) {
+                    // Fetch the most ascending question for the current system
+
+                    $mostAscendingQuestion = QbankQuestion::where('qbank_system_id', $systemId)
                     ->where('qbank_id', $qbankId)
-                    ->inRandomOrder() // Order randomly
-                    ->take($neededQuestions)
-                    ->get();
+                    ->orderBy('qbank_question_id')
+                    ->first();
 
-                // Merge additional questions with the main questions
-                $systemQuestions = $systemQuestions->merge($additionalQuestions);
-            }
+                    // Fetch questions for the current system starting from the most ascending question
+                    $systemQuestions = $questions
+                    ->where('qbank_system_id', $systemId)
+                    ->where('qbank_question_id', '>=', $mostAscendingQuestion->qbank_question_id)
+                    ->take($questionsPerBlock / count($systemIds));
+                } else {
 
-            // Take the required number of questions
-            $systemQuestions = $systemQuestions->take($questionsPerBlock / count($systemIds));
+
+                    // Fetch questions for the current system starting from the last fetched question
+                    $systemQuestions = $questions
+                        ->where('qbank_system_id', $systemId)
+                        ->where('qbank_question_id', '>', $lastFetchedQuestion->last_fetched_question_id)
+                        ->take($questionsPerBlock / count($systemIds));
+                }
+
 
             // Remove duplicates based on qbank_question_id
             $systemQuestions = $systemQuestions->unique('qbank_question_id');
@@ -78,17 +93,26 @@ class QbankLastFetchedQuestionController extends Controller
             // Add the fetched questions to the result collection
             $result = $result->merge($systemQuestions);
 
+
+
+
             // Update the last fetched question for each system and user in the database
             if ($systemQuestions->isNotEmpty()) {
+
                 $lastFetchedQuestionId = $systemQuestions->last()->qbank_question_id;
 
-                $lastFetchedQuestion = $lastFetchedQuestions
-                    ->where('qbank_system_id', $systemId)
-                    ->first();
+                $lastFetchedQuestion = LastFetchedQuestion::where('qbank_system_id', $systemId)
+                ->where('qbank_id', $qbankId)
+                ->where('user_id', $user_id)
+                ->first();
+
 
                 if ($lastFetchedQuestion) {
+
                     $lastFetchedQuestion->update(['last_fetched_question_id' => $lastFetchedQuestionId]);
                 } else {
+
+
                     LastFetchedQuestion::create([
                         'qbank_system_id' => $systemId,
                         'qbank_id' => $qbankId,
@@ -99,6 +123,49 @@ class QbankLastFetchedQuestionController extends Controller
             }
         }
 
+        // Calculate the number of questions needed to reach the target count at the end
+        $remainingQuestions = $questionsPerBlock - $result->count();
+
+        // If there are still not enough questions, fetch additional random questions
+        if ($remainingQuestions > 0) {
+            $additionalQuestions = QbankQuestion::where('qbank_id', $qbankId)
+                ->inRandomOrder()
+                ->take($remainingQuestions)
+                ->get();
+
+            // Merge additional questions with the main questions
+            $result = $result->merge($additionalQuestions);
+        }
+
+        $result = $result->unique('qbank_question_id');
+
+
+        $qbankUserTest = QbankUserTest::create([
+            'user_id' => $user_id,
+            'qbank_id' =>  $qbankId,
+        ]);
+
+        foreach ($result as $item) {
+
+            QbankUserTestQuestionHistory::create([
+
+                'user_test_id'=>$qbankUserTest->user_test_id,
+
+                'qbank_question_id' =>  $item['qbank_question_id'],
+
+            ]);
+
+
+
+        }
+
+        // Access the questions related to the user test
+        return $testQuestions =$qbankUserTest->testQuestions;
+
+
+
+
+
         // Convert the result collection to JSON
         $jsonResult = $result->toJson();
 
@@ -108,6 +175,8 @@ class QbankLastFetchedQuestionController extends Controller
             'message' => 'Questions fetched successfully.',
             'result' => json_decode($jsonResult, true),
         ]);
+
+
     }
 
 

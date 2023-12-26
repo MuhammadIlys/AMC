@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('time_spent');
 
             // Foreign key constraints
-            $table->foreign('user_mocks_id')->references('user_mocks_id')->on('mocks_user_test_history');
-            $table->foreign('question_id')->references('question_id')->on('question');
+            $table->foreign('user_mocks_id')->references('user_mocks_id')->on('mocks_user_test_history')->onDelete('cascade');
+            $table->foreign('question_id')->references('question_id')->on('question')->onDelete('cascade');
 
             $table->timestamps();
         });

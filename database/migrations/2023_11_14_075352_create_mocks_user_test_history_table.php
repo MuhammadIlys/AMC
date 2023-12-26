@@ -23,8 +23,8 @@ return new class extends Migration
             $table->decimal('perscent', 5, 2); // Assuming perscent is a decimal field
 
             // Foreign key constraints
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('test_id')->references('test_id')->on('test');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('test_id')->references('test_id')->on('test')->onDelete('cascade');
 
             $table->timestamps();
         });
