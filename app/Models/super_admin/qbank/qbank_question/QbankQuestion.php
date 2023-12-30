@@ -5,6 +5,7 @@ namespace App\Models\super_admin\qbank\qbank_question;
 use App\Models\super_admin\qbank\qbank_qbank\QbankQbank;
 use App\Models\super_admin\qbank\qbank_system\QbankSystem;
 use App\Models\users\qbank_user\qbank_corrects\QbankCorrects;
+use App\Models\users\qbank_user\qbank_highlights\QbankHighlight;
 use App\Models\users\qbank_user\qbank_incorrects\QbankIncorrects;
 use App\Models\users\qbank_user\qbank_marked\QbankMarked;
 use App\Models\users\qbank_user\qbank_notes\QbankNote;
@@ -96,6 +97,12 @@ class QbankQuestion extends Model
     {
         return $this->hasMany(QbankNote::class, 'qbank_question_id');
     }
+
+     // Relationship with QbankHighlight model
+     public function qbankHighlightQuestion()
+     {
+         return $this->hasMany(QbankHighlight::class, 'qbank_question_id');
+     }
 
 
 }

@@ -4,6 +4,9 @@
  <!-- jQuery -->
  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+  <!-- Sweet Alert css-->
+  <link href="https://uworld.aceamcq.com/Themes/themeone/assets/uw_assets/default/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+
 
  <!-- Bootstrap Bundle (includes Popper.js) -->
  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -49,6 +52,16 @@
     width: 30px;
 }
 
+.highlight {
+      background-color: yellow;
+      transition: background-color 0.3s;
+}
+
+.swal2-close:focus{
+
+    box-shadow: none !important;
+}
+
 
  </style>
 
@@ -61,6 +74,8 @@
 
     var currentQuestionIndex = 0;
     var totalQuestions ;
+    var testMode='{{ $test_mode }}';
+    var questionMode='{{ $question_mode }}';
 
 
     $(document).ready(function () {
@@ -69,97 +84,6 @@
 
         $('#card-border').hide();
         $('#hide-explanation').hide();
-
-            var testMode ='{{ $testMode }}';
-            localStorage.setItem('testMode', testMode);
-            var numberQuestion={{ $numberQuestion }};
-            localStorage.setItem('numberQuestion', numberQuestion);
-
-            var systemIds=[{{ $systemIds }}];
-            localStorage.setItem('systemIds', systemIds);
-
-            var radioId='{{ $radioId }}';
-
-            localStorage.setItem('radioId', radioId);
-
-            // Perform actions based on the selected ID
-            switch (radioId) {
-                case 'all_question':
-                    // Logic for 'all_question' selected
-                    fetchQuestion('/qbank_fetching_all_question', systemIds, numberQuestion);
-                    break;
-                case 'correct_question':
-                    // Logic for 'correct_question' selected
-                    fetchQuestion('/qbank_fetching_correct_question', systemIds, numberQuestion);
-                    break;
-                case 'incorrect_question':
-                    // Logic for 'incorrect_question' selected
-                    fetchQuestion('/qbank_fetching_incorrect_question', systemIds, numberQuestion);
-                    break;
-                case 'omitted_question':
-                    // Logic for 'omitted_question' selected
-                    fetchQuestion('/qbank_fetching_omitted_question', systemIds, numberQuestion);
-                    break;
-                case 'marked_question':
-                    // Logic for 'marked_question' selected
-                    fetchQuestion('/qbank_fetching_marked_question', systemIds, numberQuestion);
-                    break;
-                case 'used_question':
-                    // Logic for 'used_question' selected
-                    fetchQuestion('/qbank_fetching_used_question', systemIds, numberQuestion);
-                    break;
-                case 'unused_question':
-                    // Logic for 'unused_question' selected
-                    fetchQuestion('/qbank_fetching_unused_question', systemIds, numberQuestion);
-                    break;
-                default:
-                    // Default case
-                    console.log('skip');
-                    break;
-            }
-
-
-
-
-
-
-
-
-            function fetchQuestion(url, systemIds, numberQuestion) {
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        systemIds: systemIds,
-                        questionsPerBlock: numberQuestion
-                    },
-                    success: function(response) {
-                        if (response.success) {
-
-
-                          var questions2=JSON.stringify(response.result);
-
-                            questionsData=JSON.parse(questions2);
-
-                            totalQuestions = questionsData.length;
-                            loadQuestionByIndex(currentQuestionIndex );
-                            sessionStorage.setItem('currentQuestionIndex',currentQuestionIndex);
-
-
-
-
-                        } else {
-                            showToast('Error fetching questions: ' + response.message);
-                        }
-                    },
-                    error: function(error) {
-                        // Handle AJAX error
-                        console.error('AJAX error:', error);
-                    }
-                });
-            }
-
 
 
             var countdown;
@@ -202,7 +126,7 @@
 
             function handleTestMode() {
                 // Check if testMode is set to 'toggleTimed' in localStorage
-                if (localStorage.getItem('testMode') === 'toggleTimed') {
+                if (testMode === 'toggleTimed') {
                     // Start the timer and keep the interval ID for possible future use
                     startTimer();
                 } else {
@@ -286,9 +210,12 @@ function loadQuestionByIndex(index) {
         $('#correction-option-text').css('color', 'green').text('Correct Option');
         $('#card-border').css('border-left', '5px solid green');
 
+        $('#question-explanation').html('');
         // Update the question explanation as plain text
         $('#question-explanation').html(question.question_explanation);
         $('#question-id').text(question.qbank_question_id);
+
+        highlightAllText(question.qbank_question_id);
 
         storeRadioButtonState();
 
@@ -333,7 +260,7 @@ function loadQuestionByIndex(index) {
             $('#' + storedRadioId).prop('checked', true);
             $('input[name="radio-group"]').prop('disabled', true);
 
-            if (localStorage.getItem('testMode') === 'toggleTimed') {
+            if (testMode === 'toggleTimed') {
                 $('#card-border').hide();
                 $('#hide-explanation').hide();
             } else {
@@ -454,6 +381,56 @@ function storeRadioButtonState() {
 // Function to be called on page load
 $(document).ready(function () {
 
+    var result={!! $questions !!} ;
+
+    var questions2=JSON.stringify(result);
+
+    questionsData=JSON.parse(questions2);
+
+    if( questionsData !== null &&  questionsData.length !== 0){
+
+        totalQuestions=questionsData.length;
+
+    }
+
+
+    // Check if the current question index exists in sessionStorage and restore it
+    var storedIndex = localStorage.getItem('currentQuestionIndex');
+    if (storedIndex !== null) {
+        currentQuestionIndex = parseInt(storedIndex);
+    }else{
+
+        currentQuestionIndex =0;
+    }
+
+   // Check if handleDatabaseNotes has already been executed
+    if (!localStorage.getItem('handleDatabaseNotesExecuted')) {
+        // Execute handleDatabaseNotes
+        handleDatabaseNotes();
+
+        // Set the flag in localStorage to indicate that handleDatabaseNotes has been executed
+        localStorage.setItem('handleDatabaseNotesExecuted', 'true');
+    }
+
+    // Check if handleDatabaseMarked has already been executed
+    if (!localStorage.getItem('handleDatabaseMarkedExecuted')) {
+        // Execute handleDatabaseMarked
+        handleDatabaseMarked();
+
+        // Set the flag in localStorage to indicate that handleDatabaseMarked has been executed
+        localStorage.setItem('handleDatabaseMarkedExecuted', 'true');
+    }
+
+    // Load the question and restore the state of radio buttons
+    loadQuestionByIndex(currentQuestionIndex);
+
+    // Highlight functionality
+
+    handleHighlight();
+
+
+
+
 
        // Function to handle radio button click and store the selected option
        $('input[name="radio-group"]').on('change', function () {
@@ -466,7 +443,7 @@ $(document).ready(function () {
             localStorage.setItem('radioId_' + questionsData[currentQuestionIndex].qbank_question_id, radioId);
         }
 
-        if (localStorage.getItem('testMode') === 'toggleTimed') {
+        if (testMode === 'toggleTimed') {
             $('#card-border').hide();
             $('#hide-explanation').hide();
         } else {
@@ -521,17 +498,6 @@ $(document).ready(function () {
 
 
 
-    // Check if the current question index exists in sessionStorage and restore it
-    var storedIndex = sessionStorage.getItem('currentQuestionIndex');
-    if (storedIndex !== null) {
-        currentQuestionIndex = parseInt(storedIndex);
-    }
-
-    // Load the question and restore the state of radio buttons
-    loadQuestionByIndex(currentQuestionIndex);
-
-
-
     // Check if the radio button state exists in local storage and restore it
     var storedOption = localStorage.getItem('selectedOption_' + questionsData[currentQuestionIndex].qbank_question_id);
     var storedRadioId = localStorage.getItem('radioId_' + questionsData[currentQuestionIndex].qbank_question_id);
@@ -541,10 +507,86 @@ $(document).ready(function () {
     }
 
 
+    // end question block
+
+
+    $(document).on('click', '#endblock', function () {
+            Swal.fire({
+                title: "End Test",
+                text: "This is your final warning!",
+                html: '<p>This is your final warning!</p> <p>Are you sure you want to end this exam?</p>',
+                buttonsStyling: !1,
+                showCloseButton: !0,
+                showConfirmButton: !1,
+                footer: '<button type="button" class="swal2-cancel btn btn-default" onclick="swalClose()">No</button><button type="button" class="swal2-cancel btn btn-primary" onclick="examEnd()">Yes</button>',
+            });
+        $(".swal2-popup").css({"width": "32em"});
+        $(".swal2-title").css({"background": "#3852A4", "color": "#fff"});
+
+    });
+
+
+     // end question block suspend
+
+
+     $(document).on('click', '#suspend', function () {
+            Swal.fire({
+                title: "Suspend Test",
+                text: "This is your final warning!",
+                html: '<p>You are about to suspend this exam.</p> <p>Do you want to suspend this exam?</p',
+                buttonsStyling: !1,
+                showCloseButton: !0,
+                showConfirmButton: !1,
+                footer: '<button type="button" class="swal2-cancel btn btn-default" onclick="swalClose()">No</button><button type="button" class="swal2-cancel btn btn-primary" onclick="examSuspend()">Yes</button>',
+            });
+        $(".swal2-popup").css({"width": "32em"});
+        $(".swal2-title").css({"background": "#3852A4", "color": "#fff"});
+
+    });
 
 
 
-});
+
+
+
+
+
+
+
+}); // ready function end
+
+
+function swalClose() {
+    Swal.close();
+}
+
+
+function examEnd(){
+    var hash_id = $('#hash_id').val();
+    var mark_qbs = $('#mark_qbs').val();
+    $.ajax({
+        type: "GET",
+        url: "",
+        data: {hash_id: hash_id, mark_qbs: mark_qbs},
+        success: function (data) {
+            location.replace('');
+        }
+    });
+}
+
+
+function examSuspend(){
+    var hash_id = $('#hash_id').val();
+    var mark_qbs = $('#mark_qbs').val();
+    $.ajax({
+        type: "GET",
+        url: "",
+        data: {hash_id: hash_id, mark_qbs: mark_qbs},
+        success: function (data) {
+            location.replace('');
+        }
+    });
+}
 
 
 
@@ -553,7 +595,7 @@ window.onbeforeunload = function () {
 
     // Store the state of radio buttons in local storage
     storeRadioButtonState();
-    sessionStorage.setItem('currentQuestionIndex', currentQuestionIndex);
+    localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
 
 
 };
@@ -561,15 +603,377 @@ window.onbeforeunload = function () {
 // Handle navigating to the last active question after page refresh
 window.onload = function () {
     // Check if the current question index exists in sessionStorage and navigate to it
-    var storedIndex = sessionStorage.getItem('currentQuestionIndex');
+    var storedIndex = localStorage.getItem('currentQuestionIndex');
     if (storedIndex !== null) {
-        loadQuestionByIndex(parseInt(storedIndex));
+        //loadQuestionByIndex(parseInt(storedIndex));
     }
 };
 
 
+function handleDatabaseMarked(){
+
+    var markedQuestionResult={!! $question_marked !!} ;
+
+    var markedquestion=JSON.stringify(markedQuestionResult);
+
+    var markedquestionsData=JSON.parse(markedquestion);
 
 
+    if(markedquestionsData !== null && markedquestionsData.length !== 0){
+
+
+
+        markedquestionsData.forEach(function (question, index) {
+
+
+            var markedQuestion= localStorage.getItem('questionMarkChecked_' + markedquestionsData[index].qbank_question_id);
+
+            if (markedQuestion == null || markedQuestion == ""){
+
+                localStorage.setItem('questionMarkChecked_'+ markedquestionsData[index].qbank_question_id, 'true');
+
+            }
+
+
+        });
+
+    }
+
+
+
+
+}
+
+
+function handleDatabaseNotes(){
+
+    var noteQuestionResult={!! $question_notes !!} ;
+
+    var notequestion=JSON.stringify(noteQuestionResult);
+
+    var notequestionsData=JSON.parse(notequestion);
+
+    if(notequestionsData !== null && notequestionsData.length !== 0){
+
+        notequestionsData.forEach(function (question, index) {
+
+
+           var noteQuestion= localStorage.getItem('questionNote_' + notequestionsData[index].qbank_question_id);
+
+           if (noteQuestion == null || noteQuestion == ""){
+
+            localStorage.setItem('questionNoteChecked_'+ notequestionsData[index].qbank_question_id, 'true');
+            localStorage.setItem('questionNote_'+ notequestionsData[index].qbank_question_id, notequestionsData[index].note);
+
+
+            }
+
+
+        });
+
+    }
+
+
+
+
+}
+
+
+
+
+
+
+</script>
+
+
+<script src="https://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
+
+
+<script>
+
+function handleHighlight() {
+    $('.highlightable').on('mouseup', function() {
+        var selection = window.getSelection();
+        if (selection && selection.toString().trim() !== '') {
+            var questionId = $('#question-id').text().trim();
+            toggleHighlight(questionId, selection);
+        }
+    });
+}
+
+function toggleHighlight(questionId, selection) {
+    var ranges = getRangesFromSelection(selection);
+
+    ranges.forEach(function (range) {
+        // Check if the selection is within the .highlightable container
+        var highlightableContainer = getHighlightableContainer(range.commonAncestorContainer);
+        if (!highlightableContainer) {
+            return;
+        }
+
+        var isHighlighted = isRangeHighlighted(range);
+
+        if (isHighlighted) {
+            // Remove highlight
+            var highlightId = getHighlightId(range);
+            if (highlightId) {
+                removeHighlight(highlightId);
+            }
+        } else {
+            // Add highlight
+            var spans = createHighlightsFromRange(range, questionId);
+            spans.forEach(function (span) {
+                highlightableContainer.appendChild(span);
+            });
+        }
+    });
+
+    if (typeof selection.removeAllRanges === 'function') {
+    selection.removeAllRanges();
+    }
+}
+
+function createHighlightsFromRange(range, questionId) {
+    var spans = [];
+
+    // Clone the range to avoid modifying the original range
+    var clonedRange = range.cloneRange();
+
+    // Iterate over the range's nodes and create spans
+    while (clonedRange.toString() !== '') {
+        var span = createHighlightSpan(clonedRange, questionId);
+        spans.push(span);
+    }
+
+    // Restore the original selection
+    range.removeAllRanges();
+    range.addRange(clonedRange);
+
+    return spans;
+}
+
+function createHighlightSpan(range, questionId) {
+    var span = document.createElement('span');
+    var highlightId = generateUniqueId();
+    span.className = 'highlight';
+    span.setAttribute('data-highlight-id', highlightId);
+
+    // Surround only the current node with the span
+    range.surroundContents(span);
+
+    // Move to the next node
+    range.setStartAfter(span);
+    range.collapse(true);
+
+    // Send AJAX request to create highlight
+    createHighlight(questionId, span.textContent, highlightId);
+
+    return span;
+}
+
+
+
+
+function getRangesFromSelection(selection) {
+    var ranges = [];
+
+    for (var i = 0; i < selection.rangeCount; i++) {
+        ranges.push(selection.getRangeAt(i));
+    }
+
+    return ranges;
+}
+
+function getHighlightableContainer(node) {
+    // Traverse up the DOM tree to find the closest .highlightable container
+    while (node && node !== document.body) {
+        if (node.classList && node.classList.contains('highlightable')) {
+            return node;
+        }
+        node = node.parentNode;
+    }
+    return null;
+}
+
+function isRangeHighlighted(range) {
+    var startContainer = range.startContainer.parentElement;
+    var endContainer = range.endContainer.parentElement;
+
+    return startContainer && startContainer.classList.contains('highlight') &&
+           endContainer && endContainer.classList.contains('highlight');
+}
+
+function getHighlightId(range) {
+    var startContainer = range.startContainer.parentElement;
+    return startContainer ? startContainer.getAttribute('data-highlight-id') : null;
+}
+
+function generateUniqueId() {
+    // Function to generate a unique ID, you can use a library or your own logic
+    return  Date.now() + '' + Math.floor(Math.random() * 1000);
+}
+
+function createHighlight(questionId, selectedText, highlightId) {
+    // Perform AJAX request to your server to create a highlight
+    $.ajax({
+        type: 'POST',
+        url: '/create_question_highlights',
+        data: {
+            _token: '{{ csrf_token() }}',
+            questionId: questionId,
+            selectedText: selectedText,
+            highlightId: highlightId,
+        },
+        success: function(response) {
+            // Handle success response
+            console.log('Highlight created successfully:', response);
+        },
+        error: function(error) {
+            // Handle error
+            console.error('Error creating highlight:', error);
+        },
+    });
+}
+
+function removeHighlight(highlightId) {
+    // Find the highlight element using its data-highlight-id attribute
+    var highlightElement = document.querySelector('[data-highlight-id="' + highlightId + '"]');
+
+    if (highlightElement) {
+        // Create a range that encompasses the entire highlight element
+        var range = document.createRange();
+        range.selectNodeContents(highlightElement);
+
+        // Delete the highlight element
+        highlightElement.parentNode.replaceChild(range.extractContents(), highlightElement);
+
+        // Perform AJAX request to your server to delete a highlight
+        $.ajax({
+            type: 'DELETE',
+            url: '/delete_question_highlights/' + highlightId,
+            data: {
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(response) {
+                // Handle success response
+                console.log('Highlight deleted successfully:', response);
+            },
+            error: function(error) {
+                // Handle error
+                console.error('Error deleting highlight:', error);
+            },
+        });
+    }
+}
+
+
+function highlightAllText(questionId) {
+    // Perform AJAX request to get all highlights for the specified question
+    $.ajax({
+        type: 'POST',
+        url: '/get_question_highlights',
+        data: {
+            _token: '{{ csrf_token() }}',
+            questionId: questionId,
+        },
+        success: function(response) {
+            // Apply the highlights on the page
+            applyHighlights(response.highlights);
+        },
+        error: function(error) {
+            // Handle error
+            console.error('Error retrieving highlights:', error);
+        },
+    });
+}
+
+
+
+
+function applyHighlights(highlights) {
+    $('.highlightable').each(function () {
+        // Find all text nodes within the highlightable div and its descendants
+        var textNodes = getAllTextNodes(this);
+
+        highlights.forEach(function (highlight) {
+            var highlightText = highlight.highlight_text;
+
+            textNodes.forEach(function (textNode) {
+                var textContent = textNode.nodeValue;
+
+                // Continue with the highlighting process only if the highlight text is found in the text content
+                if (textContent.includes(highlightText)) {
+                    var escapedHighlightText = highlightText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+                    var regex = new RegExp(escapedHighlightText, 'ig');
+
+                    var match;
+                    while ((match = regex.exec(textContent)) !== null) {
+                        var pos = match.index;
+
+                        // Check if the offset is within the valid range of the text node
+                        if (pos >= textContent.length) {
+                            console.warn("Invalid offset for highlight:", highlight);
+                            continue; // Skip this highlight
+                        }
+
+                        var spannode = document.createElement('span');
+                        spannode.className = 'highlight';
+                        spannode.setAttribute('data-highlight-id', highlight.question_highlight_id);
+
+                        // Adjust the offset if it's at the end of the text node
+                        var adjustedPos = pos < textContent.length - 1 ? pos : textContent.length - 1;
+
+                            var start = textNode.splitText(adjustedPos);
+
+                        var end = start.splitText(match[0].length);
+                        var clonedNode = start.cloneNode(true);
+                        spannode.appendChild(clonedNode);
+                        start.parentNode.replaceChild(spannode, start);
+
+                        textContent = end.nodeValue;
+                        regex.lastIndex = 0;
+                    }
+                }
+            });
+        });
+    });
+}
+
+
+
+    function getAllTextNodes(element) {
+        var textNodes = [];
+
+        function traverse(node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                textNodes.push(node);
+            } else {
+                for (var i = 0; i < node.childNodes.length; i++) {
+                    traverse(node.childNodes[i]);
+                }
+            }
+        }
+
+        traverse(element);
+        return textNodes;
+    }
+
+
+
+
+
+
+
+
+
+$(document).keydown(function(event) {
+    // Check if Ctrl key is pressed and the pressed key is 'C'
+    if (event.ctrlKey && (event.key === 'c' || event.key === 'C')) {
+        // Prevent the default behavior (e.g., copy)
+        event.preventDefault();
+
+    }
+});
 
 
 
@@ -740,8 +1144,8 @@ font-family: Arial, sans-serif !important;
                             <!-- Question ID and numbers div-->
                             <div class="app-search">
                                 <div class="position-relative">
-                                    <div> Q.<span id="current-question-no">7</span> of <span id="total-question-no">10</span> </div>
-                                    <div >Q.ID: <span id="question-id"> 19284</span> </div>
+                                    <div> Q.<span id="current-question-no"></span> of <span id="total-question-no"></span> </div>
+                                    <div >Q.ID: <span id="question-id"> </span> </div>
                                 </div>
                             </div>
 
@@ -1088,9 +1492,13 @@ font-family: Arial, sans-serif !important;
 
                                                     <div class="row">
                                                         <div class="col-xl-12 col-md-12">
-                                                            <p style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;" class="heading-text"  id="question-text">
-                                                                Question text
-                                                            </p>
+
+                                                            <div  class="highlightable">
+                                                                <p style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;" class="heading-text"  id="question-text" >
+
+                                                                </p>
+                                                            </div>
+
 
                                                             <div class="row">
                                                             <div class="col-xl-12 col-md-12">
@@ -1211,9 +1619,13 @@ font-family: Arial, sans-serif !important;
                                                             <div class="tab-content ex-tab-content  text-muted">
                                                                 <div style ="background-color: #F3F3F9 !important;" class="tab-pane active show" id="home" role="tabpanel">
 
-                                                                    <p style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;" class="mb-0" id="question-explanation">
+                                                                    <div class="highlightable">
 
-                                                                    </p>
+                                                                        <p style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;" class="mb-0" id="question-explanation" >
+
+                                                                        </p>
+                                                                    </div>
+
                                                                 </div>
 
                                                             </div>

@@ -12,6 +12,7 @@ use App\Models\users\qbank_user\qbank_unused\QbankUnused;
 use App\Models\users\qbank_user\qbank_used\QbankUsed;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\users\qbank_user\qbank_highlights\QbankHighlight;
 
 class QbankQbank extends Model
 {
@@ -74,5 +75,11 @@ class QbankQbank extends Model
        {
            return $this->hasMany(QbankNote::class, 'qbank_id');
        }
+
+        // Relationship with QbankHighlight model
+        public function qbankHighlightQuestion()
+        {
+            return $this->hasMany(QbankHighlight::class, 'qbank_id');
+        }
 
 }

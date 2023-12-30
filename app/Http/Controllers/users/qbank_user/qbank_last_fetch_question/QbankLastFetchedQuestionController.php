@@ -52,8 +52,16 @@ class QbankLastFetchedQuestionController extends Controller
                 ->where('qbank_system_id', $systemId)
                 ->first();
 
+
+
+               if($lastFetchedQuestion=== null){
+
+                $isQuestionAvailable = null;
+               }else{
+
                 $isQuestionAvailable = QbankQuestion::where('qbank_question_id', $lastFetchedQuestion->last_fetched_question_id)
-               ->first();
+                ->first();
+               }
 
                  // Fetch the last ascending question for the current system
                 $lastAscendingQuestion = QbankQuestion::where('qbank_system_id', $systemId)
@@ -159,21 +167,12 @@ class QbankLastFetchedQuestionController extends Controller
 
         }
 
-        // Access the questions related to the user test
-        return $testQuestions =$qbankUserTest->testQuestions;
-
-
-
-
-
-        // Convert the result collection to JSON
-        $jsonResult = $result->toJson();
 
         // Return a JSON response with success message and result
         return response()->json([
             'success' => true,
             'message' => 'Questions fetched successfully.',
-            'result' => json_decode($jsonResult, true),
+            'test_id' =>  encrypt($qbankUserTest->user_test_id),
         ]);
 
 

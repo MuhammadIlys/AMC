@@ -33,6 +33,7 @@ use App\Http\Controllers\users\qbank_user\qbank_create_test\MainQbankCreateTestC
 use App\Http\Controllers\users\qbank_user\qbank_exam\MainQbankExamController;
 use App\Http\Controllers\users\qbank_user\qbank_graph\MainQbankGraphController;
 use App\Http\Controllers\users\qbank_user\qbank_help\MainQbankHelpController;
+use App\Http\Controllers\users\qbank_user\qbank_highlights\QbankHighlightController;
 use App\Http\Controllers\users\qbank_user\qbank_incorrects\QbankIncorrectsController;
 use App\Http\Controllers\users\qbank_user\qbank_last_correct_fetch_question\QbankLastCorrectFetchedQuestionController;
 use App\Http\Controllers\users\qbank_user\qbank_last_fetch_question\QbankLastFetchedQuestionController;
@@ -731,6 +732,17 @@ Route::middleware('superadmin')->group(function () {
         Route::post('/qbank_fetching_Unused_question', [QbankLastUnusedFetchedQuestionController::class, 'fetchUnusedQuestions']);
 
 
+        // exam lunch routes
+        Route::get('/lunch_user_qbank_test_exam/{test_id}/{test_mode}/{question_mode}',[MainQbankExamController::class,'lunchUserQbankTestExam']);
+
+
+        // question highlights routes
+
+        Route::post('/create_question_highlights', [QbankHighlightController::class, 'createQuestionHighlights']);
+
+        Route::delete('/delete_question_highlights/{highlightId}', [QbankHighlightController::class, 'deleteQuestionHighlights']);
+
+        Route::post('/get_question_highlights', [QbankHighlightController::class, 'getQuestionHighlights']);
 
 
 
@@ -753,7 +765,6 @@ Route::middleware('superadmin')->group(function () {
 
         Route::get('/lunch_user_qbank_test_help', [MainQbankHelpController::class, 'lunchUserQbankTestHelp']);
 
-        Route::get('/lunch_user_qbank_test_exam/{testMode}/{numberQuestion}/{systemIds}/{radioId}',[MainQbankExamController::class,'lunchUserQbankTestExam']);
 
     });
 

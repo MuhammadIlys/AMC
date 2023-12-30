@@ -15,6 +15,7 @@ use App\Models\users\qbank_user\qbank_used\QbankUsed;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\super_admin\mocks\test\Test;
+use App\Models\users\qbank_user\qbank_highlights\QbankHighlight;
 
 class Users extends Model
 {
@@ -127,6 +128,12 @@ class Users extends Model
         {
             return $this->hasMany(QbankNote::class, 'id');
         }
+
+         // Relationship with QbankHighlight model
+         public function qbankHighlightQuestion()
+         {
+             return $this->hasMany(QbankHighlight::class, 'id');
+         }
 
 
 

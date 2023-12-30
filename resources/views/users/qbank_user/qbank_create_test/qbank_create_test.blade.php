@@ -922,15 +922,34 @@ $(document).ready(function() {
 
 
 
-    // remove the exam local storage variables
+   // Get all keys from local storage
+    var keys = Object.keys(localStorage);
 
-    localStorage.clear();
+
+    // Iterate through the keys and remove each item
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+
+        // Remove the item
+        localStorage.removeItem(key);
+
+
+    }
 
     $('#create_test').click(function(){
 
-    // remove the exam local storage variables
+    // Get all keys from local storage
+    var keys = Object.keys(localStorage);
 
-       localStorage.clear();
+    // Iterate through the keys and remove each item
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+
+        // Remove the item
+        localStorage.removeItem(key);
+
+        console.log("Removed: " + key);
+    }
 
 
 
@@ -964,10 +983,76 @@ $(document).ready(function() {
         var radioId = getSelectedRadioButton();
 
 
+            // Perform actions based on the selected ID
+            switch (radioId) {
+                case 'all_question':
+                    // Logic for 'all_question' selected
+                    fetchQuestion('/qbank_fetching_all_question', systemIds, numberQuestion);
+                    break;
+                case 'correct_question':
+                    // Logic for 'correct_question' selected
+                    fetchQuestion('/qbank_fetching_correct_question', systemIds, numberQuestion);
+                    break;
+                case 'incorrect_question':
+                    // Logic for 'incorrect_question' selected
+                    fetchQuestion('/qbank_fetching_incorrect_question', systemIds, numberQuestion);
+                    break;
+                case 'omitted_question':
+                    // Logic for 'omitted_question' selected
+                    fetchQuestion('/qbank_fetching_omitted_question', systemIds, numberQuestion);
+                    break;
+                case 'marked_question':
+                    // Logic for 'marked_question' selected
+                    fetchQuestion('/qbank_fetching_marked_question', systemIds, numberQuestion);
+                    break;
+                case 'used_question':
+                    // Logic for 'used_question' selected
+                    fetchQuestion('/qbank_fetching_used_question', systemIds, numberQuestion);
+                    break;
+                case 'unused_question':
+                    // Logic for 'unused_question' selected
+                    fetchQuestion('/qbank_fetching_unused_question', systemIds, numberQuestion);
+                    break;
+                default:
+                    // Default case
+                    console.log('skip');
+                    break;
+            }
 
-        var url = "/lunch_user_qbank_test_exam/" +testMode+"/"+numberQuestion+"/"+systemIds+"/"+radioId;
 
-        window.location.href = url;
+
+            function fetchQuestion(url, systemIds, numberQuestion) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        systemIds: systemIds,
+                        questionsPerBlock: numberQuestion
+                    },
+                    success: function(response) {
+                        if (response.success) {
+
+                            var url = "/lunch_user_qbank_test_exam/" +response.test_id+"/"+testMode+"/"+radioId;
+
+                            window.location.href = url;
+
+
+                        } else {
+                            showToast('Error fetching questions: ' + response.message);
+                        }
+                    },
+                    error: function(error) {
+                        // Handle AJAX error
+                        console.error('AJAX error:', error);
+                    }
+                });
+            }
+
+
+
+
+
 
 
     });
