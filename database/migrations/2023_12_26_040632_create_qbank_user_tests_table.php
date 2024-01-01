@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('user_test_id'); // Primary key
             $table->unsignedBigInteger('user_id'); // Foreign key for user
             $table->unsignedBigInteger('qbank_id'); // Foreign key for test
-            $table->integer('score')->nullable();
+            $table->integer('marked')->nullable();
             $table->integer('correct')->nullable();
             $table->integer('incorrect')->nullable();
             $table->integer('omitted')->nullable();

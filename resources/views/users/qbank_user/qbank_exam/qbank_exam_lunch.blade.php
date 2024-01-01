@@ -20,6 +20,7 @@
 
  <style>
 
+
 .nav-tab-color {
     background-color: #5590CC !important;
     color:white;
@@ -62,6 +63,11 @@
     box-shadow: none !important;
 }
 
+.highlight-active:active{
+
+    color: yellow !important;
+}
+
 
  </style>
 
@@ -76,6 +82,7 @@
     var totalQuestions ;
     var testMode='{{ $test_mode }}';
     var questionMode='{{ $question_mode }}';
+    var loadFirstQuestionTime= new Date();
 
 
     $(document).ready(function () {
@@ -168,6 +175,7 @@ function loadNextQuestion() {
 
 
 
+
     if (currentQuestionIndex < totalQuestions - 1) {
         // Increment the current question index and load the question
         loadQuestionByIndex(currentQuestionIndex + 1);
@@ -188,6 +196,32 @@ function loadPreviousQuestion() {
 // Function to load a question by its index
 function loadQuestionByIndex(index) {
 
+    var startTime = localStorage.getItem('previousQuestionStartTime');
+
+    if (startTime === null) {
+        startTime = loadFirstQuestionTime.getTime(); // Store the timestamp in milliseconds
+    } else {
+        startTime = parseInt(startTime, 10); // Parse the stored timestamp as an integer
+    }
+
+
+    // Calculate the time spent on the current question
+    var endTime = new Date().getTime();
+    var elapsedTime = Math.floor((endTime - startTime) / 1000); // Convert to seconds
+
+    var oldQuestionTimeSpent=localStorage.getItem('questionTime_' + questionsData[currentQuestionIndex].qbank_question_id);
+    // Add the current time to the total time for the question
+    var totalTime = elapsedTime + parseInt( oldQuestionTimeSpent,10)|| elapsedTime;
+
+    // Store the updated total time for the question in local storage
+    localStorage.setItem('questionTime_' + questionsData[currentQuestionIndex].qbank_question_id, totalTime);
+
+    // Display or use the updated total time as needed
+    var formattedTotalTime = formatTime(totalTime);
+
+
+
+
     var randomNumber = generateRandomNumber(30, 100);
     $('#correct-ans-per').text(randomNumber + '%');
     $('#card-border').hide();
@@ -196,6 +230,11 @@ function loadQuestionByIndex(index) {
 
     if (index >= 0 && index < totalQuestions) {
         var question = questionsData[index];
+
+          // Store the start time when the question is loaded
+          var startTime2 = new Date().getTime();
+
+          localStorage.setItem('previousQuestionStartTime',startTime2);
 
         // Update the content in the specified elements with question details
         $('#question-text').html(question.question_text);
@@ -240,7 +279,7 @@ function loadQuestionByIndex(index) {
 
         // Hide radio buttons for empty options
         for (var i = 1; i <= 5; i++) {
-            var radioId = '#test' + i;
+            var radioId = '#option' + i;
 
             if ($('#option-' + i).text().trim() === '') {
                 $(radioId).parent().parent().hide();
@@ -273,9 +312,19 @@ function loadQuestionByIndex(index) {
         }
 
 
+
+
     }
 
 
+}
+
+
+ // Function to format time as MM:SS
+function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 }
 
 
@@ -562,17 +611,140 @@ function swalClose() {
 
 
 function examEnd(){
-    var hash_id = $('#hash_id').val();
-    var mark_qbs = $('#mark_qbs').val();
-    $.ajax({
-        type: "GET",
-        url: "",
-        data: {hash_id: hash_id, mark_qbs: mark_qbs},
-        success: function (data) {
-            location.replace('');
+
+    examEndHandler();
+
+    // var hash_id = $('#hash_id').val();
+    // var mark_qbs = $('#mark_qbs').val();
+    // $.ajax({
+    //     type: "GET",
+    //     url: "",
+    //     data: {hash_id: hash_id, mark_qbs: mark_qbs},
+    //     success: function (data) {
+    //         location.replace('');
+    //     }
+    // });
+}
+
+
+function examEndHandler() {
+    var markedQuestion = [];
+    var notesQuestion = [];
+    var omittedQuestion = [];
+    var incorrectQuestion = [];
+    var correctQuestion = [];
+    var timeSpentQuestions=[];
+
+    questionsData.forEach(function (question) {
+        var getMarkedQuestion = localStorage.getItem('questionMarkChecked_' + question.qbank_question_id);
+        var getNoteQuestion = localStorage.getItem('questionNote_' + question.qbank_question_id);
+        var getSelectedOption = localStorage.getItem('radioId_' + question.qbank_question_id);
+
+        if (getMarkedQuestion === 'true') {
+            var pair = {};
+            pair[question.qbank_question_id] = "true";
+            markedQuestion.push(pair);
+        }else{
+            var pair = {};
+            pair[question.qbank_question_id] = "false";
+            markedQuestion.push(pair);
+
+        }
+
+        if (getNoteQuestion !== null) {
+            var pair = {};
+            pair[question.qbank_question_id] = getNoteQuestion;
+            notesQuestion.push(pair);
+        }
+
+        if (getSelectedOption !== null) {
+            var selectedOption = parseInt(getSelectedOption.replace('option', ''), 10);
+            var selectedLetter;
+
+            switch (selectedOption) {
+                case 1:
+                    selectedLetter = 'A';
+                    break;
+                case 2:
+                    selectedLetter = 'B';
+                    break;
+                case 3:
+                    selectedLetter = 'C';
+                    break;
+                case 4:
+                    selectedLetter = 'D';
+                    break;
+                case 5:
+                    selectedLetter = 'E';
+                    break;
+
+            }
+            if (question.correct_option === selectedOption) {
+                var pair = {};
+                pair[question.qbank_question_id] = selectedLetter;
+                correctQuestion.push(pair);
+            } else {
+                var pair = {};
+                pair[question.qbank_question_id] = selectedLetter;
+                incorrectQuestion.push(pair);
+            }
+        } else {
+            omittedQuestion.push(question.qbank_question_id);
+        }
+
+        var questionTimeSpent=localStorage.getItem('questionTime_' + question.qbank_question_id);
+
+        if(questionTimeSpent!==null){
+
+            var pair = {};
+            pair[question.qbank_question_id] = formatTime(questionTimeSpent);
+
+            timeSpentQuestions.push(pair);
+
+
+        }else{
+            var pair = {};
+            pair[question.qbank_question_id] = '00:00';
+            timeSpentQuestions.push(pair);
+
+
+        }
+
+    });
+
+     var testId= {!! $userTest  !!};
+
+     // Prepare data to send to the server
+     var sendData = {
+        _token: '{{ csrf_token() }}',
+        markedQuestion: markedQuestion,
+        notesQuestion: notesQuestion,
+        omittedQuestion: omittedQuestion,
+        incorrectQuestion: incorrectQuestion,
+        correctQuestion: correctQuestion,
+        timeSpentQuestions: timeSpentQuestions,
+        userTest: testId
+    };
+
+     // Send data to the server using jQuery AJAX
+     $.ajax({
+        url: '/qbank_exam_end_result',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(sendData),
+        success: function (response) {
+            // Request was successful, handle the response if needed
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            // Handle errors
+            console.error('Error:', error);
         }
     });
+
+
 }
+
 
 
 function examSuspend(){
@@ -1392,7 +1564,7 @@ font-family: Arial, sans-serif !important;
                         </div>
 
                         <!-- note start-->
-                        <div class="ms-4 mobile-hide" id="note_model" style="height: 45px;" >
+                        <div class="ms-4 mobile-hide" id="note_model" style="height: 45px; cursor: pointer;" >
                             <span class="_span">
                                  <svg class="_svgnote">
                                                      <svg id="noteIcon" viewBox="0 0 160 160">
@@ -1413,6 +1585,18 @@ font-family: Arial, sans-serif !important;
                          </div>
 
                          <!-- note  end-->
+
+
+                         <!-- highlights start-->
+                        <div class="ms-4 mobile-hide highlight-active" id="highlight" style="height: 45px; cursor: pointer;" >
+                            <span class="_span">
+                                 <svg class="_svgnote">
+                                    <svg style="color: rgb(248, 247, 247);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle cx="128" cy="128" r="96" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></circle><polyline points="104 144 104 96 152 72 152 144" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></polyline><path d="M168,215.3V152a8,8,0,0,0-8-8H96a8,8,0,0,0-8,8v63.3" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path></svg>
+                            </span>
+                             <p>Highlights</p>
+                         </div>
+
+                         <!-- highlights  end-->
 
 
                         <div class="d-flex align-items-center rgt-menu">
@@ -1507,36 +1691,36 @@ font-family: Arial, sans-serif !important;
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
-                                                                                        <input type="radio" id="test1" name="radio-group">
-                                                                                        <label for="test1" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">A. <span id="option-1"></span></label>
+                                                                                        <input type="radio" id="option1" name="radio-group">
+                                                                                        <label for="option1" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">A. <span id="option-1"></span></label>
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
-                                                                                        <input type="radio" id="test2" name="radio-group">
-                                                                                        <label for="test2" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">B. <span id="option-2"></span></label>
+                                                                                        <input type="radio" id="option2" name="radio-group">
+                                                                                        <label for="option2" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">B. <span id="option-2"></span></label>
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
-                                                                                        <input type="radio" id="test3" name="radio-group">
-                                                                                        <label for="test3" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">C. <span id="option-3"></span></label>
+                                                                                        <input type="radio" id="option3" name="radio-group">
+                                                                                        <label for="option3" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">C. <span id="option-3"></span></label>
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
-                                                                                        <input type="radio" id="test4" name="radio-group">
-                                                                                        <label for="test4" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">D. <span id="option-4"></span></label>
+                                                                                        <input type="radio" id="option4" name="radio-group">
+                                                                                        <label for="option4" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">D. <span id="option-4"></span></label>
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
-                                                                                        <input type="radio" id="test5" name="radio-group">
-                                                                                        <label for="test5" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">E. <span id="option-5"></span></label>
+                                                                                        <input type="radio" id="option5" name="radio-group">
+                                                                                        <label for="option5" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">E. <span id="option-5"></span></label>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>

@@ -93,8 +93,6 @@ class MainQbankCreateTestController extends Controller
 
 
 
-
-
         // Return the result in JSON format
         return response()->json([
             'systems' => $systems

@@ -735,6 +735,9 @@ Route::middleware('superadmin')->group(function () {
         // exam lunch routes
         Route::get('/lunch_user_qbank_test_exam/{test_id}/{test_mode}/{question_mode}',[MainQbankExamController::class,'lunchUserQbankTestExam']);
 
+         // exam end result route
+         Route::post('/qbank_exam_end_result',[MainQbankExamController::class,'qbankExamEndResult']);
+
 
         // question highlights routes
 
