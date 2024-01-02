@@ -136,7 +136,10 @@ class QbankLastFetchedQuestionController extends Controller
 
         // If there are still not enough questions, fetch additional random questions
         if ($remainingQuestions > 0) {
+            // Get the IDs of questions already in the result
+            $existingQuestionIds = $result->pluck('qbank_question_id')->toArray();
             $additionalQuestions = QbankQuestion::where('qbank_id', $qbankId)
+                ->whereNotIn('qbank_question_id', $existingQuestionIds)
                 ->inRandomOrder()
                 ->take($remainingQuestions)
                 ->get();

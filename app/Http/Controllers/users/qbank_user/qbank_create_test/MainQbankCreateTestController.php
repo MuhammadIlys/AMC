@@ -73,25 +73,13 @@ class MainQbankCreateTestController extends Controller
 
     public function loadAllQuestion(){
 
-
         // Replace with the desired qbank_id
         $qbank_id =  Session::get('qbank_id');
-
-
-
-        // Get the user ID from the session
-        $userId = Session::get('user')->id;
 
         // Fetch systems related to the specified qbank_id
         $systems = QbankSystem::whereHas('qbankQuestion', function ($query) use ($qbank_id) {
             $query->where('qbank_id', $qbank_id);
         })->withCount('qbankQuestion')->get();
-
-
-        // Calculate total question count
-        $totalQuestionCount = $systems->sum('total_correct_count');
-
-
 
         // Return the result in JSON format
         return response()->json([

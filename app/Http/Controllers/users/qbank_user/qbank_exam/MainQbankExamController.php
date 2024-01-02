@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\users\qbank_user\qbank_exam;
 
 use App\Http\Controllers\Controller;
+use App\Models\super_admin\qbank\qbank_question\QbankQuestion;
 use App\Models\users\qbank_user\qbank_corrects\QbankCorrects;
 use App\Models\users\qbank_user\qbank_incorrects\QbankIncorrects;
 use App\Models\users\qbank_user\qbank_marked\QbankMarked;
 use App\Models\users\qbank_user\qbank_notes\QbankNote;
 use App\Models\users\qbank_user\qbank_omitted\QbankOmitted;
+use App\Models\users\qbank_user\qbank_unused\QbankUnused;
 use App\Models\users\qbank_user\qbank_used\QbankUsed;
 use App\Models\users\qbank_user\qbank_user_tests\QbankUserTest;
 use Illuminate\Http\Request;
@@ -450,7 +452,31 @@ class MainQbankExamController extends Controller
 
 
 
-    // managing correct, incorrect, omitted etc
+    // managing unused question
+
+
+       // Get the IDs of used questions matching user and qbank
+       $usedQuestionIds = QbankUsed::where('id', $userId)
+       ->where('qbank_id', $qbankId)
+       ->pluck('qbank_question_id');
+
+       // Retrieve all unused question IDs matching user and qbank
+       $filteredUnusedQuestionIds = QbankQuestion::where('qbank_id', $qbankId)
+       ->whereNotIn('qbank_question_id', $usedQuestionIds)
+       ->pluck('qbank_question_id');
+
+       QbankUnused::truncate();
+
+       // Store the filtered unused question IDs in the QbankUnused model
+        foreach ($filteredUnusedQuestionIds as $questionId) {
+            QbankUnused::create([
+                'qbank_question_id' => $questionId,
+                'id' => $userId,
+                'qbank_id' => $qbankId,
+            ]);
+        }
+
+
 
 
 
