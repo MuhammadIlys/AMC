@@ -18,12 +18,17 @@ use Illuminate\Support\Facades\Session;
 class MainQbankExamController extends Controller
 {
 
-   public function lunchUserQbankTestExam($test_id,$test_mode,$question_mode){
+   public function lunchUserQbankTestExam($test_id,$test_mode,$question_mode,$question_id=null,$test_status=null){
+
+     if($question_id==='' || empty($question_id) || $question_id===null){
+
+        $question_id='false';
+     }
 
     $userTest = QbankUserTest::find(decrypt($test_id));
 
     // Assuming you want to get testQuestions using the testQuestions relationship defined in the model
-    $questions = $userTest->testQuestions;
+    $questions = $userTest->testQuestionswithPivot;
 
     // Assuming you want to get qbankNoteQuestion and qbankMarkedQuestion only for the specified user_id and qbank_id
     $user_id = $userTest->user_id;
@@ -47,7 +52,9 @@ class MainQbankExamController extends Controller
         'question_mode'=>$question_mode,
         'question_notes'=>$question_notes->values()->toJson(),
         'question_marked'=>$question_marked->values()->toJson(),
-        'userTest'=>decrypt($test_id)
+        'userTest'=>$test_id,
+        'questionId'=>$question_id,
+        'testStatus'=>$test_status,
 
 
     ]);
@@ -67,7 +74,7 @@ class MainQbankExamController extends Controller
      // Get the user ID from the session
      $userId = Session::get('user')->id;
 
-     $userTestId=$examResults['userTest'];
+     $userTestId=decrypt($examResults['userTest']);
 
     // Access the arrays from the decoded JSON
     $markedQuestions = $examResults['markedQuestion'];
@@ -76,6 +83,17 @@ class MainQbankExamController extends Controller
     $incorrectQuestions = $examResults['incorrectQuestion'];
     $correctQuestions = $examResults['correctQuestion'];
     $timeSpentQuestions = $examResults['timeSpentQuestions'];
+    $testMode = $examResults['testMode'];
+    $questionMode = $examResults['questionMode'];
+    $testStatus=$examResults['testStatus'];
+
+    if($testMode === 'toggleTimed'){
+
+        $testMode ='Timed Mode';
+    }else{
+
+        $testMode ='Tutor Mode';
+    }
 
 
      // Count the total number of correct, incorrect, omitted, and marked questions
@@ -83,6 +101,7 @@ class MainQbankExamController extends Controller
      $totalIncorrect = count($incorrectQuestions);
      $totalOmitted = count($omittedQuestions);
      $totalMarked = count($markedQuestions);
+
 
      // Calculate the total number of questions
     $totalQuestions = $totalCorrect + $totalIncorrect + $totalOmitted + $totalMarked;
@@ -102,6 +121,10 @@ class MainQbankExamController extends Controller
      // Update the attributes of the retrieved record
     if ($qbankUserTest) {
         $qbankUserTest->update([
+            'name'=>'Block Name',
+            'mode'=>$testMode,
+            'questionMode'=>$questionMode,
+            'testStatus'=>$testStatus,
             'marked' => $totalMarked,
             'correct' => $totalCorrect,
             'incorrect' => $totalIncorrect,
@@ -460,21 +483,42 @@ class MainQbankExamController extends Controller
        ->where('qbank_id', $qbankId)
        ->pluck('qbank_question_id');
 
+       foreach ($usedQuestionIds as $questionId) {
+
+        $record = QbankUnused::firstOrNew([
+            'qbank_question_id' => $questionId,
+            'id' => $userId,
+            'qbank_id' => $qbankId,
+        ]);
+
+        if ($record->exists) {
+            $record->delete();
+        }
+
+
+       }
+
        // Retrieve all unused question IDs matching user and qbank
        $filteredUnusedQuestionIds = QbankQuestion::where('qbank_id', $qbankId)
        ->whereNotIn('qbank_question_id', $usedQuestionIds)
        ->pluck('qbank_question_id');
 
-       QbankUnused::truncate();
+
 
        // Store the filtered unused question IDs in the QbankUnused model
-        foreach ($filteredUnusedQuestionIds as $questionId) {
-            QbankUnused::create([
+       foreach ($filteredUnusedQuestionIds as $questionId) {
+
+            $record = QbankUnused::firstOrNew([
                 'qbank_question_id' => $questionId,
                 'id' => $userId,
                 'qbank_id' => $qbankId,
             ]);
+
+            if (!$record->exists) {
+                $record->save();
+            }
         }
+
 
 
 

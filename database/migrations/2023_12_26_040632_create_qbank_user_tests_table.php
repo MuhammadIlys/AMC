@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('qbank_user_tests', function (Blueprint $table) {
             $table->id('user_test_id'); // Primary key
+            $table->string('name')->default('Block Name');
+            $table->string('mode')->nullable();
             $table->unsignedBigInteger('user_id'); // Foreign key for user
             $table->unsignedBigInteger('qbank_id'); // Foreign key for test
             $table->integer('marked')->nullable();

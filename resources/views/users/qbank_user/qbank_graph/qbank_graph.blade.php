@@ -33,13 +33,13 @@
                                                 <a id="result1" class="test-nav nav-link text-muted active" data-bs-toggle="tab"
                                                    href="#mocks_performance"
                                                    role="tab" aria-selected="false" tabindex="-1">
-                                                   Mocks Performance
+                                                   Tests Performance
                                                 </a>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <a id="analytics1" class="test-nav nav-link text-muted" data-bs-toggle="tab" href="#subject_wise_performance"
                                                    role="tab" aria-selected="false" tabindex="-1">
-                                                    Subjects Performance
+                                                    Systems Performance
                                                 </a>
                                             </li>
 
@@ -131,34 +131,24 @@ var chartScatterBasicColors = getChartColorsArray("basic_scatter");
 // Extract the PHP data passed to the view
 var chartData = @json($chartData);
 
-// Log the chartData to the console for debugging
-console.log('chartData:', chartData);
-
 // Extract test names for x-axis labels
 var testNames = Object.keys(chartData);
-
-// Log the testNames to the console for debugging
-console.log('testNames:', testNames);
 
 // Add series data dynamically
 var dynamicSeries = [];
 
-Object.keys(chartData).forEach(function (seriesName) {
+Object.keys(chartData).forEach(function (seriesName, index) {
+    var uniqueSeriesName = seriesName // Append index to make it unique
     var seriesData = chartData[seriesName].map(function (point) {
-        return [new Date(point.date).getTime(), point.score];
+
+        return [new Date(point.date).getTime(), point.score ];
     });
 
     dynamicSeries.push({
-        name: seriesName,
+        name: uniqueSeriesName,
         data: seriesData,
     });
-
-    // Log each seriesData to the console for debugging
-    console.log('seriesData for ' + seriesName + ':', seriesData);
 });
-
-// Log the dynamicSeries to the console for debugging
-console.log('dynamicSeries:', dynamicSeries);
 
 // ApexCharts configuration
 var options = {
@@ -174,7 +164,7 @@ var options = {
             show: false,
         },
     },
-    title: {text: "Mocks Performance - Date vs Score ", align: "left", style: {fontWeight: 500}},
+    title: {text: "Tests Performance - Date vs Percentage ", align: "left", style: {fontWeight: 500}},
     xaxis: {
         type: "datetime",
         tickAmount: 10,
@@ -190,26 +180,30 @@ var options = {
         }))),
         tickPlacement: 'on',
         axisTicks: {
-            show: true,
+            show: false,
             borderType: 'solid',
             color: '#78909C',
             height: 6,
             offsetX: 0,
             offsetY: 0
         },
-        title: {text: "Mocks Date"},
-
+        title: {text: "Test Date"},
     },
     yaxis: {
         tickAmount: 7,
-        title: {text: "Mocks Score"},
+        title: {text: "Test Percentage"},
     },
     colors: chartScatterBasicColors,
+    legend: {
+        show: false,
+    },
 };
 
 // Create the chart
 var chart = new ApexCharts(document.querySelector("#basic_scatter"), options);
 chart.render();
+
+
 
 // ############################################# second chart for subject performance ########################
 
@@ -253,7 +247,7 @@ if (linechartDatalabelColors) {
                 ]
             }
         ],
-        title: {text: "Subjects Performance - Correct vs Incorrect", align: "left", style: {fontWeight: 500}},
+        title: {text: "Systems Performance - Correct vs Incorrect", align: "left", style: {fontWeight: 500}},
         grid: {row: {colors: ["transparent", "transparent"], opacity: .2}, borderColor: "#f1f1f1"},
         markers: {style: "inverted", size: 6},
         xaxis: {
@@ -262,10 +256,10 @@ if (linechartDatalabelColors) {
                     "{{ $data['subject_name'] }}",
                 @endforeach
             ],
-            title: {text: "Subjects"}
+            title: {text: "Systems"}
         },
-        yaxis: {title: {text: "Number of Answers"}, min: 0, max: 2000},
-        legend: {position: "top", horizontalAlign: "right", floating: !0, offsetY: -25, offsetX: -5},
+        yaxis: {title: {text: "Number of Answers"}, min: 0, max: 500},
+        legend: {show: false , position: "top", horizontalAlign: "right", floating: !0, offsetY: -25, offsetX: -5},
         responsive: [{breakpoint: 1000, options: {chart: {toolbar: {show: !1}}, legend: {show: !1}}}]
     };
 
@@ -280,38 +274,44 @@ if (linechartDatalabelColors) {
 
 var options, chart;
 
+// Convert total time from hours to minutes
+var chartDataInMinutes = <?php echo json_encode($chartData3); ?>.map((item, index)=> ({
+
+    test_name: item.test_name + '_' + (index+1),
+    total_time_spent: item.total_time_spent, // Do not multiply by 60
+}));
 
 // Color timeline chart
 var chartTimelineColors = getChartColorsArray("color_timeline");
 if (chartTimelineColors) {
-  options = {
-    series: [
-      {
-        data: {!! json_encode($chartData3) !!}.map(item => ({
-            x: item.test_name,
-            y: [0, item.total_time_spent],
-            fillColor: chartTimelineColors[getRandomNumber()],
-        })),
-      },
-    ],
-    chart: { height: 350, type: "rangeBar", toolbar: { show: false } },
-    plotOptions: { bar: { horizontal: true, distributed: true, dataLabels: { hideOverflowingLabels: false } } },
-    dataLabels: {
-      enabled: true,
-      formatter: function (e, t) {
-        var xValue = t.w.config.series[0].data[t.dataPointIndex].x,
-          // Calculate the difference in numbers instead of days
-          diff = e[1] - e[0];
-        return xValue;
-      },
-    },
-    title: {text: "Time Spent Per mocks - Mocks vs Hours", align: "left", style: {fontWeight: 500}},
-    xaxis: { type: "units", title: {text: "Hours"}, },
-    yaxis: { show: true ,  },
-  };
+    options = {
+        series: [
+            {
+                data: chartDataInMinutes.map(item => ({
+                    x: item.test_name,
+                    y: [0, item.total_time_spent],
+                    fillColor: chartTimelineColors[getRandomNumber()],
+                })),
+            },
+        ],
+        chart: { height: 350, type: "rangeBar", toolbar: { show: false } },
+        plotOptions: { bar: { horizontal: true, distributed: true, dataLabels: { hideOverflowingLabels: false }, barHeight: '10%', } },
+        dataLabels: {
+                    enabled: false,
+                    formatter: function (e, t) {
+                        var xValue = t.w.config.series[0].data[t.dataPointIndex].x.split('_')[0]; // Extract original test name
+                            // Display only the end value (e[1])
+                            endTime = e[1].toString();
+                        return xValue + ' (' + endTime + ' mins)';
+                    },
+                },
+        title: { text: "Time Spent Per Test - Test vs Minutes", align: "left", style: { fontWeight: 500 } },
+        xaxis: { type: "units", title: { text: "Minutes" }, },
+        yaxis: { show: true, },
+    };
 
-  chart = new ApexCharts(document.querySelector("#color_timeline"), options);
-  chart.render();
+    chart = new ApexCharts(document.querySelector("#color_timeline"), options);
+    chart.render();
 }
 
 

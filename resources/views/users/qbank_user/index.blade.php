@@ -32,39 +32,39 @@
                                         </div>
                                         <div class="col-xxl-3 col-sm-6 col-lg-4">
                                             <table class="table align-middle table-nowrap mb-0">
-                                                <h5 class="ms-2 score-title">Mocks Performance</h5>
+                                                <h5 class="ms-2 score-title">Your Score</h5>
                                                 <tbody>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Mocks Completed</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalMocksCompleted ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Total Correct</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalCorrectCount ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Mocks Passed</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalMocksPassed ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Total Incorrect</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalIncorrectCount ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
 
-                                                    <th scope="row"><a href="#" class="fw-medium">Mocks Failed</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalMocksFailed ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Total Omitted</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalOmittedCount ?? 0 }}</div></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="col-xxl-3 col-sm-6 col-lg-4">
                                             <table class="table align-middle table-nowrap mb-0">
-                                                <h5 class="ms-2 score-title">Time Performance (HH:MM)</h5>
+                                                <h5 class="ms-2 score-title">Time Performance (MM:SS)</h5>
                                                 <tbody>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Last Recent Mocks</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalTimeSpentInRecentMocks ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Last Recent Test</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalTimeSpentRecentTest ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Avg. Time per Mocks</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $averageTimeSpent ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Avg. Time per Test</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $formattedAverageTimeSpent ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row"><a href="#" class="fw-medium">Other Users Average Time</a></th>
-                                                    <td> <div class="score-badge float-end">03:05</div></td>
+                                                    <td> <div class="score-badge float-end">30:44</div></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -81,38 +81,38 @@
                                         </div>
                                         <div class="col-xxl-3 col-sm-6 col-lg-4">
                                             <table class="table align-middle table-nowrap mb-0">
-                                                <h5 class="ms-2 score-title">Difficulty  Performance</h5>
+                                                <h5 class="ms-2 score-title">QBank Usage</h5>
                                                 <tbody>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Corrects Questions</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalCorrectQuestions ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Used Questions</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalUsedQuestionCount ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Incorrects Questions</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalIncorrectQuestions ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Unused Questions</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalUnusedQuestionCount ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Omitted Questions</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalOmittedQuestions ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Total Questions</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalQuestionCount ?? 0 }}</div></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="col-xxl-3 col-sm-6 col-lg-4">
                                             <table class="table align-middle table-nowrap mb-0">
-                                                <h5 class="ms-2 score-title" style="visibility: hidden">Count</h5>
+                                                <h5 class="ms-2 score-title" >Questions Activities</h5>
                                                 <tbody>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Hard Correct Questions</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalHardQuestions ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Marked Questions</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalMarkedQuestionCount ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Fair Correct Questions</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalFairQuestions ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Notes Questions</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalNoteQuestionCount ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Easy Correct Questions</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalEasyQuestions ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Highlight Questions</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalHighlightQuestionCount ?? 0 }}</div></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -131,39 +131,39 @@
                                         </div>
                                         <div class="col-xxl-3 col-sm-6 col-lg-4">
                                             <table class="table align-middle table-nowrap mb-0">
-                                                <h5 class="ms-2 score-title">Subjects Performance</h5>
+                                                <h5 class="ms-2 score-title">Test Count</h5>
                                                 <tbody>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Obstetrics Gynecology</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalCorrectQuestionsPerSubject['Obstetrics Gynecology'] ?? 0 }}/{{ $totalQuestionsPerSubject['Obstetrics Gynecology'] ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Tests Created</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalTestCount ?? 0 }}</div></td>
                                                 </tr>
 
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Medicine</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalCorrectQuestionsPerSubject['Medicine'] ?? 0 }}/{{ $totalQuestionsPerSubject['Medicine'] ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Tests Completed</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalCompleteTestCount ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Surgery</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalCorrectQuestionsPerSubject['Surgery'] ?? 0 }}/{{ $totalQuestionsPerSubject['Surgery'] ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Suspended Tests</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalSuspendTestCount ?? 0 }}</div></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="col-xxl-3 col-sm-6 col-lg-4">
                                             <table class="table align-middle table-nowrap mb-0">
-                                                <h5 class="ms-2 score-title" style="visibility:hidden">Subjects Performance</h5>
+                                                <h5 class="ms-2 score-title" >Test Performance</h5>
                                                 <tbody>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Psychiatry</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalCorrectQuestionsPerSubject['Psychiatry'] ?? 0 }}/{{ $totalQuestionsPerSubject['Psychiatry'] ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Tests between 70% & 100%</a></th>
+                                                    <td> <div class="score-badge float-end">{{  $totalTestAbove70Count ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Pediatrics</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalCorrectQuestionsPerSubject['Pediatrics'] ?? 0 }}/{{ $totalQuestionsPerSubject['Psychiatry'] ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Tests between 30% & 50%</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalTestBelow50Count ?? 0 }}</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><a href="#" class="fw-medium">Public Health</a></th>
-                                                    <td> <div class="score-badge float-end">{{ $totalCorrectQuestionsPerSubject['Public Health'] ?? 0 }}/{{ $totalQuestionsPerSubjectt['Psychiatry'] ?? 0 }}</div></td>
+                                                    <th scope="row"><a href="#" class="fw-medium">Tests between 10% & 30%</a></th>
+                                                    <td> <div class="score-badge float-end">{{ $totalTestBelow30Count ?? 0 }}</div></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -202,46 +202,37 @@
 
     <script>
 
-            var totalMocksCompleted  = {{ $totalMocksCompleted ?? 0 }};
-            var totalMocksPassed = {{ $totalMocksPassed ?? 0 }};
-            var totalMocksFailed = {{ $totalMocksFailed ?? 0 }};
-            var averageTimeSpentRecentMock = '{{ $totalTimeSpentInRecentMocks ?? 0 }}';
-            var averageTimeSpent= '{{ $averageTimeSpent ?? 0 }}';
-            var otherUserAverageTimeSpent = '03:05';
+            var totalCorrectCount  = {{ $totalCorrectCount ?? 0 }};
+            var totalIncorrectCount = {{ $totalIncorrectCount ?? 0 }};
+            var totalOmittedCount = {{ $totalOmittedCount ?? 0 }};
+            var totalTimeSpentRecentTest = '{{ $totalTimeSpentRecentTest ?? 0 }}';
+            var formattedAverageTimeSpent= '{{ $formattedAverageTimeSpent ?? 0 }}';
+            var otherUserAverageTimeSpent = '30:44';
 
-          // Given time in HH:MM format
-        var otherUserAverageTimeSpent = "03:05";
+          // Given time in MM:SS format
+        var otherUserAverageTimeSpent = "30:44";
 
-        // Split the time into hours and minutes
-        var timeParts = averageTimeSpentRecentMock.split(":");
-        var hours = parseInt(timeParts[0], 10);
-        var minutes = parseInt(timeParts[1], 10);
+        // Split the time into minutes and seconds MM:SS formate
+        var timeParts = otherUserAverageTimeSpent.split(":");
+        var minutes = parseInt(timeParts[0], 10);
+        var Seconds = parseInt(timeParts[1], 10);
 
-        // Convert the time to minutes and round to the nearest whole number
-        var totalMinutes = hours * 60 + minutes;
-        averageTimeSpentRecentMock = Math.round(totalMinutes / 60);
+        otherUserAverageTimeSpent= Math.round(minutes + Seconds / 60);
 
+        // Split the time into minutes and seconds MM:SS formate
+        var timeParts = totalTimeSpentRecentTest.split(":");
+        var minutes = parseInt(timeParts[0], 10);
+        var Seconds = parseInt(timeParts[1], 10);
 
-         // Split the time into hours and minutes
-         var timeParts = averageTimeSpent.split(":");
-        var hours = parseInt(timeParts[0], 10);
-        var minutes = parseInt(timeParts[1], 10);
-
-        // Convert the time to minutes and round to the nearest whole number
-        var totalMinutes = hours * 60 + minutes;
-        averageTimeSpent = Math.round(totalMinutes / 60);
-
-         // Split the time into hours and minutes
-         var timeParts = otherUserAverageTimeSpent.split(":");
-        var hours = parseInt(timeParts[0], 10);
-        var minutes = parseInt(timeParts[1], 10);
-
-        // Convert the time to minutes and round to the nearest whole number
-        var totalMinutes = hours * 60 + minutes;
-        otherUserAverageTimeSpent = Math.round(totalMinutes / 60);
+        totalTimeSpentRecentTest= Math.round(minutes + Seconds / 60);
 
 
+        // Split the time into minutes and seconds MM:SS formate
+        var timeParts = formattedAverageTimeSpent.split(":");
+        var minutes = parseInt(timeParts[0], 10);
+        var Seconds = parseInt(timeParts[1], 10);
 
+        formattedAverageTimeSpent= Math.round(minutes + Seconds / 60);
 
 
 
@@ -269,8 +260,8 @@
             var donutchartportfolioColors = getChartColorsArray("mocks_performance");
 
             var MarketchartColors = (donutchartportfolioColors && (options = {
-                series: [totalMocksCompleted, totalMocksPassed, totalMocksFailed, averageTimeSpentRecentMock, averageTimeSpent, otherUserAverageTimeSpent],
-                labels: ["Mocks Completed", "Mocks Passed", "Mocks Failed", "Avg. Time Spent Recent", "Avg. Time Spent", "Other Users Avg. Time Spent"],
+                series: [totalCorrectCount, totalIncorrectCount, totalOmittedCount, totalTimeSpentRecentTest, formattedAverageTimeSpent, otherUserAverageTimeSpent],
+                labels: ["Total Correct", "Total Incorrect", "Total Omitted", "Time Spent Recent", "Avg. Time Spent", "Other Users Avg. Time Spent"],
                 chart: { type: "donut", height: 224 },
                 plotOptions: {
                     pie: {
@@ -295,11 +286,11 @@
                                 total: {
                                     show: true,
                                     fontSize: "13px",
-                                    label: "Mocks Completed",
+                                    label: "Total Correct",
                                     color: "#9599ad",
                                     fontWeight: 500,
                                     formatter: function (e) {
-                                        return "" + totalMocksCompleted; // Display the value of totalMocksCompleted
+                                        return "" + totalCorrectCount; // Display the value of totalMocksCompleted
                                     }
                                 }
                             }
@@ -324,19 +315,19 @@
 
 
 
-          var totalCorrectQuestions={{ $totalCorrectQuestions ?? 0 }};
-          var totalIncorrectQuestions={{ $totalIncorrectQuestions ?? 0 }};
-          var totalOmittedQuestions={{ $totalOmittedQuestions ?? 0 }};
-          var totalHardQuestions ={{ $totalHardQuestions ?? 0 }};
-          var totalFairQuestions={{ $totalFairQuestions ?? 0 }};
-          var totalEasyQuestions= {{ $totalEasyQuestions ?? 0 }};
+          var totalUsedQuestionCount={{ $totalUsedQuestionCount ?? 0 }};
+          var totalUnusedQuestionCount={{ $totalUnusedQuestionCount ?? 0 }};
+          var totalQuestionCount={{ $totalQuestionCount ?? 0 }};
+          var totalMarkedQuestionCount ={{ $totalMarkedQuestionCount ?? 0 }};
+          var totalNoteQuestionCount={{ $totalNoteQuestionCount ?? 0 }};
+          var totalHighlightQuestionCount= {{ $totalHighlightQuestionCount ?? 0 }};
 
 
             var donutchartportfolioColors = getChartColorsArray("difficulty_performance");
 
             var MarketchartColors = (donutchartportfolioColors && (options = {
-                series: [totalCorrectQuestions, totalIncorrectQuestions, totalOmittedQuestions, totalHardQuestions, totalFairQuestions, totalEasyQuestions],
-                labels: ["Correct Questions", "Incorrect Questions", "Omitted Question", "Hard Questions", "Fair Questions", "Easy Question"],
+                series: [totalUsedQuestionCount, totalUnusedQuestionCount, totalQuestionCount, totalMarkedQuestionCount, totalNoteQuestionCount, totalHighlightQuestionCount],
+                labels: ["Used Questions", "Unused Questions", "Total Questions", "Marked Questions", "Notes Questions", "Highlight Questions"],
                 chart: { type: "donut", height: 224 },
                 plotOptions: {
                     pie: {
@@ -361,11 +352,11 @@
                                 total: {
                                     show: true,
                                     fontSize: "13px",
-                                    label: "Correct Question",
+                                    label: "Used Questions",
                                     color: "#9599ad",
                                     fontWeight: 500,
                                     formatter: function (e) {
-                                        return "" + totalCorrectQuestions; // Display the value of totalMocksCompleted
+                                        return "" + totalUsedQuestionCount; // Display the value of totalMocksCompleted
                                     }
                                 }
                             }
@@ -392,20 +383,20 @@
 
 
 
-            var  obstetricsGynecology = {{ $totalCorrectQuestionsPerSubject['Obstetrics Gynecology'] ?? 0 }};
-            var medicine={{ $totalCorrectQuestionsPerSubject['Medicine'] ?? 0 }};
-            var surgery ={{ $totalCorrectQuestionsPerSubject['Surgery'] ?? 0 }};
-            var psychiatry= {{ $totalCorrectQuestionsPerSubject['Psychiatry'] ?? 0 }};
-            var pediatrics={{ $totalCorrectQuestionsPerSubject['Pediatrics'] ?? 0 }};
-            var publicHealth={{ $totalCorrectQuestionsPerSubject['Public Health'] ?? 0 }};
+            var  totalTestCount = {{ $totalTestCount ?? 0 }};
+            var totalCompleteTestCount={{ $totalCompleteTestCount ?? 0 }};
+            var totalSuspendTestCount ={{ $totalSuspendTestCount ?? 0 }};
+            var totalTestAbove70Count= {{ $totalTestAbove70Count ?? 0 }};
+            var totalTestBelow50Count={{ $totalTestBelow50Count ?? 0 }};
+            var totalTestBelow30Count={{ $totalTestBelow30Count ?? 0 }};
 
 
 
             var donutchartportfolioColors = getChartColorsArray("subject_performance");
 
             var MarketchartColors = (donutchartportfolioColors && (options = {
-                series: [obstetricsGynecology, medicine, surgery, psychiatry, pediatrics, publicHealth],
-                labels: ["Obstetrics Gynecology", "Medicine", "Surgery", "Psychiatry", "Pediatrics", "Public Health"],
+                series: [totalTestCount, totalCompleteTestCount, totalSuspendTestCount, totalTestAbove70Count, totalTestBelow50Count, totalTestBelow30Count],
+                labels: ["Tests Created", "Tests Completed", "Suspended Tests", "70% & 100%", "30% & 50%", "10% & 30%"],
                 chart: { type: "donut", height: 224 },
                 plotOptions: {
                     pie: {
@@ -430,11 +421,11 @@
                                 total: {
                                     show: true,
                                     fontSize: "13px",
-                                    label: "Obstetrics Gynecology",
+                                    label: "Tests Created",
                                     color: "#9599ad",
                                     fontWeight: 500,
                                     formatter: function (e) {
-                                        return "" + obstetricsGynecology; // Display the value of totalMocksCompleted
+                                        return "" + totalTestCount; // Display the value of totalMocksCompleted
                                     }
                                 }
                             }

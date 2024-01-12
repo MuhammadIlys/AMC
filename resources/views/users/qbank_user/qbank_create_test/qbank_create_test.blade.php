@@ -706,9 +706,50 @@
       }
 
     }
+
+
+
+    #system-loader {
+            position: relative;
+        }
+        .loader {
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: #013884; /* You can change the color */
+            animation: spin 1s infinite linear;
+            z-index: 9999; /* Set a high z-index value to ensure it appears on top */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+        .loader2 {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: #013884; /* You can change the color */
+            animation: spin 1s infinite linear;
+            z-index: 9999; /* Set a high z-index value to ensure it appears on top */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
   </style>
 
 
+<div class="loader2">
+    <i class="fas fa-spinner"></i>
+</div>
 
 <div class="main-content">
 
@@ -812,21 +853,17 @@
 
                                      <div class="panel-body pb_3">
                                         <div class="accordion_3_body">
-                                            <div class="subject_area">
-                                                <div class="row">
-                                                    <div id="show_systems" class="col-md-4 col-sm-4 col-lg-4 col-12">
-                                                        @php $count = 0; @endphp
-                                                        @foreach ($systems as $system)
-                                                            @if($count % 4 == 0 && $count != 0)
-                                                                </div><div class="col-md-4 col-sm-4 col-lg-4 col-12">
-                                                            @endif
-                                                            <div class="form-group">
-                                                                <input class="system-checkbox" type="checkbox" value="{{ $system->qbank_system_id }}" id="{{ $system->qbank_system_id }}" >
-                                                                <label for="{{ $system->qbank_system_id }}">{{ $system->system_name }} <span class="span_coutner">{{ $system->qbank_question_count }}</span></label>
-                                                            </div>
-                                                            @php $count++; @endphp
-                                                        @endforeach
-                                                    </div>
+                                            <div id="system-loader" class="subject_area">
+
+                                                 <!-- Loader for the specific div -->
+                                                 <div id="clearrowLoader">
+                                                    <i class="loader fas fa-spinner"></i>
+                                                </div>
+
+                                                <div id="clearrow" class="row">
+
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -849,7 +886,7 @@
                                                     <div class="col-md-6 col-sm-6 col-lg-6 col-12">
                                                         <div style="display: flex;">
                                                             <input type="number" class="form-control" name="number_question" id="number_question" value="0"  style="width: 50px; text-align: center; min-height: 35px;" min="10" max="40"  >
-                                                            <span style="margin: 7px 10px;"> Max allowed per block
+                                                            <span style="margin: 7px 10px;"> Max allowed per block  <span class="span_coutner">40</span>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -987,31 +1024,31 @@ $(document).ready(function() {
             switch (radioId) {
                 case 'all_question':
                     // Logic for 'all_question' selected
-                    fetchQuestion('/qbank_fetching_all_question', systemIds, numberQuestion);
+                    fetchQuestion('/qbank_fetching_all_questions', systemIds, numberQuestion);
                     break;
                 case 'correct_question':
                     // Logic for 'correct_question' selected
-                    fetchQuestion('/qbank_fetching_correct_question', systemIds, numberQuestion);
+                    fetchQuestion('/qbank_fetching_correct_questions', systemIds, numberQuestion);
                     break;
                 case 'incorrect_question':
                     // Logic for 'incorrect_question' selected
-                    fetchQuestion('/qbank_fetching_incorrect_question', systemIds, numberQuestion);
+                    fetchQuestion('/qbank_fetching_incorrect_questions', systemIds, numberQuestion);
                     break;
                 case 'omitted_question':
                     // Logic for 'omitted_question' selected
-                    fetchQuestion('/qbank_fetching_omitted_question', systemIds, numberQuestion);
+                    fetchQuestion('/qbank_fetching_omitted_questions', systemIds, numberQuestion);
                     break;
                 case 'marked_question':
                     // Logic for 'marked_question' selected
-                    fetchQuestion('/qbank_fetching_marked_question', systemIds, numberQuestion);
+                    fetchQuestion('/qbank_fetching_marked_questions', systemIds, numberQuestion);
                     break;
                 case 'used_question':
                     // Logic for 'used_question' selected
-                    fetchQuestion('/qbank_fetching_used_question', systemIds, numberQuestion);
+                    fetchQuestion('/qbank_fetching_used_questions', systemIds, numberQuestion);
                     break;
                 case 'unused_question':
                     // Logic for 'unused_question' selected
-                    fetchQuestion('/qbank_fetching_unused_question', systemIds, numberQuestion);
+                    fetchQuestion('/qbank_fetching_unused_questions', systemIds, numberQuestion);
                     break;
                 default:
                     // Default case
@@ -1030,6 +1067,10 @@ $(document).ready(function() {
                         systemIds: systemIds,
                         questionsPerBlock: numberQuestion
                     },
+                    beforeSend: function () {
+                    // Show loader in the specific div
+                    showLoader2();
+                    },
                     success: function(response) {
                         if (response.success) {
 
@@ -1045,9 +1086,25 @@ $(document).ready(function() {
                     error: function(error) {
                         // Handle AJAX error
                         console.error('AJAX error:', error);
+                    },
+
+                    complete: function () {
+                        // Hide loader in the specific div
+                        hideLoader2();
                     }
                 });
             }
+
+
+             // Display loader in a specific div
+    function showLoader2() {
+        $('.loader2').show();
+    }
+
+    // Hide loader in a specific div
+    function hideLoader2() {
+        $('.loader2').hide();
+    }
 
 
 
@@ -1150,6 +1207,8 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 
+        performAjaxForAllQuestion('/load_qbank_all_question_Systems');
+
         $('#all_question').change(function() {
 
             if ($(this).is(':checked')) {
@@ -1202,6 +1261,7 @@ $(document).ready(function() {
 
         function performAjaxForAllQuestion(url){
 
+            showLoader();
             $.ajax({
 
                 url: url,
@@ -1210,37 +1270,27 @@ $(document).ready(function() {
                     _token: '{{ csrf_token() }}'
 
                 },
+                beforeSend: function () {
+                    // Show loader in the specific div
+                    showLoader();
+                },
                 success: function(response) {
-                    // Extract systems and questionCount from the JSON response
+
+
                     var systems = response.systems;
+                    $('#clearrow').empty();
 
-                    // Clear the existing content of the div with id "show_systems"
-                    $('#show_systems').empty();
-
-                    // Iterate through systems and populate the content dynamically
-                    var count = 0;
                     var currentRow;
 
-                    systems.forEach(function (system) {
+                    systems.forEach(function (system, index) {
 
-                        if (count % 4 === 0) {
-
-                            if(count===0){
-
-                                currentRow = $('<div>').appendTo('#show_systems');
-
-
-                            }else{
-
+                        if (index % 4 === 0) {
                             // If count is a multiple of 4, start a new row
-                            currentRow = $('<div class="col-md-4 col-sm-4 col-lg-4 col-12">').appendTo('#show_systems');
-                            }
+                            currentRow = $('<div class="col-md-4 col-sm-4 col-lg-4 col-12 delete-col">').appendTo('#clearrow');
                         }
 
-                        // Create a form group for each system
                         var formGroup = $('<div class="form-group">').appendTo(currentRow);
 
-                        // Create checkbox element
                         $('<input>', {
                             class: 'system-checkbox',
                             type: 'checkbox',
@@ -1248,25 +1298,30 @@ $(document).ready(function() {
                             id: system.qbank_system_id
                         }).appendTo(formGroup);
 
-                        // Create label element
                         var label = $('<label>', {
                             for: system.qbank_system_id,
                             text: system.system_name + ' '
                         }).appendTo(formGroup);
 
-                        // Create span element for the question count
                         $('<span>', {
                             class: 'span_coutner',
                             text: system.qbank_question_count
                         }).appendTo(label);
-
-                        count++;
                     });
+
+
+
+
+
 
 
                 },
                 error: function(error) {
                     console.error('Ajax request failed:', error);
+                },
+                complete: function () {
+                    // Hide loader in the specific div
+                    hideLoader();
                 }
 
                 });
@@ -1279,6 +1334,8 @@ $(document).ready(function() {
 
         function performAjax(url){
 
+            showLoader();
+
             $.ajax({
 
                 url: url,
@@ -1287,66 +1344,55 @@ $(document).ready(function() {
                     _token: '{{ csrf_token() }}'
 
                 },
+
+                beforeSend: function () {
+                    // Show loader in the specific div
+                    showLoader();
+                },
                 success: function(response) {
-                    // Extract systems and questionCount from the JSON response
-                    var systems = response.systems;
 
-                    // Clear the existing content of the div with id "show_systems"
-                    $('#show_systems').empty();
+                var systems = response.systems;
+                $('#clearrow').empty();
 
-                    // Iterate through systems and populate the content dynamically
-                    var count = 0;
-                    var currentRow;
+                var currentRow;
 
-                    systems.forEach(function (system) {
+                systems.forEach(function (system, index) {
 
-                        if (count % 4 === 0) {
+                    if (index % 4 === 0) {
+                        // If count is a multiple of 4, start a new row
+                        currentRow = $('<div class="col-md-4 col-sm-4 col-lg-4 col-12 ">').appendTo('#clearrow');
+                    }
 
-                            if(count===0){
+                    var formGroup = $('<div class="form-group">').appendTo(currentRow);
 
-                                currentRow = $('<div>').appendTo('#show_systems');
+                    $('<input>', {
+                        class: 'system-checkbox',
+                        type: 'checkbox',
+                        value: system.qbank_system_id,
+                        id: system.qbank_system_id
+                    }).appendTo(formGroup);
 
-                            }else{
+                    var label = $('<label>', {
+                        for: system.qbank_system_id,
+                        text: system.system_name + ' '
+                    }).appendTo(formGroup);
 
-                                 // If count is a multiple of 4, start a new row
-                            currentRow = $('<div class="col-md-4 col-sm-4 col-lg-4 col-12">').appendTo('#show_systems');
-
-
-
-                            }
-
-                        }
-
-                        // Create a form group for each system
-                        var formGroup = $('<div class="form-group">').appendTo(currentRow);
-
-                        // Create checkbox element
-                        $('<input>', {
-                            class: 'system-checkbox',
-                            type: 'checkbox',
-                            value: system.qbank_system_id,
-                            id: system.qbank_system_id
-                        }).appendTo(formGroup);
-
-                        // Create label element
-                        var label = $('<label>', {
-                            for: system.qbank_system_id,
-                            text: system.system_name + ' '
-                        }).appendTo(formGroup);
-
-                        // Create span element for the question count
+                     // Create span element for the question count
                         $('<span>', {
                             class: 'span_coutner',
-                            text: system.total_correct_count
+                            text: system.qbank_question_count
                         }).appendTo(label);
+                });
 
-                        count++;
-                    });
 
 
                 },
                 error: function(error) {
                     console.error('Ajax request failed:', error);
+                },
+                complete: function () {
+                    // Hide loader in the specific div
+                    hideLoader();
                 }
 
                 });
@@ -1359,9 +1405,22 @@ $(document).ready(function() {
 
 
 
+
+
     });//ready function end
 
 
+
+
+     // Display loader in a specific div
+    function showLoader() {
+        $('#clearrowLoader').show();
+    }
+
+    // Hide loader in a specific div
+    function hideLoader() {
+        $('#clearrowLoader').hide();
+    }
 
 </script>
 

@@ -25,9 +25,12 @@ class MainGraphController extends Controller
 
         // Transform data into the required structure
         $chartData = [];
+        $testnamebase=0;
         foreach ($userTestHistories as $history) {
             // Use a combination of test name and user ID as the series name
+            $testnamebase++;
             $seriesName = $history->test->test_name;
+            $seriesName=$seriesName."_".$testnamebase;
 
             $chartData[$seriesName][] = [
                 'date' => $history->created_at->format('m-d-Y'), // Adjust the date format as needed

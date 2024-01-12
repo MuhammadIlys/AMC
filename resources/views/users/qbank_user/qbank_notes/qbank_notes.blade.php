@@ -2,6 +2,11 @@
 @extends('users.qbank_user.templates.main')
 @section('main-container')
 
+<!-- SweetAlert2 CSS CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+ <!-- SweetAlert2 JS CDN -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+
 <style>
     .table>:not(caption)>*>*{
         background: unset;
@@ -26,6 +31,11 @@
     tbody, td, tfoot, th, thead, tr{
 
         border: none;
+    }
+
+    .swal2-close:focus{
+
+    box-shadow: none !important;
     }
 
 
@@ -145,7 +155,10 @@
     })
 
 
-    const dataSet = [
+    const dataSet = @json($dataSet);
+
+
+    const dataSet3 = [
     [
         `<div class="card nt-card" id="card1">
             <div class="card-header nc-header">
@@ -186,31 +199,96 @@
     ]
 ];
 
-function editFunc(cardId) {
-    const editable = document.querySelector(`#${cardId} #content1`);
+function editFunc(cardId,contentId,noteId) {
+    const editable = document.querySelector(`#${cardId} #${contentId}`);
     editable.contentEditable = 'true';
     $(`#${cardId}.nt-card`).css({ "border": "1px solid #013884" });
     $(`#${cardId} .savc`).removeClass('d-none');
     $(`#${cardId} .edt`).addClass('d-none');
 }
 
-function saveFunc(cardId) {
-    const editable = document.querySelector(`#${cardId} #content1`);
+function saveFunc(cardId,contentId,noteId) {
+    const editable = document.querySelector(`#${cardId} #${contentId}`);
+    var content=editable.innerHTML;
     editable.contentEditable = 'false';
     $(`#${cardId}.nt-card`).css({ "border": "unset" });
     $(`#${cardId} .savc`).addClass('d-none');
     $(`#${cardId} .edt`).removeClass('d-none');
 
-    // Save the data in localStorage
-    localStorage.setItem(editable.id, editable.innerHTML);
+
+    $.ajax({
+        url: "/save_user_qbank_notes", // The URL to send the request to
+        method: "POST", // The HTTP method (GET, POST, etc.)
+        data: {
+            _token: '{{ csrf_token() }}',
+            noteId: noteId,
+            content: content
+        },
+        success: function(response) {
+            // This function is called if the request succeeds
+            console.log("Success:", response);
+        },
+        error: function(xhr, status, error) {
+            // This function is called if the request fails
+            console.error("Error:", status, error);
+        }
+    });
+
+
+
 }
 
-function cancelFunc(cardId) {
-    const editable = document.querySelector(`#${cardId} #content1`);
+function cancelFunc(cardId,contentId,noteId) {
+    const editable = document.querySelector(`#${cardId} #${contentId}`);
     editable.contentEditable = 'false';
     $(`#${cardId}.nt-card`).css({ "border": "unset" });
     $(`#${cardId} .savc`).addClass('d-none');
     $(`#${cardId} .edt`).removeClass('d-none');
+}
+
+function deleteFunc(cardId, contentId, noteId) {
+    Swal.fire({
+        title: "Delete Note!",
+        text: "This is your final warning!",
+        html: '<p>You are sure to delete.</p> <p>This question Note ?</p>',
+        buttonsStyling: !1,
+        showCloseButton: !0,
+        showConfirmButton: !1,
+        footer: '<button type="button" class="swal2-cancel btn btn-default" onclick="swalClose()">No</button><button type="button" class="swal2-cancel btn btn-primary" onclick="deleteNote(' + noteId + ')">Yes</button>',
+    });
+    $(".swal2-popup").css({ "width": "32em" ,"padding-left":"0px" ,"padding-right":"0px" ,"padding-top":"0px"});
+    $(".swal2-header").css({ "background": "rgb(221, 51, 51)", "color": "#fff" ,"display": "block" ,"margin-bottom":"10px"});
+    $(".swal2-title").css({  "color": "#fff" });
+}
+
+function deleteNote(noteId){
+
+    $.ajax({
+        url: "/delete_user_qbank_notes",
+        method: "POST",
+        data: {
+            _token: '{{ csrf_token() }}',
+            noteId: noteId,
+
+        },
+        success: function(response) {
+            swalClose();
+
+            window.location.reload();
+
+        },
+        error: function(xhr, status, error) {
+            // This function is called if the request fails
+            console.error("Error:", status, error);
+        }
+    });
+
+
+}
+
+
+function swalClose() {
+    Swal.close();
 }
 
 
@@ -222,8 +300,8 @@ function cancelFunc(cardId) {
         $('#datatables-example').DataTable({
             // Table data
             data: dataSet, // My JS array
-            columns: [ // Define table Headers for each column
-                { title: 'SCORE' }
+            columns: [
+                { title: 'HTML', data: 'html' }
             ],
             "columnDefs": [
                 // { "width": "10%", "targets": 8 }

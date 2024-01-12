@@ -4,8 +4,8 @@
  <!-- jQuery -->
  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-  <!-- Sweet Alert css-->
-  <link href="https://uworld.aceamcq.com/Themes/themeone/assets/uw_assets/default/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+  <!-- SweetAlert2 CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
 
 
  <!-- Bootstrap Bundle (includes Popper.js) -->
@@ -68,6 +68,42 @@
     color: yellow !important;
 }
 
+/* Style for the feedback mark */
+.option-container {
+    position: relative;
+}
+
+.feedback-mark {
+    position: absolute;
+    left: -20px; /* Adjust the left position as needed */
+    font-size: 10px;
+}
+
+/* Style for the right and wrong marks */
+.feedback-mark.right {
+    color: green;
+}
+
+.feedback-mark.wrong {
+    color: red;
+}
+
+.loader2 {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: #013884; /* You can change the color */
+            animation: spin 1s infinite linear;
+            z-index: 20000; /* Set a high z-index value to ensure it appears on top */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
 
  </style>
 
@@ -128,14 +164,29 @@
 
             function timerEnded() {
                 // Add your logic to handle what happens when the time is up
-                alert('Time is up!');  // You can replace this with your own actions
+                examEndHandler('end');
             }
 
             function handleTestMode() {
                 // Check if testMode is set to 'toggleTimed' in localStorage
                 if (testMode === 'toggleTimed') {
-                    // Start the timer and keep the interval ID for possible future use
-                    startTimer();
+
+                    var testStatus='{{ $testStatus}}';
+
+
+
+                    if(testStatus==='end'){
+
+                        $('#test_timing').hide();
+
+
+                    }else{
+
+                        // Start the timer and keep the interval ID for possible future use
+                        startTimer();
+
+                    }
+
                 } else {
                     // Hide the time element if the condition is not met
                     $('#test_timing').hide();
@@ -271,6 +322,7 @@ function loadQuestionByIndex(index) {
         if (ischecked5 === 'true') {
 
             $('#question_mark').prop('checked', true);
+
         }else{
             $('#question_mark').prop('checked', false);
 
@@ -288,18 +340,42 @@ function loadQuestionByIndex(index) {
             }
         }
 
-        // Clear previous radio button state
-        $('input[name="radio-group"]').prop('checked', false);
+         // Clear previous radio button state
+         $('input[name="radio-group"]').prop('checked', false);
+
+
+         //disable the radio button if the test is end
+        var testStatus='{{ $testStatus }}';
+
+        if(testStatus==='end'){
+
+            $('input[name="radio-group"]').prop('disabled', true);
+
+
+        }else{
+
+            $('input[name="radio-group"]').prop('disabled', false);
+        }
+
+
+
+
+
 
         // Restore the state of radio buttons from local storage if the question ID matches
         var storedOption = localStorage.getItem('selectedOption_' + question.qbank_question_id);
         var storedRadioId = localStorage.getItem('radioId_' + question.qbank_question_id);
+
+        var selectedOption = ""+localStorage.getItem('radioId_' + questionsData[currentQuestionIndex].qbank_question_id)+"";
+        var feedbackMark;
 
         if (storedOption !== null && storedRadioId !== null) {
             $('#' + storedRadioId).prop('checked', true);
             $('input[name="radio-group"]').prop('disabled', true);
 
             if (testMode === 'toggleTimed') {
+
+
                 $('#card-border').hide();
                 $('#hide-explanation').hide();
             } else {
@@ -308,6 +384,75 @@ function loadQuestionByIndex(index) {
             }
 
 
+            for (let i = 1; i <= 5; i++) {
+                let feedbackMark2 = document.getElementById('mark-' + i);
+                if (feedbackMark2) {
+                    feedbackMark2.innerHTML = '';
+                }
+            }
+
+            switch (selectedOption) {
+
+                case 'option1':
+                    selectedOption=1;
+                    feedbackMark = document.getElementById('mark-1');
+                    break;
+                case 'option2':
+                    selectedOption=2;
+                    feedbackMark = document.getElementById('mark-2');
+                    break;
+                case 'option3':
+                    selectedOption=3;
+                    feedbackMark = document.getElementById('mark-3');
+                    break;
+                case 'option4':
+                    selectedOption=4;
+                    feedbackMark = document.getElementById('mark-4');
+                    break;
+                case 'option5':
+                    selectedOption=5;
+                    feedbackMark = document.getElementById('mark-5');
+                    break;
+                default:
+                    console.log('Invalid option');
+                }
+
+
+
+                // Check if the selected option is correct
+                if (selectedOption == questionsData[currentQuestionIndex].correct_option) {
+                // Display a right mark
+                feedbackMark.innerHTML = '✔️';
+                feedbackMark.classList.add('right');
+                console.log("right");
+                } else {
+                // Display a wrong mark
+                feedbackMark.innerHTML = '❌';
+                feedbackMark.classList.add('wrong');
+                console.log("wrong");
+                }
+
+
+
+        }else{
+
+
+            for (let i = 1; i <= 5; i++) {
+                let feedbackMark = document.getElementById('mark-' + i);
+                if (feedbackMark) {
+                    feedbackMark.innerHTML = '';
+                }
+            }
+
+        }
+
+
+         // show the explination to end test preview
+
+         if(testStatus==='end'){
+
+            $('#card-border').show();
+            $('#hide-explanation').show();
 
         }
 
@@ -392,8 +537,6 @@ function storeRadioButtonState() {
     var selectedOption = $('input[name="radio-group"]:checked').val();
     var radioId = $('input[name="radio-group"]:checked').attr('id');
 
-
-
     if (selectedOption !== undefined) {
         localStorage.setItem('selectedOption_' + questionsData[currentQuestionIndex].qbank_question_id, selectedOption);
         localStorage.setItem('radioId_' + questionsData[currentQuestionIndex].qbank_question_id, radioId);
@@ -470,12 +613,57 @@ $(document).ready(function () {
         localStorage.setItem('handleDatabaseMarkedExecuted', 'true');
     }
 
+    // Check if handleDatabaseOption has already been executed
+    if (!localStorage.getItem('handleDatabaseOptionExecuted')) {
+        // Execute handleDatabaseOption
+        handleResumeTestOption();
+
+        // Set the flag in localStorage to indicate that handleDatabaseOption has been executed
+        localStorage.setItem('handleDatabaseOptionExecuted', 'true');
+
+         // make the highlight disable for load user
+
+        localStorage.setItem('activeHighlight','false');
+    }
+
+
+   var checkHighlightStatus=localStorage.getItem('activeHighlight');
+
+   if(checkHighlightStatus==='false'){
+
+    $('#highlight').css('color', '#fff');
+    $('#circle').css('stroke','#fff');
+    $('#path1').css('fill','#fff');
+   }else{
+
+    $('#highlight').css('color', 'yellow');
+    $('#circle').css('stroke','yellow');
+    $('#path1').css('fill','yellow');
+
+
+   }
+
+
+    // disable the radio button for end test
+
+    disableRadioButtonforEndTest();
+
+
     // Load the question and restore the state of radio buttons
     loadQuestionByIndex(currentQuestionIndex);
 
     // Highlight functionality
 
     handleHighlight();
+
+    // load the question by its id
+
+    // Check if questionId is not null and not empty
+    if ('{{ $questionId }}' !== 'false' ) {
+        // Run the function only if questionId is valid
+
+        loadQuestionById33({{ $questionId }});
+    }
 
 
 
@@ -499,6 +687,8 @@ $(document).ready(function () {
             $('#card-border').show();
             $('#hide-explanation').show();
         }
+
+        loadQuestionByIndex(currentQuestionIndex);
     });
 
 
@@ -594,8 +784,64 @@ $(document).ready(function () {
     });
 
 
+    //activate highlight
+
+    $(document).on('click', '#highlight', function () {
+
+        var highlightStatus=localStorage.getItem('activeHighlight');
+
+        if(highlightStatus==='true'){
+
+            localStorage.setItem('activeHighlight','false');
+
+            $('#myToast2 .toast-body h6').text('Highlight Deactivated!');
+
+            $('#myToast2').toast('show');
+
+            // Hide the toast after 3 seconds
+            setTimeout(function(){
+                $('#myToast2').toast('hide');
+            }, 5000);
+
+            $('#highlight').css('color', '#fff');
+            $('#circle').css('stroke','#fff');
+            $('#path1').css('fill','#fff');
 
 
+        }else{
+
+            localStorage.setItem('activeHighlight','true');
+
+            $('#myToast .toast-body h6').text('Highlight Active!');
+
+            $('#myToast').toast('show');
+
+            // Hide the toast after 3 seconds
+            setTimeout(function(){
+                $('#myToast').toast('hide');
+            }, 5000);
+
+            $('#highlight').css('color', 'yellow');
+            $('#circle').css('stroke','yellow');
+            $('#path1').css('fill','yellow');
+
+
+        }
+
+
+
+    });
+
+    // disable the suspend and end button
+
+    var testStatus='{{ $testStatus }}';
+
+    if(testStatus==='end'){
+        // Disable the Suspend button using jQuery
+        $('#suspend').prop('disabled', true);
+        // Disable the End Block button using jQuery
+       $('#endblock').prop('disabled', true);
+    }
 
 
 
@@ -605,6 +851,96 @@ $(document).ready(function () {
 }); // ready function end
 
 
+// Function to load a question by its ID
+function loadQuestionById33(questionId) {
+    // Find the index of the question with the given ID
+    var index = questionsData.findIndex(function(question) {
+        return question.qbank_question_id === questionId;
+    });
+
+    // If the question ID is found, load the question
+    if (index !== -1) {
+        loadQuestionByIndex(index);
+    } else {
+        console.error('Question with ID ' + questionId + ' not found.');
+    }
+}
+
+// disable the radio button group for end test
+function disableRadioButtonforEndTest(){
+
+    var testStatus='{{ $testStatus }}';
+
+    if(testStatus==='end'){
+
+        $('input[name="radio-group"]').prop('disabled', true);
+
+
+    }else{
+
+        $('input[name="radio-group"]').prop('disabled', false);
+    }
+
+
+}
+
+
+function handleResumeTestOption() {
+
+
+
+    questionsData.forEach(function (question, index) {
+
+       var selectOption=questionsData[index].pivot.choose_option;
+
+
+
+        if(selectOption!=='Not Selected'){
+
+
+            switch (selectOption) {
+
+                case 'A':
+
+                     localStorage.setItem('selectedOption_' + questionsData[index].qbank_question_id, 'on');
+                     localStorage.setItem('radioId_' + questionsData[index].qbank_question_id, 'option1');
+
+                    break;
+                case 'B':
+                     localStorage.setItem('selectedOption_' + questionsData[index].qbank_question_id, 'on');
+                     localStorage.setItem('radioId_' + questionsData[index].qbank_question_id, 'option2');
+                    break;
+                case 'C':
+                     localStorage.setItem('selectedOption_' + questionsData[index].qbank_question_id, 'on');
+                     localStorage.setItem('radioId_' + questionsData[index].qbank_question_id, 'option3');
+                    break;
+                case 'D':
+                     localStorage.setItem('selectedOption_' + questionsData[index].qbank_question_id, 'on');
+                     localStorage.setItem('radioId_' + questionsData[index].qbank_question_id, 'option4');
+                    break;
+                case 'E':
+                     localStorage.setItem('selectedOption_' + questionsData[index].qbank_question_id, 'on');
+                     localStorage.setItem('radioId_' + questionsData[index].qbank_question_id, 'option5');
+                    break;
+                default:
+                    console.log('This is the default case');
+            }
+
+
+
+        }
+
+
+
+
+
+    });
+
+
+}
+
+
+
 function swalClose() {
     Swal.close();
 }
@@ -612,22 +948,17 @@ function swalClose() {
 
 function examEnd(){
 
-    examEndHandler();
+    swalClose();
 
-    // var hash_id = $('#hash_id').val();
-    // var mark_qbs = $('#mark_qbs').val();
-    // $.ajax({
-    //     type: "GET",
-    //     url: "",
-    //     data: {hash_id: hash_id, mark_qbs: mark_qbs},
-    //     success: function (data) {
-    //         location.replace('');
-    //     }
-    // });
+
+    localStorage.setItem('runSuspend','true');
+
+    examEndHandler('end');
+
 }
 
 
-function examEndHandler() {
+function examEndHandler(testStatus) {
     var markedQuestion = [];
     var notesQuestion = [];
     var omittedQuestion = [];
@@ -644,11 +975,6 @@ function examEndHandler() {
             var pair = {};
             pair[question.qbank_question_id] = "true";
             markedQuestion.push(pair);
-        }else{
-            var pair = {};
-            pair[question.qbank_question_id] = "false";
-            markedQuestion.push(pair);
-
         }
 
         if (getNoteQuestion !== null) {
@@ -712,7 +1038,9 @@ function examEndHandler() {
 
     });
 
-     var testId= {!! $userTest  !!};
+
+
+     var testId= '{!! $userTest  !!}';
 
      // Prepare data to send to the server
      var sendData = {
@@ -723,7 +1051,10 @@ function examEndHandler() {
         incorrectQuestion: incorrectQuestion,
         correctQuestion: correctQuestion,
         timeSpentQuestions: timeSpentQuestions,
-        userTest: testId
+        userTest: testId,
+        testMode:testMode,
+        questionMode:questionMode,
+        testStatus:testStatus
     };
 
      // Send data to the server using jQuery AJAX
@@ -732,13 +1063,21 @@ function examEndHandler() {
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(sendData),
+        beforeSend: function () {
+        // Show loader in the specific div
+        showLoader2();
+        },
         success: function (response) {
             // Request was successful, handle the response if needed
-            console.log(response);
+            window.location.href = "/lunch_user_qbank_test_result/"+"{{ $userTest }}";
         },
         error: function (xhr, status, error) {
             // Handle errors
             console.error('Error:', error);
+        },
+        complete: function () {
+            // Hide loader in the specific div
+            hideLoader2();
         }
     });
 
@@ -748,17 +1087,24 @@ function examEndHandler() {
 
 
 function examSuspend(){
-    var hash_id = $('#hash_id').val();
-    var mark_qbs = $('#mark_qbs').val();
-    $.ajax({
-        type: "GET",
-        url: "",
-        data: {hash_id: hash_id, mark_qbs: mark_qbs},
-        success: function (data) {
-            location.replace('');
-        }
-    });
+
+    swalClose();
+
+    localStorage.setItem('runSuspend','true');
+
+    examEndHandler('suspend');
+
 }
+
+    // Display loader in a specific div
+    function showLoader2() {
+      $('.loader2').show();
+    }
+
+    // Hide loader in a specific div
+    function hideLoader2() {
+      $('.loader2').hide();
+    }
 
 
 
@@ -769,16 +1115,29 @@ window.onbeforeunload = function () {
     storeRadioButtonState();
     localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
 
+    var runSuspend =localStorage.getItem('runSuspend');
 
-};
+   if(!runSuspend){
 
-// Handle navigating to the last active question after page refresh
-window.onload = function () {
-    // Check if the current question index exists in sessionStorage and navigate to it
-    var storedIndex = localStorage.getItem('currentQuestionIndex');
-    if (storedIndex !== null) {
-        //loadQuestionByIndex(parseInt(storedIndex));
+    var testStatus='{{ $testStatus }}';
+
+    if(testStatus==='end'){
+
+        examEndHandler('end');
+
+
+    }else{
+
+        examEndHandler('suspend');
+
     }
+
+
+
+   }
+
+
+
 };
 
 
@@ -864,12 +1223,20 @@ function handleDatabaseNotes(){
 <script>
 
 function handleHighlight() {
+
     $('.highlightable').on('mouseup', function() {
+
+      var highlightStatus= localStorage.getItem('activeHighlight');
+       if(highlightStatus==='true'){
+
         var selection = window.getSelection();
         if (selection && selection.toString().trim() !== '') {
             var questionId = $('#question-id').text().trim();
             toggleHighlight(questionId, selection);
         }
+
+       }
+
     });
 }
 
@@ -1254,6 +1621,41 @@ font-family: Arial, sans-serif !important;
 
 </style>
 
+<div class="loader2">
+    <i class="fas fa-spinner"></i>
+</div>
+    <div id="myToast" class="toast toast-border-success fade " role="alert" aria-live="assertive" aria-atomic="true" data-bs-toggle="toast" style="position: fixed; bottom: 16px; right: 16px; z-index: 999;" data-bs-delay="3000">
+
+        <div class="toast-body">
+
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-2">
+                    <i class="ri-checkbox-circle-fill align-middle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0">!</h6>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="myToast2" class="toast toast-border-danger fade " role="alert" aria-live="assertive" aria-atomic="true" data-bs-toggle="toast" style="position: fixed; bottom: 16px; right: 16px; z-index: 999;" data-bs-delay="3000">
+
+        <div class="toast-body">
+
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-2">
+                    <i class="ri-alert-line align-middle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0">QBank Activate Successfully!</h6>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Loader Container -->
     <div class="loader-container" id="loaderContainer" style="display:none;">
         <div class="loader">
@@ -1591,7 +1993,7 @@ font-family: Arial, sans-serif !important;
                         <div class="ms-4 mobile-hide highlight-active" id="highlight" style="height: 45px; cursor: pointer;" >
                             <span class="_span">
                                  <svg class="_svgnote">
-                                    <svg style="color: rgb(248, 247, 247);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle cx="128" cy="128" r="96" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></circle><polyline points="104 144 104 96 152 72 152 144" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></polyline><path d="M168,215.3V152a8,8,0,0,0-8-8H96a8,8,0,0,0-8,8v63.3" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path></svg>
+                                    <svg style="color: rgb(248, 247, 247);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle id="circle" cx="128" cy="128" r="96" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></circle><polyline points="104 144 104 96 152 72 152 144" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></polyline><path id="path1" d="M168,215.3V152a8,8,0,0,0-8-8H96a8,8,0,0,0-8,8v63.3" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path></svg>
                             </span>
                              <p>Highlights</p>
                          </div>
@@ -1691,36 +2093,51 @@ font-family: Arial, sans-serif !important;
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
+                                                                                        <div class="option-container">
+                                                                                        <span class="feedback-mark" id="mark-1"></span>
                                                                                         <input type="radio" id="option1" name="radio-group">
                                                                                         <label for="option1" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">A. <span id="option-1"></span></label>
+                                                                                        </div >
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
+                                                                                        <div class="option-container">
+                                                                                        <span class="feedback-mark" id="mark-2"></span>
                                                                                         <input type="radio" id="option2" name="radio-group">
                                                                                         <label for="option2" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">B. <span id="option-2"></span></label>
+                                                                                        </div >
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
-                                                                                        <input type="radio" id="option3" name="radio-group">
-                                                                                        <label for="option3" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">C. <span id="option-3"></span></label>
+                                                                                        <div class="option-container">
+                                                                                            <span class="feedback-mark" id="mark-3"></span>
+                                                                                            <input type="radio" id="option3" name="radio-group">
+                                                                                            <label for="option3" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">C. <span id="option-3"></span></label>
+                                                                                        </div>
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
+                                                                                        <div class="option-container">
+                                                                                        <span class="feedback-mark" id="mark-4"></span>
                                                                                         <input type="radio" id="option4" name="radio-group">
                                                                                         <label for="option4" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">D. <span id="option-4"></span></label>
+                                                                                        </div >
                                                                                     </td>
                                                                                 </tr>
 
                                                                                 <tr>
                                                                                     <td class="tbl_radio">
+                                                                                        <div class="option-container">
+                                                                                        <span class="feedback-mark" id="mark-5"></span>
                                                                                         <input type="radio" id="option5" name="radio-group">
                                                                                         <label for="option5" style="font-size: 12pt; font-family: Arial, sans-serif; color:#3A3A3A;">E. <span id="option-5"></span></label>
+                                                                                        </div>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -1775,7 +2192,7 @@ font-family: Arial, sans-serif !important;
                                                                                     <i class="bx bx-calendar display-6 text-muted"></i>
                                                                                 </div>
                                                                                 <div class="flex-grow-1 ms-3">
-                                                                                    <span class="correct-option-mb">2023</span>
+                                                                                    <span class="correct-option-mb"><script>document.write(new Date().getFullYear())</script></span>
                                                                                     <br>
                                                                                     <span class="correct-option-mb">Version</span>
                                                                                 </div>
@@ -2060,18 +2477,6 @@ $(document).ready(function () {
 </script>
 
 <!--##################################### designing the font for question and explination end ###################################################-->
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!-- popup image Modal -->

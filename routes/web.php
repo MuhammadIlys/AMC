@@ -717,23 +717,23 @@ Route::middleware('superadmin')->group(function () {
 
 
         //qbank question fetching routes
-        Route::post('/qbank_fetching_all_question', [QbankLastFetchedQuestionController::class, 'fetchAllQuestions']);
+        Route::post('/qbank_fetching_all_questions', [QbankLastFetchedQuestionController::class, 'fetchAllQuestions']);
 
-        Route::post('/qbank_fetching_correct_question', [QbankLastCorrectFetchedQuestionController::class, 'fetchCorrectQuestions']);
+        Route::post('/qbank_fetching_correct_questions', [QbankLastCorrectFetchedQuestionController::class, 'fetchCorrectQuestions']);
 
-        Route::post('/qbank_fetching_incorrect_question', [QbankLastIncorrectFetchedQuestionController::class, 'fetchIncorrectQuestions']);
+        Route::post('/qbank_fetching_incorrect_questions', [QbankLastIncorrectFetchedQuestionController::class, 'fetchIncorrectQuestions']);
 
-        Route::post('/qbank_fetching_omitted_question', [QbankLastOmittedFetchedQuestionController::class, 'fetchOmittedQuestions']);
+        Route::post('/qbank_fetching_omitted_questions', [QbankLastOmittedFetchedQuestionController::class, 'fetchOmittedQuestions']);
 
-        Route::post('/qbank_fetching_marked_question', [QbankLastMarkedFetchedQuestionController::class, 'fetchMarkedQuestions']);
+        Route::post('/qbank_fetching_marked_questions', [QbankLastMarkedFetchedQuestionController::class, 'fetchMarkedQuestions']);
 
-        Route::post('/qbank_fetching_Used_question', [QbankLastUsedFetchedQuestionController::class, 'fetchUsedQuestions']);
+        Route::post('/qbank_fetching_Used_questions', [QbankLastUsedFetchedQuestionController::class, 'fetchUsedQuestions']);
 
-        Route::post('/qbank_fetching_Unused_question', [QbankLastUnusedFetchedQuestionController::class, 'fetchUnusedQuestions']);
+        Route::post('/qbank_fetching_Unused_questions', [QbankLastUnusedFetchedQuestionController::class, 'fetchUnusedQuestions']);
 
 
         // exam lunch routes
-        Route::get('/lunch_user_qbank_test_exam/{test_id}/{test_mode}/{question_mode}',[MainQbankExamController::class,'lunchUserQbankTestExam']);
+        Route::get('/lunch_user_qbank_test_exam/{test_id}/{test_mode}/{question_mode}/{question_id?}/{test_status?}',[MainQbankExamController::class,'lunchUserQbankTestExam']);
 
          // exam end result route
          Route::post('/qbank_exam_end_result',[MainQbankExamController::class,'qbankExamEndResult']);
@@ -751,20 +751,42 @@ Route::middleware('superadmin')->group(function () {
 
         Route::get('/lunch_user_qbank_previous_test', [MainQbankPreviousTestController ::class, 'lunchUserQbankPreviousTests']);
 
-        Route::get('/lunch_user_qbank_test_result', [MainQbankTestResultController::class, 'lunchUserQbankTestResults']);
 
-        Route::get('/lunch_user_qbank_test_analytics', [MainQbankTestResultController::class, 'lunchUserQbankTestAnalytics']);
+        Route::post('/update_qbank_user_test_name', [MainQbankPreviousTestController ::class, 'updateUserTestName']);
+
+
+
+
+        Route::get('/lunch_user_qbank_test_result/{test_id}', [MainQbankTestResultController::class, 'lunchUserQbankTestResults']);
+
+        Route::get('/lunch_user_qbank_test_analytics/{test_id}', [MainQbankTestResultController::class, 'lunchUserQbankTestAnalytics']);
 
         Route::get('/lunch_user_qbank_test_reports', [MainQbankReportController::class, 'lunchUserQbankTestReports']);
 
         Route::get('/lunch_user_qbank_test_graphs', [MainQbankGraphController::class, 'lunchUserQbankTestGraphs']);
 
+
         Route::get(' /lunch_user_qbank_search', [MainQbankSearchController::class, 'lunchUserQbankSearch']);
+
+        Route::post(' /load_qbank_search_question', [MainQbankSearchController::class, 'loadQbankSearchQuestion']);
+
 
         Route::get(' /lunch_user_qbank_notes', [MainQbankNoteController::class, 'lunchUserQbankNotes']);
 
+        Route::post(' /save_user_qbank_notes', [MainQbankNoteController::class, 'saveUserQbankNotes']);
+
+        Route::post(' /delete_user_qbank_notes', [MainQbankNoteController::class, 'deleteUserQbankNotes']);
 
         Route::get('/lunch_user_qbank_test_account_reset', [MainQbankAccountResetController::class, 'lunchUserQbankTestResetAccount']);
+
+        Route::post('/user_qbank_tests_reset', [MainQbankAccountResetController::class, 'userQbankTestReset']);
+
+        Route::post('/user_qbank_notes_reset', [MainQbankAccountResetController::class, 'userQbankNotesReset']);
+
+        Route::post('/user_qbank_highlights_reset', [MainQbankAccountResetController::class, 'userQbankHighlightsReset']);
+
+        Route::post('/user_qbank_marked_reset', [MainQbankAccountResetController::class, 'userQbankMarkedReset']);
+
 
         Route::get('/lunch_user_qbank_test_help', [MainQbankHelpController::class, 'lunchUserQbankTestHelp']);
 

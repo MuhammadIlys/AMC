@@ -295,9 +295,9 @@ if (chartTimelineColors) {
       },
     ],
     chart: { height: 350, type: "rangeBar", toolbar: { show: false } },
-    plotOptions: { bar: { horizontal: true, distributed: true, dataLabels: { hideOverflowingLabels: false } } },
+    plotOptions: { bar: { horizontal: true, distributed: true, dataLabels: { hideOverflowingLabels: false }, barHeight: '10%' } },
     dataLabels: {
-      enabled: true,
+      enabled: false,
       formatter: function (e, t) {
         var xValue = t.w.config.series[0].data[t.dataPointIndex].x,
           // Calculate the difference in numbers instead of days

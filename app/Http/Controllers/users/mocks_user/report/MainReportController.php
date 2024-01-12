@@ -174,15 +174,11 @@ class MainReportController extends Controller
         // JSON encode the data
         $jsonData = json_encode($data2, JSON_PRETTY_PRINT);
 
+        // Pass data to the view
+        return view("users.mocks_user.report.reports", [
+            'jsonData' => $jsonData,
 
-
-
-
-                    // Pass data to the view
-                    return view("users.mocks_user.report.reports", [
-                        'jsonData' => $jsonData,
-
-                    ]);
+        ]);
     }
 
 

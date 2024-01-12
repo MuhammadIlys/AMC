@@ -12,6 +12,7 @@ use App\Models\users\qbank_user\qbank_notes\QbankNote;
 use App\Models\users\qbank_user\qbank_omitted\QbankOmitted;
 use App\Models\users\qbank_user\qbank_unused\QbankUnused;
 use App\Models\users\qbank_user\qbank_used\QbankUsed;
+use App\Models\users\qbank_user\qbank_user_tests\QbankUserTest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\super_admin\mocks\test\Test;
@@ -134,6 +135,13 @@ class Users extends Model
          {
              return $this->hasMany(QbankHighlight::class, 'id');
          }
+
+
+          // Define the one-to-many relationship with QbankUserTest
+        public function qbankUserTestHistories()
+        {
+            return $this->hasMany(QbankUserTest::class, 'user_id', 'id');
+        }
 
 
 

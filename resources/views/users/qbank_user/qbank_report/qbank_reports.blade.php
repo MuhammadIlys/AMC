@@ -245,7 +245,7 @@
                                                     <li class="nav-item" role="presentation">
                                                         <a class="nav-link active" data-bs-toggle="tab" href="#Subject_tab"
                                                            role="tab" aria-selected="false" tabindex="-1">
-                                                            Subjects
+                                                            Systems
                                                         </a>
                                                     </li>
 
@@ -287,8 +287,8 @@
                                                         <thead>
                                                         <tr>
 
-                                                            <th></th>
-                                                            <th>subject name</th>
+
+                                                            <th>System Name</th>
 
                                                             <th>Correct</th>
                                                             <th>Incorrect</th>
@@ -339,14 +339,14 @@
         ],
         // Display
         dom: '<"top"f><"data-table"rt<"bottom"Blip>>',
-        lengthMenu: [ // https://datatables.net/examples/advanced_init/length_menu.html
+        lengthMenu: [
             [10, 25, 50, -1],
             [10, 25, 50, "All"],
         ],
         language: {
             search: '_INPUT_',
-            searchPlaceholder: 'Search', // https://datatables.net/reference/option/language.searchPlaceholder
-            info: '_START_-_END_ of _TOTAL_', // https://datatables.net/examples/basic_init/language.html
+            searchPlaceholder: 'Search',
+            info: '_START_-_END_ of _TOTAL_',
             lengthMenu: 'Items per page: _MENU_',
             infoEmpty: '0 of _MAX_',
             infoFiltered: '',
@@ -366,31 +366,18 @@
         fixedHeader: true,
         ordering: true,
         paging: false,
-        // pageLength: 10,
-        // pagingType: 'full', // https://datatables.net/reference/option/pagingType
+
         responsive: true,
         searching: true,
         "info":     false,
         select: {
-            style: 'multi+shift', // https://datatables.net/reference/option/select.style
-            className: 'table-active' // https://datatables.net/reference/option/select.className
+            style: 'multi+shift',
+            className: 'table-active'
         },
         stateSave: true,
     })
 
-    // $(function () {
-    //     $('#datatables-example').DataTable({
-    //         "columnDefs": [
-    //             {"width": "2%", "targets": 0}
-    //         ],
-    //         "fnInitComplete": function (oSettings, json) {
-    //             $('.dataTables_filter input').attr('type', 'text');
-    //         },
-    //     })
-    //         .on('page.dt', function () {
-    //             $('[data-toggle="tooltip"]').tooltip({placement: 'bottom'})
-    //         })
-    // })
+
 
 
 </script>
@@ -399,41 +386,18 @@
 
     var data={!! $jsonData  !!}
 
-    function format(d) {
-    var specialitiesTable = '<table class="table mb-0 table-sub-rows">';
-
-    d.specialities.forEach(function (speciality) {
-        specialitiesTable += '<tr class="table-primary">' +
-            '<td>' + speciality.name + '</td>' +
-            '<td>' + speciality.correct + '</td>' +
-            '<td>' + speciality.incorrect + '</td>' +
-            '<td>' + speciality.omitted + '</td>' +
-            '</tr>';
-    });
-
-    specialitiesTable += '</table>';
-
-    return specialitiesTable;
-    }
-
-
     //table for mocks analytics
 
     $(document).ready(function() {
         var table = $("#employees").DataTable({
             data: data,
             columns: [
-                {
-                    className: "details-control",
-                    orderable: false,
-                    data: null,
-                    defaultContent: ''
-                },
+
                 { data: "name" },
                 { data: "correct" },
                 { data: "incorrect" },
                 { data: "omitted" },
-                { data: "specialities", visible: false }
+
             ],
             order: [[1, "asc"]],
             "fnInitComplete": function (oSettings, json) {
@@ -445,18 +409,7 @@
         $('#myInputTextField').keyup(function(){
             table.search($(this).val()).draw() ;
         });
-        $("#employees tbody").on("click", "td.details-control", function() {
-            var tr = $(this).closest("tr");
-            var row = table.row(tr);
 
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass("shown");
-            } else {
-                row.child(format(row.data()), "p-0").show();
-                tr.addClass("shown");
-            }
-        });
     });
 
 

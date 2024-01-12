@@ -18,6 +18,10 @@ class QbankUserTest extends Model
 
     protected $fillable = [
         'user_id',   // Foreign key for Users
+        'name',
+        'mode',
+        'questionMode',
+        'testStatus',
         'qbank_id',  // Foreign key for QbankQbank
         'marked',
         'correct',

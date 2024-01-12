@@ -1631,16 +1631,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- SweetAlert CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <!-- Check for the error in session and show SweetAlert2 -->
-    @if(session('mocks_older_error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '{{ session('mocks_older_error') }}',
-        });
-    </script>
-    @endif
+
 
 
     <!-- Start right Content here -->
@@ -1676,21 +1667,21 @@
                                                         <a id="result1" class="test-nav nav-link text-muted active" data-bs-toggle="tab"
                                                            href="#test_results"
                                                            role="tab" aria-selected="false" tabindex="-1">
-                                                            Mocks Results
+                                                            Results
                                                         </a>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
                                                         <a id="analytics1" class="test-nav nav-link text-muted" data-bs-toggle="tab" href="#test_analytics"
                                                            role="tab" aria-selected="false" tabindex="-1">
-                                                            Mocks Analytics
+                                                           Analytics
                                                         </a>
                                                     </li>
                                                 </ul>
                                             </div>
 
                                             <div class="flex-grow-1 oveflow-hidden">
-                                                <p class="text-muted text-truncates mb-0 float-end fs-14">Custom Mocks
-                                                    ID: {{ $custom_mocks_id }} <i class="la la-info-circle text-blue fs-18 ms-2"></i>
+                                                <p class="text-muted text-truncates mb-0 float-end fs-14">Custom Test Id:
+                                                     {{ decrypt($test_id) }} <i class="la la-info-circle text-blue fs-18 ms-2"></i>
                                                 </p>
                                             </div>
 
@@ -1706,20 +1697,24 @@
                                                 <div class="tab-pane active show" id="test_results" role="tabpanel">
 
 
+
+
                                                          <!-- result progress bar design start-->
 
-                                                        @if ($userCustomMocks->test_status == 'Pass')
+                                                        @if ($userTest->perscent >= 50)
 
                                                         <div class="row" style="padding-left:80px">
 
-                                                            <div class="col-6">
+
+
+                                                            <div class="col-12 col-lg-12 col-md-12 col-sm-12">
                                                                 <div class="test-results">
                                                                     <div class="summary-stats">
                                                                         <div class="score-stats">
                                                                             <div class="stats-title">Your Percentage</div>
                                                                             <div class="stats-area ng-star-inserted" style="">
-                                                                                <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%;">
-                                                                                    <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
+                                                                                <div class="user-score" style="left: {{ $userTest->perscent }}%;">
+                                                                                    <span>{{ $userTest->perscent}}%</span><i class="la la-caret-down"></i>
                                                                                 </div>
                                                                                 <div class="average-score-line on-right" style="left: 61%;">
                                                                                     <div class="average-score"> Avg:&nbsp;61%
@@ -1727,7 +1722,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="score-bar">
-                                                                                    <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%;"></div>
+                                                                                    <div class="user-score-bar" style="width: {{ $userTest->perscent  }}%;"></div>
                                                                                 </div>
                                                                             </div><!---->
                                                                         </div>
@@ -1738,30 +1733,10 @@
                                                             </div>
 
 
-                                                            <div class="col-6">
 
-                                                                <div class="test-results">
-                                                                    <div class="summary-stats">
-                                                                        <div class="score-stats">
-                                                                            <div class="stats-title">Your Score</div>
-                                                                            <div class="stats-area ng-star-inserted" style="">
-                                                                                <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%;">
-                                                                                    <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
-                                                                                </div>
-                                                                                <div class="average-score-line on-right" style="left: 61%;">
-                                                                                    <div class="average-score"> Avg:&nbsp;255
-                                                                                        <div class="arrow-up-div"></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="score-bar">
-                                                                                    <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%;"></div>
-                                                                                </div>
-                                                                            </div><!---->
-                                                                        </div>
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+
+
                                                         </div>
 
 
@@ -1772,14 +1747,14 @@
 
                                                         <div class="row" style="padding-left:80px">
 
-                                                            <div class="col-6">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                                                                 <div class="test-results">
                                                                     <div class="summary-stats">
                                                                         <div class="score-stats">
                                                                             <div class="stats-title">Your Percentage</div>
                                                                             <div class="stats-area ng-star-inserted" style="">
-                                                                                <div class="user-score" style="left: {{ $userCustomMocks->perscent }}%; color:red;">
-                                                                                    <span>{{ $userCustomMocks->perscent}}%</span><i class="la la-caret-down"></i>
+                                                                                <div class="user-score" style="left: {{ $userTest->perscent }}%; color:red;">
+                                                                                    <span>{{ $userTest->perscent}}%</span><i class="la la-caret-down"></i>
                                                                                 </div>
                                                                                 <div class="average-score-line on-right" style="left: 61%; ">
                                                                                     <div class="average-score"> Avg:&nbsp;61%
@@ -1787,41 +1762,25 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="score-bar">
-                                                                                    <div class="user-score-bar" style="width: {{ $userCustomMocks->perscent  }}%; background-color:red;"></div>
+                                                                                    <div class="user-score-bar" style="width: {{ $userTest->perscent  }}%; background-color:red;"></div>
                                                                                 </div>
                                                                             </div><!---->
                                                                         </div>
 
+
                                                                     </div>
+
+
+
+
+
                                                                 </div>
 
                                                             </div>
 
 
-                                                            <div class="col-6">
 
-                                                                <div class="test-results">
-                                                                    <div class="summary-stats">
-                                                                        <div class="score-stats">
-                                                                            <div class="stats-title">Your Score</div>
-                                                                            <div class="stats-area ng-star-inserted" style="">
-                                                                                <div class="user-score" style="left: {{ ($userCustomMocks->score*100)/500 }}%; color:red;">
-                                                                                    <span>{{ $userCustomMocks->score}}</span><i class="la la-caret-down"></i>
-                                                                                </div>
-                                                                                <div class="average-score-line on-right" style="left: 61%;">
-                                                                                    <div class="average-score"> Avg:&nbsp;255
-                                                                                        <div class="arrow-up-div"></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="score-bar">
-                                                                                    <div class="user-score-bar" style="width: {{ ($userCustomMocks->score*100)/500   }}%; background-color:red;"></div>
-                                                                                </div>
-                                                                            </div><!---->
-                                                                        </div>
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
 
                                                     @endif
@@ -1865,15 +1824,15 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->correct }}</div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userTest->correct }}</div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Incorrect</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->incorrect }}</div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userTest->incorrect }}</div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Omitted</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->omitted}}</div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userTest->omitted}}</div></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -1884,15 +1843,15 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Hard Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->hard_correct}} </div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userTest->hard_correct}} </div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Fair Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->fair_correct}} </div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userTest->fair_correct}} </div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><a href="#" class="fw-medium">Total Easy Correct</a></th>
-                                                                    <td> <div class="score-badge float-end">{{ $userCustomMocks->easy_correct}} </div></td>
+                                                                    <td> <div class="score-badge float-end">{{ $userTest->easy_correct}} </div></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -1932,9 +1891,8 @@
                                                         <table id="employees" class="table table-striped" style="width:100%">
                                                             <thead>
                                                             <tr>
-                                                                <th></th>
-                                                                <th>subject name</th>
 
+                                                                <th>System Name</th>
                                                                 <th>CORRECT</th>
                                                                 <th>INCORRECT</th>
                                                                 <th>OMITTED</th>
@@ -1998,12 +1956,12 @@
 
 
 <script>
-    var hardCorrect = {{ $userCustomMocks->hard_correct }};
-    var fairCorrect = {{ $userCustomMocks->fair_correct }};
-    var easyCorrect = {{ $userCustomMocks->easy_correct }};
-    var correct = {{ $userCustomMocks->correct }};
-    var incorrect = {{ $userCustomMocks->incorrect }};
-    var omitted = {{ $userCustomMocks->omitted }};
+    var hardCorrect = 30; //{{ $userTest->hard_correct }};
+    var fairCorrect = 30; //{{ $userTest->fair_correct }};
+    var easyCorrect =30 ; //{{ $userTest->easy_correct }};
+    var correct = {{ $userTest->correct }};
+    var incorrect = {{ $userTest->incorrect }};
+    var omitted = {{ $userTest->omitted }};
 
     function getChartColorsArray(elementId) {
         var element = document.getElementById(elementId);
@@ -2173,9 +2131,7 @@
                 columns: [ // Define table Headers for each column
                     {title: ''},
                     { title: 'ID' },
-                    { title: 'Subject' },
-                    { title: 'Speciality' },
-                    { title: 'Topic' },
+                    { title: 'System Name' },
                     { title: 'choose Option' },
                     { title: 'Tim Spent (mm:ss)' },
                     { title: '' }, // Add an empty title for the 8th column
@@ -2200,23 +2156,6 @@
 
     var data={!! $jsonData  !!}
 
-    function format(d) {
-    var specialitiesTable = '<table class="table mb-0 table-sub-rows">';
-
-    d.specialities.forEach(function (speciality) {
-        specialitiesTable += '<tr class="table-primary">' +
-            '<td>' + speciality.name + '</td>' +
-            '<td>' + speciality.correct + '</td>' +
-            '<td>' + speciality.incorrect + '</td>' +
-            '<td>' + speciality.omitted + '</td>' +
-            '</tr>';
-    });
-
-    specialitiesTable += '</table>';
-
-    return specialitiesTable;
-}
-
 
     //table for mocks analytics
 
@@ -2224,17 +2163,12 @@
         var table = $("#employees").DataTable({
             data: data,
             columns: [
-                {
-                    className: "details-control",
-                    orderable: false,
-                    data: null,
-                    defaultContent: ''
-                },
+
                 { data: "name" },
                 { data: "correct" },
                 { data: "incorrect" },
                 { data: "omitted" },
-                { data: "specialities", visible: false }
+
             ],
             order: [[1, "asc"]],
             "fnInitComplete": function (oSettings, json) {
@@ -2246,18 +2180,7 @@
         $('#myInputTextField').keyup(function(){
             table.search($(this).val()).draw() ;
         });
-        $("#employees tbody").on("click", "td.details-control", function() {
-            var tr = $(this).closest("tr");
-            var row = table.row(tr);
 
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass("shown");
-            } else {
-                row.child(format(row.data()), "p-0").show();
-                tr.addClass("shown");
-            }
-        });
     });
 </script>
 
@@ -2298,6 +2221,27 @@ $(document).ready(function() {
     $(document).ready(function() {
         $('#data-table').DataTable();
     });
+</script>
+
+<script>
+
+    function deleteLocalStorage(){
+
+
+
+        // Get all keys from local storage
+         var keys = Object.keys(localStorage);
+
+        // Iterate through the keys and remove each item
+        for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+
+            // Remove the item
+            localStorage.removeItem(key);
+
+            console.log("Removed: " + key);
+        }
+    }
 </script>
 
 

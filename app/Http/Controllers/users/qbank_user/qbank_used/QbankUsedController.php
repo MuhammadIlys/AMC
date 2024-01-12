@@ -45,10 +45,10 @@ class QbankUsedController extends Controller
             $totalCorrectCounts[$systemId] = [
                 'qbank_system_id' => $systemId,
                 'system_name' => $systemName,
-                'total_correct_count' => 0,
+                'qbank_question_count' => 0,
             ];
         }
-        $totalCorrectCounts[$systemId]['total_correct_count']++;
+        $totalCorrectCounts[$systemId]['qbank_question_count']++;
     }
 
     // Prepare the data to be returned

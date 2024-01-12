@@ -10,6 +10,26 @@
         .form-select{
             width: unset;
         }
+        .editable{
+
+            border: none;
+        }
+
+        .editable:active{
+            border: none;
+        }
+
+        .editable:focus{
+            border: none;
+        }
+
+        .editable[readonly]:focus-visible {
+            border: none !important; /* Remove border when input is readonly */
+            outline: none !important; /* Remove the default outline as well */
+
+        }
+
+
     </style>
 
     <link href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/b-1.6.5/b-colvis-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.2/fc-3.3.1/r-2.2.6/rr-1.2.7/sl-1.3.1/datatables.css" rel="stylesheet" crossorigin>
@@ -20,21 +40,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/staterestore/1.2.2/css/stateRestore.dataTables.min.css">
 
 
-
-
-    <!-- SweetAlert CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <!-- Check for the error in session and show SweetAlert2 -->
-
-    @if(session('mocks_older_error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '{{ session('mocks_older_error') }}',
-        });
-    </script>
-    @endif
 
 
     <!-- ============================================================== -->
@@ -97,11 +102,7 @@
 
 <script>
     $.extend($.fn.dataTable.defaults, {
-        buttons:[
-            'colvis',
 
-        ],
-        // Display
         dom: '<"top"f><"data-table"rt<"bottom"Blip>>', // https://datatables.net/examples/basic_init/dom.html
         lengthMenu: [ // https://datatables.net/examples/advanced_init/length_menu.html
             [10, 25, 50, -1],
@@ -140,10 +141,6 @@
         stateSave: true,
     })
 
-    @php
-    $urlMockResults = url('/mocks_user_mocks_result');
-    $urlTestAnalytics = url('/mocks_user_mocks_analytics');
-    @endphp
 
 
     var dataSet = @json($dataSet);
@@ -153,14 +150,16 @@
         $('#datatables-example2').DataTable({
             data: dataSet,
             columns: [
-                { title: 'Percentage' },
+                { title: 'Block ID' },
                 { title: 'NAME' },
+                { title: 'Per.%' },
                 { title: 'DATE' },
-                { title: 'Obtain Marks' },
-                { title: 'Correct Qs' },
-                { title: 'Incorrect Qs' },
-                { title: 'Omitted Qs' },
-                { title: 'Test Status' },
+                { title: 'Marked' },
+                { title: 'Corrects' },
+                { title: 'Incorrects' },
+                { title: 'Omitted' },
+                { title: 'Status' },
+                { title: 'Mode' },
                 { title: 'ACTIONS' }
             ],
             "columnDefs": [
@@ -174,5 +173,86 @@
         });
     });
 </script>
+
+
+
+
+
+
+<script>
+    $(document).ready(function() {
+        $('.edit-icon').on('click', function() {
+            var container = $(this).parent('.editable-container');
+            var input = container.find('.editable');
+
+            // Hide the edit icon
+            $(this).hide();
+
+            // Disable input
+            input.prop('readonly', true);
+
+            // Enable editing and focus on the input after a short delay
+            setTimeout(function() {
+                input.prop('readonly', false).focus();
+            }, 100);
+        });
+
+        $('.editable').on('blur', function() {
+            var container = $(this).closest('.editable-container');
+
+            // Show the edit icon after saving
+            container.find('.edit-icon').show();
+
+            var testId = $(this).data('test-id');
+            var value = $(this).val();
+
+            $.ajax({
+                url: '/update_qbank_user_test_name',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    test_id: testId,
+                    value: value
+                },
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+
+            // Make the input readonly again after saving
+            $(this).prop('readonly', true);
+        });
+    });
+</script>
+
+
+<script>
+
+    function deleteLocalStorage(){
+
+
+
+        // Get all keys from local storage
+         var keys = Object.keys(localStorage);
+
+        // Iterate through the keys and remove each item
+        for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+
+            // Remove the item
+            localStorage.removeItem(key);
+
+            console.log("Removed: " + key);
+        }
+    }
+</script>
+
+
+
+
+
 
 @endsection
